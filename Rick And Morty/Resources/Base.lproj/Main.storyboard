@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="Rick_And_Morty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMA-Ud-ZRI">
+                                <rect key="frame" x="82" y="348" width="250" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="KzD-bP-Kuf"/>
+                                    <constraint firstAttribute="width" constant="250" id="asD-We-adv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-sj-ChT">
+                                <rect key="frame" x="82" y="416" width="250" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="8ZB-2N-x2p"/>
+                                    <constraint firstAttribute="width" constant="250" id="jMH-SR-fAK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isg-nl-5gC">
+                                <rect key="frame" x="82" y="484" width="250" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="Tnh-Hd-lT7"/>
+                                    <constraint firstAttribute="height" constant="44" id="sVf-fR-IaZ"/>
+                                </constraints>
+                                <state key="normal" title="Sign in"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-qG-os0">
+                                <rect key="frame" x="82" y="536" width="250" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="IrI-Sf-eXv"/>
+                                    <constraint firstAttribute="height" constant="44" id="l2z-2v-5sW"/>
+                                </constraints>
+                                <state key="normal" title="Sign up"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="RQ0-sj-ChT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2aB-1g-qGn"/>
+                            <constraint firstItem="RQ0-sj-ChT" firstAttribute="top" secondItem="sMA-Ud-ZRI" secondAttribute="bottom" constant="24" id="5xk-Jq-NMa"/>
+                            <constraint firstItem="isg-nl-5gC" firstAttribute="top" secondItem="RQ0-sj-ChT" secondAttribute="bottom" constant="24" id="Mbz-lW-vUq"/>
+                            <constraint firstItem="Tto-qG-os0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fSm-Cv-qOJ"/>
+                            <constraint firstItem="RQ0-sj-ChT" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-10" id="hG6-YO-KxT"/>
+                            <constraint firstItem="sMA-Ud-ZRI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jcT-qm-9qZ"/>
+                            <constraint firstItem="isg-nl-5gC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oDu-8n-ZMZ"/>
+                            <constraint firstItem="Tto-qG-os0" firstAttribute="top" secondItem="isg-nl-5gC" secondAttribute="bottom" constant="8" id="uvf-Ct-KHJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="sMA-Ud-ZRI" id="Ogc-VT-4Lb"/>
+                        <outlet property="loginButton" destination="isg-nl-5gC" id="OAe-5r-J4J"/>
+                        <outlet property="logoutButton" destination="Tto-qG-os0" id="3rB-oD-nV2"/>
+                        <outlet property="passwordTextField" destination="RQ0-sj-ChT" id="4WP-B2-oBB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="105.80357142857143"/>
+        </scene>
+    </scenes>
+</document>
