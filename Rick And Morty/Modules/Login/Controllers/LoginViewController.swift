@@ -14,8 +14,8 @@ class LoginViewController: UIViewController {
     
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
-    @IBOutlet var loginButton: UIButton!
-    @IBOutlet var logoutButton: UIButton!
+    @IBOutlet var loginButton: TransitionButton!
+    @IBOutlet var signUpButton: TransitionButton!
     
     var viewModel = LoginViewModel()
     let disposeBag = DisposeBag()
@@ -39,35 +39,70 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         self.loginButton.rx.tap.do(onNext: { [unowned self] in
-            self.emailTextField.resignFirstResponder()
-            self.loginButton.resignFirstResponder()
+            
+            self.loginButton.startAnimation()
+            
         }).subscribe(onNext: { [unowned self] in
+            
             if self.viewModel.validateCredentials() {
                 self.viewModel.loginUser()
+            } else {
+                if let text = self.viewModel.emailViewModel.errorValue.value, !text.isEmpty {
+                    
+                    showMessage(with: text)
+                    self.loginButton.stopAnimation()
+                    self.passwordTextField.text = ""
+                    
+                } else if let text = self.viewModel.passwordViewModel.errorValue.value, !text.isEmpty {
+                    
+                    showMessage(with: text)
+                    self.loginButton.stopAnimation()
+                    self.passwordTextField.text = ""
+                    
+                }
             }
+            
         }).disposed(by: disposeBag)
         
-        self.logoutButton.rx.tap.do(onNext: { [unowned self] in
-            self.emailTextField.resignFirstResponder()
-            self.loginButton.resignFirstResponder()
+        self.signUpButton.rx.tap.do(onNext: { [unowned self] in
+            
+            self.signUpButton.startAnimation()
+            
         }).subscribe(onNext: { [unowned self] in
+            
             if self.viewModel.validateCredentials() {
                 self.viewModel.signUp()
-            }
+            } else {
+               if let text = self.viewModel.emailViewModel.errorValue.value, !text.isEmpty {
+                   showMessage(with: text)
+                   self.signUpButton.stopAnimation()
+               } else if let text = self.viewModel.passwordViewModel.errorValue.value, !text.isEmpty {
+                   showMessage(with: text)
+                   self.signUpButton.stopAnimation()
+               }
+           }
+            
         }).disposed(by: disposeBag)
     }
     
     private func createObservers() {
         
-        self.viewModel.isSuccess.asObservable()
-            .bind { value in
-                print(value)
+        self.viewModel.isSuccess.asObservable().bind { value in
+            
+            if !value && self.loginButton.isLoading {
+                self.loginButton.stopAnimation()
+            }
+            
+            if self.signUpButton.isLoading {
+                self.signUpButton.stopAnimation()
+                
+                self.emailTextField.text = ""
+                self.passwordTextField.text = ""
+            }
         }.disposed(by: disposeBag)
         
-        self.viewModel.errorMessage.asObservable()
-            .bind { value in
-                print(value)
-                showMessage(with: value)
+        self.viewModel.errorMessage.asObservable().bind { value in
+            showMessage(with: value)
         }.disposed(by: disposeBag)
     }
 }
