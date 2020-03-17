@@ -19,11 +19,10 @@ class LoginCoordinator: CoordinatorProtocol {
     
     func start(from viewController: UIViewController) -> Observable<Void> {
         
-        let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "LoginViewController") as? LoginViewController
-        loginViewController?.viewModel = loginViewModel
-        
-        if let vc = loginViewController {
-            viewController.present(vc, animated: true)
+        if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+            
+            loginViewController.viewModel = loginViewModel
+            viewController.present(loginViewController, animated: true)
         }
         
         return Observable.never()
