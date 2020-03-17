@@ -6,9 +6,9 @@
 //  Copyright © 2020 SQILSOFT. All rights reserved.
 //
 
-import UIKit
 import Firebase
 import IQKeyboardManager
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         FirebaseApp.configure()
         IQKeyboardManager.shared().isEnabled = true
+        
+        if let vc = window?.rootViewController {
+            _ = AppCoordinator().start(from: vc)
+        }
         
         return true
     }
