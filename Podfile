@@ -10,5 +10,6 @@ target 'Rick And Morty' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'MaterialComponents/Snackbar'
+  pod 'IQKeyboardManager', '~> 6.5.4'
 
 end
