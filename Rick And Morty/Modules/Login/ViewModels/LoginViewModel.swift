@@ -35,12 +35,11 @@ class LoginViewModel {
         self.isLoading.accept(false)
         
         Auth.auth().signIn(withEmail: self.model.email, password: self.model.password) { user, error in
-            print(user)
-            print(error)
             
-            if error != nil {
+            if let error = error {
                 self.isLoading.accept(true)
                 self.isSuccess.accept(false)
+                showMessage(with: error.localizedDescription)
             } else {
                 self.isLoading.accept(true)
                 self.isSuccess.accept(true)
@@ -56,8 +55,22 @@ class LoginViewModel {
         self.isLoading.accept(false)
         
         Auth.auth().createUser(withEmail: self.model.email, password: self.model.password) { user, error in
-            print(user)
-            print(error)
+            
+            if let error = error {
+                self.isLoading.accept(true)
+                self.isSuccess.accept(false)
+                showMessage(with: error.localizedDescription)
+            } else {
+                self.isLoading.accept(true)
+                
+                if user?.additionalUserInfo?.isNewUser ?? false {
+                    showMessage(with: "New user created successfully. Please sign in to the app.")
+                    self.isSuccess.accept(true)
+                } else {
+                    showMessage(with: "Failed to create new user..")
+                    self.isSuccess.accept(false)
+                }
+            }
         }
     }
 }

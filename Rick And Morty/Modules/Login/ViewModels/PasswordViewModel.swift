@@ -14,7 +14,7 @@ class PasswordViewModel: ValidationViewModelProtocol {
     
     var data: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     
-    var errorMessage: String = "Please enter a valid password"
+    var errorMessage: String = "Please enter a valid password. Minimum password length: 6. Maximum password length: 15."
     
     var errorValue: BehaviorRelay<String?> = BehaviorRelay<String?>(value: "")
     

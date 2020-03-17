@@ -13,7 +13,7 @@ class EmailViewModel: ValidationViewModelProtocol {
     
     var data: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     
-    var errorMessage: String = "Please enter a valid email"
+    var errorMessage: String = "Please enter a valid email."
     
     var errorValue: BehaviorRelay<String?> = BehaviorRelay<String?>(value: "")
     
