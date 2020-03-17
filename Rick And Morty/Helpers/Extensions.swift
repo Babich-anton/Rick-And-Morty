@@ -50,5 +50,7 @@ extension UIViewController {
 }
 
 func showMessage(with text: String) {
-    MDCSnackbarManager.show(MDCSnackbarMessage(text: text))
+    if !text.isEmpty {
+        MDCSnackbarManager.show(MDCSnackbarMessage(text: text))
+    }
 }

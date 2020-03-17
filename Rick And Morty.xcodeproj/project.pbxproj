@@ -11,6 +11,11 @@
 		64516C24241E65DF0057B000 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64516C23241E65DF0057B000 /* AppCoordinator.swift */; };
 		64516C2C241E6A710057B000 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64516C2B241E6A710057B000 /* CoordinatorProtocol.swift */; };
 		64516C2E241E6B780057B000 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64516C2D241E6B780057B000 /* LoginCoordinator.swift */; };
+		646603D024213D79004C6135 /* TransitionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646603CF24213D79004C6135 /* TransitionButton.swift */; };
+		646603D224213D85004C6135 /* SpinerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646603D124213D85004C6135 /* SpinerLayer.swift */; };
+		646603D424213D96004C6135 /* FadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646603D324213D96004C6135 /* FadeTransition.swift */; };
+		646603D624213DB1004C6135 /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646603D524213DB1004C6135 /* CGRectExtension.swift */; };
+		646603D824214047004C6135 /* DesignTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646603D724214047004C6135 /* DesignTextField.swift */; };
 		64C326AC241E6F8300B7EDB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C326AB241E6F8300B7EDB7 /* Extensions.swift */; };
 		64C326AE241E723300B7EDB7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C326AD241E723300B7EDB7 /* LoginViewController.swift */; };
 		64C326B0241E725E00B7EDB7 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C326AF241E725E00B7EDB7 /* EmailViewModel.swift */; };
@@ -31,6 +36,11 @@
 		64516C23241E65DF0057B000 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		64516C2B241E6A710057B000 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		64516C2D241E6B780057B000 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		646603CF24213D79004C6135 /* TransitionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionButton.swift; sourceTree = "<group>"; };
+		646603D124213D85004C6135 /* SpinerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinerLayer.swift; sourceTree = "<group>"; };
+		646603D324213D96004C6135 /* FadeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransition.swift; sourceTree = "<group>"; };
+		646603D524213DB1004C6135 /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
+		646603D724214047004C6135 /* DesignTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTextField.swift; sourceTree = "<group>"; };
 		64C326AB241E6F8300B7EDB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		64C326AD241E723300B7EDB7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		64C326AF241E725E00B7EDB7 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
@@ -143,9 +153,30 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		646603CB24213C9F004C6135 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				646603CE24213D57004C6135 /* TransitionButton */,
+				646603D724214047004C6135 /* DesignTextField.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		646603CE24213D57004C6135 /* TransitionButton */ = {
+			isa = PBXGroup;
+			children = (
+				646603CF24213D79004C6135 /* TransitionButton.swift */,
+				646603D124213D85004C6135 /* SpinerLayer.swift */,
+				646603D324213D96004C6135 /* FadeTransition.swift */,
+				646603D524213DB1004C6135 /* CGRectExtension.swift */,
+			);
+			path = TransitionButton;
+			sourceTree = "<group>";
+		};
 		64C326AA241E6F5500B7EDB7 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				646603CB24213C9F004C6135 /* UI */,
 				64C326AB241E6F8300B7EDB7 /* Extensions.swift */,
 			);
 			path = Helpers;
@@ -314,12 +345,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				646603D624213DB1004C6135 /* CGRectExtension.swift in Sources */,
+				646603D024213D79004C6135 /* TransitionButton.swift in Sources */,
 				64C326AE241E723300B7EDB7 /* LoginViewController.swift in Sources */,
+				646603D824214047004C6135 /* DesignTextField.swift in Sources */,
 				64516C24241E65DF0057B000 /* AppCoordinator.swift in Sources */,
 				64C326B8241E7BE700B7EDB7 /* LoginViewModel.swift in Sources */,
 				64C326B4241E76CC00B7EDB7 /* ValidationViewModelProtocol.swift in Sources */,
 				64C326AC241E6F8300B7EDB7 /* Extensions.swift in Sources */,
+				646603D224213D85004C6135 /* SpinerLayer.swift in Sources */,
 				64516C2E241E6B780057B000 /* LoginCoordinator.swift in Sources */,
+				646603D424213D96004C6135 /* FadeTransition.swift in Sources */,
 				64516C2C241E6A710057B000 /* CoordinatorProtocol.swift in Sources */,
 				64C326B2241E764900B7EDB7 /* LoginModel.swift in Sources */,
 				64C433B0241D077700BD9F18 /* AppDelegate.swift in Sources */,
@@ -472,6 +508,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PXRCZGZUFL;
 				INFOPLIST_FILE = "$(SRCROOT)/Rick And Morty/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -491,6 +528,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PXRCZGZUFL;
 				INFOPLIST_FILE = "$(SRCROOT)/Rick And Morty/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
