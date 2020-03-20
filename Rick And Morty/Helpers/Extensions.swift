@@ -49,6 +49,45 @@ extension UIViewController {
     }
 }
 
+extension UIStoryboard {
+    
+    convenience init(_ name: Tab) {
+        self.init(name: name.rawValue, bundle: nil)
+    }
+    
+    func inflateVC<T: UIViewController>() -> T {
+        if let name = NSStringFromClass(T.self).components(separatedBy: ".").last,
+            let vc = instantiateViewController(withIdentifier: name) as? T {
+            return vc
+        }
+        
+        fatalError("Could not find " + String(describing: T.self) + ". Perhaps you need to add the class name to the StoryboardID for that UIViewController in IB?")
+    }
+}
+
+extension UITabBarItem {
+    
+    convenience init(_ title: Tab, image: Tab) {
+        self.init(title: title.rawValue, image: UIImage(named: image.rawValue), selectedImage: UIImage(named: image.rawValue))
+    }
+}
+
+extension UIImageView {
+    
+    func load(url: URL) {
+        
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}
+
 func showMessage(with text: String) {
     if !text.isEmpty {
         MDCSnackbarManager.show(MDCSnackbarMessage(text: text))
