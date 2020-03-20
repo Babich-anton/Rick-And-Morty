@@ -19,6 +19,7 @@ class LoginViewModel {
     let emailViewModel = EmailViewModel()
     let passwordViewModel = PasswordViewModel()
     
+    let isSignedIn: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     let isSuccess: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     let isLoading: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     let errorMessage: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
@@ -43,6 +44,7 @@ class LoginViewModel {
             } else {
                 self.isLoading.accept(true)
                 self.isSuccess.accept(true)
+                self.isSignedIn.accept(true)
             }
         }
     }

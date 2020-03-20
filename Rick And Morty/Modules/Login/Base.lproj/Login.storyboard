@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Rick_And_Morty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="JBP-Rq-5QV">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="color-dark"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="qwerty" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-sj-ChT" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
+                                <rect key="frame" x="32" y="682" width="350" height="44"/>
+                                <color key="backgroundColor" name="color-dark"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="8ZB-2N-x2p"/>
+                                </constraints>
+                                <color key="textColor" name="color-light"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderBackgroundColor">
+                                        <color key="value" name="color-light"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isg-nl-5gC" customClass="TransitionButton" customModule="Rick_And_Morty" customModuleProvider="target">
+                                <rect key="frame" x="32" y="742" width="350" height="44"/>
+                                <color key="backgroundColor" name="color-active"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="sVf-fR-IaZ"/>
+                                </constraints>
+                                <color key="tintColor" name="color-light"/>
+                                <state key="normal" title="Sign in">
+                                    <color key="titleColor" name="color-light"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                        <color key="value" name="color-light"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                        <color key="value" name="color-dark"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-qG-os0" customClass="TransitionButton" customModule="Rick_And_Morty" customModuleProvider="target">
+                                <rect key="frame" x="32" y="802" width="350" height="44"/>
+                                <color key="backgroundColor" name="color-dark"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="l2z-2v-5sW"/>
+                                </constraints>
+                                <state key="normal" title="Sign up">
+                                    <color key="titleColor" name="color-light"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                        <color key="value" name="color-dark"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="anton@gmail.com" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMA-Ud-ZRI" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
+                                <rect key="frame" x="32" y="626" width="350" height="44"/>
+                                <color key="backgroundColor" name="color-dark"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="KzD-bP-Kuf"/>
+                                </constraints>
+                                <color key="textColor" name="color-light"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderBackgroundColor">
+                                        <color key="value" name="color-light"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="RQ0-sj-ChT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2aB-1g-qGn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tto-qG-os0" secondAttribute="trailing" constant="32" id="3Ud-Jp-1vB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RQ0-sj-ChT" secondAttribute="trailing" constant="32" id="5rt-wa-Jhg"/>
+                            <constraint firstItem="RQ0-sj-ChT" firstAttribute="top" secondItem="sMA-Ud-ZRI" secondAttribute="bottom" constant="12" id="5xk-Jq-NMa"/>
+                            <constraint firstItem="Tto-qG-os0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="8GS-va-pym"/>
+                            <constraint firstItem="sMA-Ud-ZRI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="FWx-mX-Bfh"/>
+                            <constraint firstItem="isg-nl-5gC" firstAttribute="top" secondItem="RQ0-sj-ChT" secondAttribute="bottom" constant="16" id="Mbz-lW-vUq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sMA-Ud-ZRI" secondAttribute="trailing" constant="32" id="XLr-o5-AS0"/>
+                            <constraint firstItem="Tto-qG-os0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fSm-Cv-qOJ"/>
+                            <constraint firstItem="isg-nl-5gC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="h1v-DP-O7e"/>
+                            <constraint firstItem="sMA-Ud-ZRI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jcT-qm-9qZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Tto-qG-os0" secondAttribute="bottom" constant="16" id="max-bn-3Gd"/>
+                            <constraint firstItem="isg-nl-5gC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oDu-8n-ZMZ"/>
+                            <constraint firstItem="RQ0-sj-ChT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="pSI-6K-HDR"/>
+                            <constraint firstItem="Tto-qG-os0" firstAttribute="top" secondItem="isg-nl-5gC" secondAttribute="bottom" constant="16" id="uvf-Ct-KHJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="isg-nl-5gC" secondAttribute="trailing" constant="32" id="was-3o-KKi"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="sMA-Ud-ZRI" id="Ogc-VT-4Lb"/>
+                        <outlet property="loginButton" destination="isg-nl-5gC" id="OAe-5r-J4J"/>
+                        <outlet property="passwordTextField" destination="RQ0-sj-ChT" id="4WP-B2-oBB"/>
+                        <outlet property="signUpButton" destination="Tto-qG-os0" id="7pF-TR-CJD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="105.80357142857143"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bg" width="550" height="550"/>
+        <namedColor name="color-active">
+            <color red="0.99599999189376831" green="0.20399999618530273" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="color-dark">
+            <color red="0.17299999296665192" green="0.0" blue="0.24300000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="color-light">
+            <color red="0.82400000095367432" green="0.98000001907348633" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -12,24 +12,28 @@ import UIKit
 
 class LoginCoordinator: CoordinatorProtocol {
     
+    lazy var mainCoordinator = MainCoordinator()
+    
     lazy var loginViewModel = LoginViewModel()
-    var loginViewController: LoginViewController?
     
     private let disposeBag = DisposeBag()
     
-    func start(from viewController: UIViewController) -> Observable<Void> {
+    func start(from viewController: UIViewController) {
         
-        if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+        if let loginViewController = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
             
             loginViewController.viewModel = loginViewModel
             viewController.present(loginViewController, animated: true)
+            
+            loginViewModel.isSignedIn.asObservable().bind { value in
+                if value {
+                    self.coordinate(to: self.mainCoordinator, from: loginViewController)
+                }
+            }.disposed(by: disposeBag)
         }
-        
-        return Observable.never()
     }
     
-    func coordinate(to coordinator: CoordinatorProtocol,
-                    from viewControoler: UIViewController) -> Observable<Void> {
-        return coordinator.start(from: viewControoler)
+    func coordinate(to coordinator: CoordinatorProtocol, from viewController: UIViewController) {
+        coordinator.start(from: viewController)
     }
 }
