@@ -12,7 +12,6 @@ import UIKit
 
 protocol CoordinatorProtocol {
     
-    func start(from viewController: UIViewController) -> Observable<Void>
-    func coordinate(to coordinator: CoordinatorProtocol,
-                    from viewControoler: UIViewController) -> Observable<Void>
+    func start(from viewController: UIViewController)
+    func coordinate(to coordinator: CoordinatorProtocol, from viewController: UIViewController)
 }
