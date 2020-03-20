@@ -16,15 +16,13 @@ class AppCoordinator: CoordinatorProtocol {
     
     private let disposeBag = DisposeBag()
     
-    func start(from viewController: UIViewController) -> Observable<Void> {
-        viewController.rx.viewDidAppear.bind(onNext: { [unowned self] () in
-            _ = self.coordinate(to: self.loginCoordinator, from: viewController)
+    func start(from viewController: UIViewController) {
+        viewController.rx.viewDidAppear.subscribe(onNext: {
+            self.coordinate(to: self.loginCoordinator, from: viewController)
         }).disposed(by: disposeBag)
-        
-        return Observable.never()
     }
     
-    func coordinate(to coordinator: CoordinatorProtocol, from viewControoler: UIViewController) -> Observable<Void> {
-        return coordinator.start(from: viewControoler)
+    func coordinate(to coordinator: CoordinatorProtocol, from viewController: UIViewController) {
+        return coordinator.start(from: viewController)
     }
 }
