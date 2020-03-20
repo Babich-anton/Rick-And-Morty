@@ -6,6 +6,7 @@ target 'Rick And Morty' do
   use_frameworks!
 
   # Pods for Rick And Mortyx
+  pod 'Alamofire', '~> 5.0'
   pod 'Firebase/Auth'
   pod 'RxSwift'
   pod 'RxCocoa'
