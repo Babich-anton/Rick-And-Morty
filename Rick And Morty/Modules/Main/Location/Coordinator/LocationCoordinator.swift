@@ -17,6 +17,8 @@ class LocationCoordinator: TabCoordinator {
     
     init() {
         let viewController: LocationViewController = storyboard.inflateVC()
+        viewController.title = Tab.location.rawValue
+        viewController.viewModel = LocationViewModel()
         
         rootController = UINavigationController(rootViewController: viewController)
         rootController.tabBarItem = tabBarItem
