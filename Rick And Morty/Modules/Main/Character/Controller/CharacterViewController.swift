@@ -15,6 +15,7 @@ fileprivate let CELL_IDENTIFIER = "character-cell"
 class CharacterViewController: UITableViewController {
 
     var viewModel: CharacterViewModel!
+    var selectedDetailsViewModel: CharacterDetailsViewModel?
     
     private let disposeBag = DisposeBag()
     
@@ -39,14 +40,16 @@ class CharacterViewController: UITableViewController {
             }
         }.disposed(by: disposeBag)
         
-//        tableView.rx.modelSelected(Place.self)
-//            .map{ URL(string: $0.url) }
-//            .subscribe(onNext: { [weak self] url in
-//                guard let url = url else {
-//                    return
-//                }
-//                self?.present(SFSafariViewController(url: url), animated: true)
-//        }).disposed(by: disposeBag)
+        tableView.rx.modelSelected(Character.self)
+            .map { $0 }
+            .subscribe({ [unowned self] model in
+                if let element = model.element {
+                    self.selectedDetailsViewModel = CharacterDetailsViewModel(character: element)
+                    self.performSegue(withIdentifier: "ShowCharacterDetailsFromCharacters", sender: nil)
+                } else {
+                    showMessage(with: "Could not found model. Please, try again!")
+                }
+        }).disposed(by: disposeBag)
     }
 
     // MARK: - Table view data source
@@ -58,8 +61,13 @@ class CharacterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.characters.value.count
     }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "ShowCharacterDetailsFromCharacters" {
+            if let vc = segue.destination as? CharacterDetailsViewController {
+                vc.characterViewModel = self.selectedDetailsViewModel!
+            }
+        }
     }
 }
