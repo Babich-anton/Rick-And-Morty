@@ -26,7 +26,7 @@ class CharacterDetailsViewController: UIViewController {
         let character = characterViewModel.character.value
         
         if let url = URL(string: character.image) {
-            imageView.load(url: url)
+            imageView.af.setImage(withURL: url)
         }
         
         nameLabel.text         = character.name

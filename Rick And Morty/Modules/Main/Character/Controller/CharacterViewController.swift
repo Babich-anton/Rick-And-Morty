@@ -22,7 +22,11 @@ class CharacterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.refreshControl = UIRefreshControl()
+        let search = UISearchController(searchResultsController: nil)
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Search"
+        navigationItem.searchController = search
+        navigationItem.hidesSearchBarWhenScrolling = false
         
         let cell = UINib(nibName: "CharacterViewCell", bundle: nil)
         self.tableView.register(cell, forCellReuseIdentifier: CELL_IDENTIFIER)
@@ -50,16 +54,30 @@ class CharacterViewController: UITableViewController {
                     showMessage(with: "Could not found model. Please, try again!")
                 }
         }).disposed(by: disposeBag)
+        
+        navigationItem.searchController?.searchBar.rx.text.orEmpty
+            .subscribe(onNext: { query in
+                self.viewModel.search(query)
+            }).disposed(by: disposeBag)
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if indexPath.row + 1 >= self.viewModel.characters.value.count {
+            if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
+                self.viewModel.loadNextPage(nextPage)
+            }
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.characters.value.count
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

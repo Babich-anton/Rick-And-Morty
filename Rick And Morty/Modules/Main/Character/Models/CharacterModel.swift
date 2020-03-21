@@ -30,7 +30,7 @@ struct Character: Codable {
         let url: String
     }
     
-    static func getCharacter(_ id: Int, completionHandler: @escaping ((Character?, Error?) -> ())) {
+    static func get(by id: Int, completionHandler: @escaping ((Character?, Error?) -> ())) {
         
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase

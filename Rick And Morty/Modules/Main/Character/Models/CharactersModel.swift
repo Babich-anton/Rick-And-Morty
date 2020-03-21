@@ -52,4 +52,29 @@ struct Characters: Codable {
             }
         }
     }
+    
+    static func search(by name: String, completionHandler: @escaping ((Characters?, Error?) -> ())) {
+        
+        AF.request(
+            API.ENDPOINT + API.CHARACTER + "?name=" + name,
+            method: .get
+        ).responseJSON { response in
+            switch(response.result) {
+            case .success(_):
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
+                    let characters = try JSONDecoder().decode(Characters.self, from: response.data!)
+                    completionHandler(characters, nil)
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(nil, error)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(nil, error)
+            }
+        }
+    }
 }
