@@ -11,7 +11,7 @@ import Alamofire
 
 struct Location: Codable {
     
-    let id: String
+    let id: Int
     let name: String
     let type: String
     let dimension: String
@@ -19,13 +19,13 @@ struct Location: Codable {
     let url: String
     let created: String
     
-    static func getLocation(_ id: Int, completionHandler: @escaping ((Location?, Error?) -> ())) {
+    static func get(by id: Int, completionHandler: @escaping ((Location?, Error?) -> ())) {
         
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         AF.request(
-            API.ENDPOINT + API.CHARACTER + String(id),
+            API.ENDPOINT + API.LOCATION + String(id),
             method: .get
         ).responseJSON { response in
             switch(response.result) {

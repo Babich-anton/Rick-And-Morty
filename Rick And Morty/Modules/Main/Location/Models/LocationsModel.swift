@@ -22,25 +22,33 @@ struct Locations: Codable {
         let prev: String
     }
     
-    static func getLocations(completionHandler: @escaping ((Locations?, Error?) -> ())) {
+    static func getLocations(from url: String?, completionHandler: @escaping ((Locations?, Error?) -> ())) {
         
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        var endpoint = API.ENDPOINT + API.LOCATION
+        
+        if let url = url {
+            endpoint = url
+        }
         
         AF.request(
-            API.ENDPOINT + API.LOCATION,
+            endpoint,
             method: .get
         ).responseJSON { response in
             switch(response.result) {
             case .success(_):
                 do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
                     let locations = try JSONDecoder().decode(Locations.self, from: response.data!)
                     completionHandler(locations, nil)
                 } catch {
                     print(error.localizedDescription)
+                    completionHandler(nil, error)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+                completionHandler(nil, error)
             }
         }
     }
