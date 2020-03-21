@@ -22,6 +22,7 @@ class LoginCoordinator: CoordinatorProtocol {
         
         if let loginViewController = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
             
+            loginViewController.modalPresentationStyle = .fullScreen
             loginViewController.viewModel = loginViewModel
             viewController.present(loginViewController, animated: true)
             

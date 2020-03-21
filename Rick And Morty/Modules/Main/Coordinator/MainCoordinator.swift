@@ -30,6 +30,7 @@ class MainCoordinator: CoordinatorProtocol {
         self.tabBarController?.tabBar.tintColor = UIColor(named: "color-active")
         self.tabBarController?.tabBar.barTintColor = UIColor(named: "color-dark")
         self.tabBarController?.tabBar.unselectedItemTintColor = UIColor(named: "color-light")
+        self.tabBarController?.modalPresentationStyle = .fullScreen
         
         viewController.present(self.tabBarController!, animated: true)
     }
