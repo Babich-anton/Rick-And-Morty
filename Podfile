@@ -7,6 +7,7 @@ target 'Rick And Morty' do
 
   # Pods for Rick And Mortyx
   pod 'Alamofire', '~> 5.0'
+  pod 'AlamofireImage', '~> 4.0'
   pod 'Firebase/Auth'
   pod 'RxSwift'
   pod 'RxCocoa'
