@@ -11,9 +11,9 @@ import Alamofire
 
 struct Episode: Codable {
     
-    let id: String
+    let id: Int
     let name: String
-    let artDate: String
+    let airDate: String
     let episode: String
     let characters: [String]
     let url: String
@@ -40,5 +40,10 @@ struct Episode: Codable {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, episode, characters, url, created
+        case airDate = "air_date"
     }
 }

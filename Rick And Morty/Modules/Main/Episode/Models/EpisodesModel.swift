@@ -22,25 +22,33 @@ struct Episodes: Codable {
         let prev: String
     }
     
-    static func get(completionHandler: @escaping ((Episodes?, Error?) -> ())) {
+    static func getEpisodes(from url: String?, completionHandler: @escaping ((Episodes?, Error?) -> ())) {
         
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        var endpoint = API.ENDPOINT + API.EPISODE
+        
+        if let url = url {
+            endpoint = url
+        }
         
         AF.request(
-            API.ENDPOINT + API.EPISODE,
+            endpoint,
             method: .get
         ).responseJSON { response in
             switch(response.result) {
             case .success(_):
                 do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
                     let episodes = try JSONDecoder().decode(Episodes.self, from: response.data!)
                     completionHandler(episodes, nil)
                 } catch {
                     print(error.localizedDescription)
+                    completionHandler(nil, error)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+                completionHandler(nil, error)
             }
         }
     }
