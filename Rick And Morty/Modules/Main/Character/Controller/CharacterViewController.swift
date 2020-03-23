@@ -11,6 +11,7 @@ import RxSwift
 import UIKit
 
 fileprivate let CELL_IDENTIFIER = "character-cell"
+fileprivate let SCOPE_BUTTON_TITLES = ["All", "Alive", "Dead", "Unknown"]
 
 class CharacterViewController: UITableViewController {
 
@@ -25,6 +26,7 @@ class CharacterViewController: UITableViewController {
         let search = UISearchController(searchResultsController: nil)
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
+        search.searchBar.scopeButtonTitles = SCOPE_BUTTON_TITLES
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
         
@@ -57,8 +59,14 @@ class CharacterViewController: UITableViewController {
         
         navigationItem.searchController?.searchBar.rx.text.orEmpty
             .subscribe(onNext: { query in
-                self.viewModel.search(query)
+                let status = SCOPE_BUTTON_TITLES[self.navigationItem.searchController?.searchBar.selectedScopeButtonIndex ?? 0]
+                self.viewModel.search(query, status: status)
             }).disposed(by: disposeBag)
+        
+        navigationItem.searchController?.searchBar.rx.selectedScopeButtonIndex.subscribe(onNext: { [unowned self] index in
+            let status = SCOPE_BUTTON_TITLES[index]
+            self.viewModel.search(self.navigationItem.searchController?.searchBar.text ?? "", status: status)
+        }).disposed(by: disposeBag)
     }
 
     // MARK: - Table view data source

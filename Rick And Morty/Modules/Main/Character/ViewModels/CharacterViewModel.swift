@@ -43,9 +43,9 @@ class CharacterViewModel: NSObject {
         }
     }
     
-    func search(_ query: String) {
+    func search(_ query: String, status: String) {
         
-        Characters.search(by: query) { characters, error in
+        Characters.search(by: query, status: status) { characters, error in
             if let characters = characters {
                 self.characters.accept(characters.results)
                 self.nextPage = characters.info.next
