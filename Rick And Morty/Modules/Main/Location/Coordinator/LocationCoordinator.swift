@@ -21,6 +21,7 @@ class LocationCoordinator: TabCoordinator {
         viewController.viewModel = LocationViewModel()
         
         rootController = UINavigationController(rootViewController: viewController)
+        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0.0, vertical: -4)
         rootController.tabBarItem = tabBarItem
     }
 }
