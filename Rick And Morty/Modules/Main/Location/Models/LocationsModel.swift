@@ -52,4 +52,31 @@ struct Locations: Codable {
             }
         }
     }
+    
+    static func search(by name: String, completionHandler: @escaping ((Locations?, Error?) -> ())) {
+        
+        let queryName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        
+        AF.request(
+            API.ENDPOINT + API.LOCATION + "?name=" + queryName,
+            method: .get
+        ).responseJSON { response in
+            switch(response.result) {
+            case .success(_):
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
+                    let locations = try JSONDecoder().decode(Locations.self, from: response.data!)
+                    completionHandler(locations, nil)
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(nil, error)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(nil, error)
+            }
+        }
+    }
 }

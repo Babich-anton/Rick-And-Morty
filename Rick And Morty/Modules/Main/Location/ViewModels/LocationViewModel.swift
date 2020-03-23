@@ -25,6 +25,27 @@ class LocationViewModel: NSObject {
     func loadNextPage(_ url: String?) {
         
         Locations.getLocations(from: url) { locations, error in
+            self.nextPage = locations?.info.next
+            
+            if let locationsToAppend = locations?.results {
+                var locations = self.locations.value
+                
+                for location in locationsToAppend {
+                    if !locations.contains(where: { $0.id == location.id }) {
+                        locations.append(location)
+                    }
+                }
+                
+                self.locations.accept(locations)
+            } else if let error = error {
+                showMessage(with: error.localizedDescription)
+            }
+        }
+    }
+    
+    func search(_ query: String) {
+        
+        Locations.search(by: query) { locations, error in
             if let locations = locations {
                 self.locations.accept(locations.results)
                 self.nextPage = locations.info.next
