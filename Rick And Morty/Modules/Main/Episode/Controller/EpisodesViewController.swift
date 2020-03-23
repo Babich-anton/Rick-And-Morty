@@ -22,6 +22,12 @@ class EpisodesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let search = UISearchController(searchResultsController: nil)
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Search"
+        navigationItem.searchController = search
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
         let cell = UINib(nibName: "EpisodeViewCell", bundle: nil)
         self.tableView.register(cell, forCellReuseIdentifier: CELL_IDENTIFIER)
         self.tableView.dataSource = nil
