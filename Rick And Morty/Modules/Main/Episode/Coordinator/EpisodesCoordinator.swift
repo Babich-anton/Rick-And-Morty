@@ -21,7 +21,7 @@ class EpisodesCoordinator: TabCoordinator {
         viewController.viewModel = EpisodeViewModel()
         
         rootController = UINavigationController(rootViewController: viewController)
-        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0.0, vertical: -4)
+        tabBarItem.titlePositionAdjustment = tabTitlePosition
         rootController.tabBarItem = tabBarItem
     }
 }

@@ -22,6 +22,8 @@ class EpisodesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.definesPresentationContext = true
+        
         let search = UISearchController(searchResultsController: nil)
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
@@ -54,9 +56,26 @@ class EpisodesViewController: UITableViewController {
                     showMessage(with: "Could not found model. Please, try again!")
                 }
             }).disposed(by: disposeBag)
+            
+        navigationItem.searchController?.searchBar.rx.text.orEmpty
+            .subscribe(onNext: { query in
+                self.viewModel.search(query)
+            }).disposed(by: disposeBag)
+            
+        let isEmpty = tableView.rx.isEmpty(message: "No episodes found")
+        viewModel.episodes.map({ $0.isEmpty }).distinctUntilChanged().bind(to: isEmpty).disposed(by: disposeBag)
     }
 
     // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if indexPath.row + 1 >= self.viewModel.episodes.value.count {
+            if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
+                self.viewModel.loadNextPage(nextPage)
+            }
+        }
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

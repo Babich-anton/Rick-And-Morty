@@ -6,8 +6,8 @@
 //  Copyright © 2020 SQILSOFT. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 struct Episodes: Codable {
     
@@ -32,6 +32,33 @@ struct Episodes: Codable {
         
         AF.request(
             endpoint,
+            method: .get
+        ).responseJSON { response in
+            switch(response.result) {
+            case .success(_):
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
+                    let episodes = try JSONDecoder().decode(Episodes.self, from: response.data!)
+                    completionHandler(episodes, nil)
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(nil, error)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(nil, error)
+            }
+        }
+    }
+    
+    static func search(by name: String, completionHandler: @escaping ((Episodes?, Error?) -> ())) {
+        
+        let queryName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        
+        AF.request(
+            API.ENDPOINT + API.EPISODE + "?name=" + queryName,
             method: .get
         ).responseJSON { response in
             switch(response.result) {

@@ -6,8 +6,8 @@
 //  Copyright © 2020 SQILSOFT. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 struct Episode: Codable {
     
