@@ -23,6 +23,8 @@ class CharacterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.definesPresentationContext = true
+        
         let search = UISearchController(searchResultsController: nil)
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
@@ -67,6 +69,9 @@ class CharacterViewController: UITableViewController {
             let status = SCOPE_BUTTON_TITLES[index]
             self.viewModel.search(self.navigationItem.searchController?.searchBar.text ?? "", status: status)
         }).disposed(by: disposeBag)
+        
+        let isEmpty = tableView.rx.isEmpty(message: "No characters found")
+        viewModel.characters.map({ $0.isEmpty }).distinctUntilChanged().bind(to: isEmpty).disposed(by: disposeBag)
     }
 
     // MARK: - Table view data source

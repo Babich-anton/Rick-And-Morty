@@ -22,6 +22,8 @@ class LocationViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.definesPresentationContext = true
+        
         let search = UISearchController(searchResultsController: nil)
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
@@ -59,6 +61,9 @@ class LocationViewController: UITableViewController {
             .subscribe(onNext: { query in
                 self.viewModel.search(query)
             }).disposed(by: disposeBag)
+        
+        let isEmpty = tableView.rx.isEmpty(message: "No locations found")
+        viewModel.locations.map({ $0.isEmpty }).distinctUntilChanged().bind(to: isEmpty).disposed(by: disposeBag)
     }
 
     // MARK: - Table view data source
