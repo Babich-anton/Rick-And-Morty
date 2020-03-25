@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,48 +19,47 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotFound" translatesAutoresizingMaskIntoConstraints="NO" id="8hq-JM-cOG">
-                        <rect key="frame" x="8" y="4" width="62" height="62"/>
+                        <rect key="frame" x="8" y="8" width="54" height="54"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="62" id="PII-Sx-uLL"/>
+                            <constraint firstAttribute="width" constant="54" id="PII-Sx-uLL"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogx-11-mYD">
-                        <rect key="frame" x="78" y="4" width="226" height="36"/>
+                        <rect key="frame" x="70" y="12" width="234" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="J0R-u7-4Y5"/>
+                            <constraint firstAttribute="height" constant="24" id="J0R-u7-4Y5"/>
                         </constraints>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="color-dark"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4y-Y1-rxa">
-                        <rect key="frame" x="78" y="42" width="226" height="24"/>
+                        <rect key="frame" x="70" y="38" width="234" height="19.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="color-secondary"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="F6f-ax-HIO">
-                        <rect key="frame" x="8" y="4" width="62" height="62"/>
+                        <rect key="frame" x="8" y="8" width="54" height="54"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="62" id="cMd-2W-ckZ"/>
+                            <constraint firstAttribute="width" constant="54" id="cMd-2W-ckZ"/>
                         </constraints>
                         <color key="color" name="color-dark"/>
                     </activityIndicatorView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="F6f-ax-HIO" secondAttribute="bottom" constant="4" id="0VR-UT-5NI"/>
-                    <constraint firstAttribute="bottom" secondItem="8hq-JM-cOG" secondAttribute="bottom" constant="4" id="5Kq-hk-po6"/>
-                    <constraint firstItem="8hq-JM-cOG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="7Ld-De-T1L"/>
-                    <constraint firstAttribute="bottom" secondItem="p4y-Y1-rxa" secondAttribute="bottom" constant="4" id="Amh-Ox-lvU"/>
+                    <constraint firstAttribute="bottom" secondItem="F6f-ax-HIO" secondAttribute="bottom" constant="8" id="0VR-UT-5NI"/>
+                    <constraint firstAttribute="bottom" secondItem="8hq-JM-cOG" secondAttribute="bottom" constant="8" id="5Kq-hk-po6"/>
+                    <constraint firstItem="8hq-JM-cOG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="7Ld-De-T1L"/>
                     <constraint firstAttribute="trailing" secondItem="p4y-Y1-rxa" secondAttribute="trailing" constant="16" id="AuN-34-dpg"/>
                     <constraint firstItem="F6f-ax-HIO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="DDw-Ye-3d8"/>
                     <constraint firstAttribute="trailing" secondItem="ogx-11-mYD" secondAttribute="trailing" constant="16" id="E6x-hU-eh4"/>
                     <constraint firstItem="8hq-JM-cOG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="OzL-vo-rJ1"/>
                     <constraint firstItem="ogx-11-mYD" firstAttribute="leading" secondItem="8hq-JM-cOG" secondAttribute="trailing" constant="8" id="TsP-ds-4U3"/>
-                    <constraint firstItem="F6f-ax-HIO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="Xi7-K2-h3r"/>
+                    <constraint firstItem="F6f-ax-HIO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Xi7-K2-h3r"/>
                     <constraint firstItem="p4y-Y1-rxa" firstAttribute="leading" secondItem="8hq-JM-cOG" secondAttribute="trailing" constant="8" id="cNC-Jq-EA8"/>
                     <constraint firstItem="p4y-Y1-rxa" firstAttribute="top" secondItem="ogx-11-mYD" secondAttribute="bottom" constant="2" id="gmd-bg-ABo"/>
-                    <constraint firstItem="ogx-11-mYD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="ozl-Xc-qhj"/>
+                    <constraint firstItem="ogx-11-mYD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="ozl-Xc-qhj"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -76,7 +75,10 @@
     <resources>
         <image name="NotFound" width="155" height="100"/>
         <namedColor name="color-dark">
-            <color red="0.17299999296665192" green="0.0" blue="0.24300000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.054901960784313725" green="0.035294117647058823" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="color-secondary">
+            <color red="0.4823529411764706" green="0.396078431372549" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -27,6 +27,10 @@ class CharacterViewCell: UITableViewCell {
             
             nameLabel.text = character.name
             speciesLabel.text = character.species
+            
+            characterImageView.layer.cornerRadius = characterImageView.bounds.midY
+            characterImageView.clipsToBounds = true
+            characterImageView.setNeedsDisplay()
         }
     }
     
