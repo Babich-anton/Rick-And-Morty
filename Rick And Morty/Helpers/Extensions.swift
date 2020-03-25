@@ -35,6 +35,19 @@ extension Reactive where Base: UIViewController {
     }
 }
 
+extension Reactive where Base: UITableView {
+   
+    func isEmpty(message: String) -> Binder<Bool> {
+        return Binder(base) { tableView, isEmpty in
+            if isEmpty {
+                tableView.setEmptyView(text: message)
+            } else {
+                tableView.restoreFromEmptyView()
+            }
+        }
+    }
+}
+
 extension UIViewController {
     
     func hideKeyboardWhenTappedAround() {
@@ -69,6 +82,29 @@ extension UITabBarItem {
     
     convenience init(_ title: Tab, image: Tab) {
         self.init(title: title.rawValue, image: UIImage(named: image.rawValue), selectedImage: UIImage(named: image.rawValue))
+    }
+}
+
+extension UITableView {
+    
+    func setEmptyView(text: String) {
+        let emptyView = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
+        let textLabel = UILabel()
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        textLabel.textColor = UIColor.black
+        textLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        emptyView.addSubview(textLabel)
+        textLabel.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
+        textLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        textLabel.text = text
+        
+        self.backgroundView = emptyView
+        self.separatorStyle = .none
+    }
+    
+    func restoreFromEmptyView() {
+        self.backgroundView = nil
+        self.separatorStyle = .singleLine
     }
 }
 
