@@ -36,6 +36,7 @@ class LocationViewController: UITableViewController {
         self.tableView.dataSource = nil
         self.tableView.delegate = self
         self.tableView.separatorInset = .zero
+        self.tableView.tableFooterView = UIView()
         
         self.setupBinding()
     }
@@ -61,6 +62,15 @@ class LocationViewController: UITableViewController {
                     showMessage(with: "Could not found model. Please, try again!")
                 }
             }).disposed(by: disposeBag)
+            
+        self.tableView.rx.willDisplayCell.subscribe(onNext: { cell, indexPath in
+            
+            if indexPath.row + 1 >= self.viewModel.locations.value.count {
+                if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
+                    self.viewModel.loadNextPage(nextPage)
+                }
+            }
+        }).disposed(by: disposeBag)
         
         navigationItem.searchController?.searchBar.rx.text.orEmpty
             .subscribe(onNext: { query in
@@ -72,15 +82,6 @@ class LocationViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if indexPath.row + 1 >= self.viewModel.locations.value.count {
-            if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
-                self.viewModel.loadNextPage(nextPage)
-            }
-        }
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.locations.value.count

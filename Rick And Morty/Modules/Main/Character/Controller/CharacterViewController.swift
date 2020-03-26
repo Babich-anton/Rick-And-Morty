@@ -37,6 +37,7 @@ class CharacterViewController: UITableViewController {
         self.tableView.register(cell, forCellReuseIdentifier: CELL_IDENTIFIER)
         self.tableView.dataSource = nil
         self.tableView.delegate = self
+        self.tableView.tableFooterView = UIView()
         
         self.setupBinding()
     }
@@ -62,6 +63,15 @@ class CharacterViewController: UITableViewController {
                     showMessage(with: "Could not found model. Please, try again!")
                 }
         }).disposed(by: disposeBag)
+            
+        self.tableView.rx.willDisplayCell.subscribe(onNext: { cell, indexPath in
+            
+            if indexPath.row + 1 >= self.viewModel.characters.value.count {
+                if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
+                    self.viewModel.loadNextPage(nextPage)
+                }
+            }
+        }).disposed(by: disposeBag)
         
         navigationItem.searchController?.searchBar.rx.text.orEmpty
             .subscribe(onNext: { query in
@@ -79,15 +89,6 @@ class CharacterViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if indexPath.row + 1 >= self.viewModel.characters.value.count {
-            if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
-                self.viewModel.loadNextPage(nextPage)
-            }
-        }
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.characters.value.count
