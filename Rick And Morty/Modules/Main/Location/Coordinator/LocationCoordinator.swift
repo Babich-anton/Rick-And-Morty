@@ -21,6 +21,7 @@ class LocationCoordinator: TabCoordinator {
         viewController.viewModel = LocationViewModel()
         
         rootController = UINavigationController(rootViewController: viewController)
+        rootController.navigationBar.barStyle = .blackTranslucent
         tabBarItem.titlePositionAdjustment = tabTitlePosition
         rootController.tabBarItem = tabBarItem
     }

@@ -24,6 +24,9 @@ class LocatioDetailsViewController: UIViewController {
         self.nameLabel.text = location.name
         self.typeLabel.text = location.type
         self.dimensionLabel.text = location.dimension
-        // TODO: - add table view with residents
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
