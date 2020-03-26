@@ -21,6 +21,7 @@ class EpisodesCoordinator: TabCoordinator {
         viewController.viewModel = EpisodeViewModel()
         
         rootController = UINavigationController(rootViewController: viewController)
+        rootController.navigationBar.barStyle = .blackTranslucent
         tabBarItem.titlePositionAdjustment = tabTitlePosition
         rootController.tabBarItem = tabBarItem
     }

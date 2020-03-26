@@ -27,6 +27,7 @@ class EpisodesViewController: UITableViewController {
         let search = UISearchController(searchResultsController: nil)
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
+        search.searchBar.tintColor = UIColor(named: "color-on-background")
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
         
@@ -34,6 +35,7 @@ class EpisodesViewController: UITableViewController {
         self.tableView.register(cell, forCellReuseIdentifier: CELL_IDENTIFIER)
         self.tableView.dataSource = nil
         self.tableView.delegate = self
+        self.tableView.separatorInset = .zero
         
         self.setupBinding()
     }
@@ -44,6 +46,9 @@ class EpisodesViewController: UITableViewController {
             if let cell = cell as? EpisodeViewCell {
                 cell.episode = model
             }
+
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+            cell.layoutMargins = .zero
         }.disposed(by: disposeBag)
         
         self.tableView.rx.modelSelected(Episode.self)
@@ -77,12 +82,12 @@ class EpisodesViewController: UITableViewController {
         }
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.episodes.value.count
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,5 +97,9 @@ class EpisodesViewController: UITableViewController {
                 vc.episodeViewModel = self.selectedDetailsViewModel
             }
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

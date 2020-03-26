@@ -25,4 +25,8 @@ class EpisodeDetailsViewController: UIViewController {
         episodeLabel.text = episode.episode
         airDateLabel.text = episode.airDate
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
