@@ -71,7 +71,7 @@ struct Episodes: Codable {
                     completionHandler(episodes, nil)
                 } catch {
                     print(error.localizedDescription)
-                    completionHandler(nil, error)
+                    completionHandler(nil, nil)
                 }
             case .failure(let error):
                 print(error.localizedDescription)

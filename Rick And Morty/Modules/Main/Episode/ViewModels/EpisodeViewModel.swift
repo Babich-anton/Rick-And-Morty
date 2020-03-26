@@ -51,6 +51,8 @@ class EpisodeViewModel: NSObject {
                 self.nextPage = episodes.info.next
             } else if let error = error {
                 showMessage(with: error.localizedDescription)
+            } else {
+                self.episodes.accept([])
             }
         }
     }
