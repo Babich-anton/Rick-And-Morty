@@ -91,7 +91,7 @@ extension UITableView {
         let emptyView = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
         let textLabel = UILabel()
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.textColor = UIColor.black
+        textLabel.textColor = UIColor(named: "color-on-background")
         textLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         emptyView.addSubview(textLabel)
         textLabel.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
