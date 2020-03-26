@@ -35,5 +35,13 @@ class CharacterDetailsViewController: UIViewController {
         genderLabel.text       = character.gender
         placeOfBirthLabel.text = character.origin.name
         placeOfStayLabel.text  = character.location.name
+        
+        imageView.layer.cornerRadius = imageView.bounds.midY
+        imageView.clipsToBounds = true
+        imageView.setNeedsDisplay()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

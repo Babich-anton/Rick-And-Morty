@@ -29,6 +29,7 @@ class CharacterViewController: UITableViewController {
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
         search.searchBar.scopeButtonTitles = SCOPE_BUTTON_TITLES
+        search.searchBar.tintColor = UIColor(named: "color-on-background")
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
         
@@ -103,5 +104,9 @@ class CharacterViewController: UITableViewController {
                 vc.characterViewModel = self.selectedDetailsViewModel!
             }
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

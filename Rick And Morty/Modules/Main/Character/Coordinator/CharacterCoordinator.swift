@@ -20,6 +20,7 @@ class CharacterCoordinator: TabCoordinator {
         selectViewController.viewModel = CharacterViewModel()
         
         rootController = UINavigationController(rootViewController: selectViewController)
+        rootController.navigationBar.barStyle = .blackTranslucent
         tabBarItem.titlePositionAdjustment = tabTitlePosition
         rootController.tabBarItem = tabBarItem
     }

@@ -22,26 +22,26 @@
                         <rect key="frame" x="8" y="4" width="304" height="62"/>
                         <subviews>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotFound" translatesAutoresizingMaskIntoConstraints="NO" id="8hq-JM-cOG">
-                                <rect key="frame" x="8" y="8" width="54" height="46"/>
+                                <rect key="frame" x="8" y="8" width="46" height="46"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="54" id="4uW-7l-ss0"/>
+                                    <constraint firstAttribute="width" constant="46" id="4uW-7l-ss0"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4y-Y1-rxa">
-                                <rect key="frame" x="70" y="34.5" width="226" height="19.5"/>
+                                <rect key="frame" x="62" y="34.5" width="234" height="19.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <color key="textColor" name="color-on-background"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="F6f-ax-HIO">
-                                <rect key="frame" x="8" y="8" width="54" height="46"/>
+                                <rect key="frame" x="8" y="8" width="46" height="46"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="54" id="9Di-Fl-rtd"/>
+                                    <constraint firstAttribute="width" constant="46" id="9Di-Fl-rtd"/>
                                 </constraints>
                                 <color key="color" name="color-on-background"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogx-11-mYD">
-                                <rect key="frame" x="70" y="8" width="226" height="26.5"/>
+                                <rect key="frame" x="62" y="8" width="234" height="26.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <color key="textColor" name="color-on-background"/>
                                 <nil key="highlightedColor"/>
@@ -75,13 +75,14 @@
                     <constraint firstAttribute="bottom" secondItem="v3P-o9-Idx" secondAttribute="bottom" constant="4" id="QxS-fC-E1V"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" name="color-background"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="characterImageView" destination="8hq-JM-cOG" id="EMd-oV-PVK"/>
                 <outlet property="loadingActivityIndicator" destination="F6f-ax-HIO" id="Szo-jk-WEf"/>
                 <outlet property="nameLabel" destination="ogx-11-mYD" id="nR8-1F-IAV"/>
                 <outlet property="speciesLabel" destination="p4y-Y1-rxa" id="QFy-OO-vDK"/>
-                <outlet property="surfaveView" destination="v3P-o9-Idx" id="xXg-ii-Vkj"/>
+                <outlet property="surfaceView" destination="v3P-o9-Idx" id="xXg-ii-Vkj"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="145.3125"/>
         </tableViewCell>
@@ -95,7 +96,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="color-surface">
-            <color red="0.125" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.18823529411764706" green="0.18823529411764706" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
