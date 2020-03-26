@@ -113,4 +113,8 @@ class LoginViewController: UIViewController {
             showMessage(with: value)
         }.disposed(by: disposeBag)
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }

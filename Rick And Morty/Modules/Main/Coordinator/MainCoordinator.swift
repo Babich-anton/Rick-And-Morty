@@ -28,8 +28,8 @@ class MainCoordinator: CoordinatorProtocol {
         self.tabBarController = UITabBarController()
         self.tabBarController?.viewControllers = tabs.map { $0.rootController }
         self.tabBarController?.tabBar.barTintColor = UIColor(named: "color-surface")
-        self.tabBarController?.tabBar.tintColor = UIColor(named: "color-on-background")
-        self.tabBarController?.tabBar.unselectedItemTintColor = .gray
+        self.tabBarController?.tabBar.tintColor = UIColor(named: "color-secondary")
+        self.tabBarController?.tabBar.unselectedItemTintColor = UIColor(named: "color-primary")
         self.tabBarController?.modalPresentationStyle = .fullScreen
         
         UINavigationBar.appearance().barTintColor = UIColor(named: "color-surface")

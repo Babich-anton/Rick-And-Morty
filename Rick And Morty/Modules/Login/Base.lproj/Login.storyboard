@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,28 +12,48 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Rick_And_Morty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" interfaceStyle="dark" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Rick_And_Morty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="JBP-Rq-5QV">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JBP-Rq-5QV">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" name="color-dark"/>
+                                <color key="backgroundColor" name="color-background"/>
                             </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="anton@gmail.com" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMA-Ud-ZRI" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
+                                <rect key="frame" x="32" y="626" width="350" height="44"/>
+                                <color key="backgroundColor" name="color-surface"/>
+                                <color key="tintColor" name="color-background"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="KzD-bP-Kuf"/>
+                                </constraints>
+                                <color key="textColor" name="color-on-background"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderBackgroundColor">
+                                        <color key="value" name="color-on-background"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="qwerty" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-sj-ChT" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
                                 <rect key="frame" x="32" y="682" width="350" height="44"/>
-                                <color key="backgroundColor" name="color-dark"/>
+                                <color key="backgroundColor" name="color-surface"/>
+                                <color key="tintColor" name="color-background"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8ZB-2N-x2p"/>
                                 </constraints>
-                                <color key="textColor" name="color-light"/>
+                                <color key="textColor" name="color-on-background"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderBackgroundColor">
-                                        <color key="value" name="color-light"/>
+                                        <color key="value" name="color-on-background"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="16"/>
@@ -42,20 +62,20 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isg-nl-5gC" customClass="TransitionButton" customModule="Rick_And_Morty" customModuleProvider="target">
                                 <rect key="frame" x="32" y="742" width="350" height="44"/>
-                                <color key="backgroundColor" name="color-active"/>
+                                <color key="backgroundColor" name="color-error"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="sVf-fR-IaZ"/>
                                 </constraints>
-                                <color key="tintColor" name="color-light"/>
+                                <color key="tintColor" name="color-background"/>
                                 <state key="normal" title="Sign in">
-                                    <color key="titleColor" name="color-light"/>
+                                    <color key="titleColor" name="color-on-background"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
-                                        <color key="value" name="color-light"/>
+                                        <color key="value" name="color-on-background"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
-                                        <color key="value" name="color-dark"/>
+                                        <color key="value" name="color-background"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="22"/>
@@ -64,40 +84,26 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-qG-os0" customClass="TransitionButton" customModule="Rick_And_Morty" customModuleProvider="target">
                                 <rect key="frame" x="32" y="802" width="350" height="44"/>
-                                <color key="backgroundColor" name="color-dark"/>
+                                <color key="backgroundColor" name="color-surface"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="l2z-2v-5sW"/>
                                 </constraints>
+                                <color key="tintColor" name="color-background"/>
                                 <state key="normal" title="Sign up">
-                                    <color key="titleColor" name="color-light"/>
+                                    <color key="titleColor" name="color-on-background"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
-                                        <color key="value" name="color-dark"/>
+                                        <color key="value" name="color-background"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="22"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                        <color key="value" name="color-on-background"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="anton@gmail.com" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMA-Ud-ZRI" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
-                                <rect key="frame" x="32" y="626" width="350" height="44"/>
-                                <color key="backgroundColor" name="color-dark"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="KzD-bP-Kuf"/>
-                                </constraints>
-                                <color key="textColor" name="color-light"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderBackgroundColor">
-                                        <color key="value" name="color-light"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="16"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -133,15 +139,17 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bg" width="550" height="550"/>
-        <namedColor name="color-active">
-            <color red="0.99599999189376831" green="0.20399999618530273" blue="0.4309999942779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="color-background">
+            <color red="0.071000002324581146" green="0.071000002324581146" blue="0.071000002324581146" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="color-dark">
-            <color red="0.17299999296665192" green="0.0" blue="0.24300000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="color-error">
+            <color red="0.81199997663497925" green="0.40000000596046448" blue="0.47499999403953552" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="color-light">
-            <color red="0.82400000095367432" green="0.98000001907348633" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="color-on-background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="color-surface">
+            <color red="0.18823529411764706" green="0.18823529411764706" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
