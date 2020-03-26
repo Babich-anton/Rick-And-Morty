@@ -15,7 +15,8 @@ class CharacterViewCell: UITableViewCell {
     @IBOutlet weak var characterImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var speciesLabel: UILabel!
-
+    @IBOutlet weak var surfaveView: UIView!
+    
     var character: Character! {
         didSet {
             if let url = URL(string: character.image) {
@@ -31,6 +32,10 @@ class CharacterViewCell: UITableViewCell {
             characterImageView.layer.cornerRadius = characterImageView.bounds.midY
             characterImageView.clipsToBounds = true
             characterImageView.setNeedsDisplay()
+            
+            surfaveView.layer.cornerRadius = surfaveView.bounds.midY
+            surfaveView.clipsToBounds = true
+            surfaveView.setNeedsDisplay()
         }
     }
     
