@@ -6,8 +6,8 @@
 //  Copyright © 2020 SQILSOFT. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 struct Locations: Codable {
     
@@ -71,7 +71,7 @@ struct Locations: Codable {
                     completionHandler(locations, nil)
                 } catch {
                     print(error.localizedDescription)
-                    completionHandler(nil, error)
+                    completionHandler(nil, nil)
                 }
             case .failure(let error):
                 print(error.localizedDescription)

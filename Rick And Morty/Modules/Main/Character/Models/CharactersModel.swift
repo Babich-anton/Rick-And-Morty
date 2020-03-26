@@ -6,8 +6,8 @@
 //  Copyright © 2020 SQILSOFT. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 struct Characters: Codable {
     
@@ -73,7 +73,7 @@ struct Characters: Codable {
                     completionHandler(characters, nil)
                 } catch {
                     print(error.localizedDescription)
-                    completionHandler(nil, error)
+                    completionHandler(nil, nil)
                 }
             case .failure(let error):
                 print(error.localizedDescription)

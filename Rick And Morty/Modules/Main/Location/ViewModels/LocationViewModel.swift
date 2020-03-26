@@ -51,6 +51,8 @@ class LocationViewModel: NSObject {
                 self.nextPage = locations.info.next
             } else if let error = error {
                 showMessage(with: error.localizedDescription)
+            } else {
+                self.locations.accept([])
             }
         }
     }

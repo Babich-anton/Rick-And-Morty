@@ -51,6 +51,8 @@ class CharacterViewModel: NSObject {
                 self.nextPage = characters.info.next
             } else if let error = error {
                 showMessage(with: error.localizedDescription)
+            } else {
+                self.characters.accept([])
             }
         }
     }
