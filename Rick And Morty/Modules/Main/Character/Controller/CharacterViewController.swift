@@ -46,6 +46,9 @@ class CharacterViewController: UITableViewController {
             if let cell = cell as? CharacterViewCell {
                 cell.character = model
             }
+            
+            cell.separatorInset = .zero
+            cell.layoutMargins = .zero
         }.disposed(by: disposeBag)
         
         tableView.rx.modelSelected(Character.self)

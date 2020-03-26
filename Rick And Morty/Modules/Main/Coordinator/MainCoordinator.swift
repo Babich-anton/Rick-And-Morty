@@ -27,10 +27,15 @@ class MainCoordinator: CoordinatorProtocol {
     func start(from viewController: UIViewController) {
         self.tabBarController = UITabBarController()
         self.tabBarController?.viewControllers = tabs.map { $0.rootController }
-        self.tabBarController?.tabBar.tintColor = UIColor(named: "color-active")
-        self.tabBarController?.tabBar.barTintColor = UIColor(named: "color-dark")
-        self.tabBarController?.tabBar.unselectedItemTintColor = UIColor(named: "color-light")
+        self.tabBarController?.tabBar.barTintColor = UIColor(named: "color-surface")
+        self.tabBarController?.tabBar.tintColor = UIColor(named: "color-on-background")
+        self.tabBarController?.tabBar.unselectedItemTintColor = .gray
         self.tabBarController?.modalPresentationStyle = .fullScreen
+        
+        UINavigationBar.appearance().barTintColor = UIColor(named: "color-surface")
+        UINavigationBar.appearance().tintColor = UIColor(named: "color-on-background")
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "color-on-background")!]
+        UINavigationBar.appearance().isTranslucent = false
         
         viewController.present(self.tabBarController!, animated: true)
     }

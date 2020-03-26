@@ -20,7 +20,7 @@ class CharacterCoordinator: TabCoordinator {
         selectViewController.viewModel = CharacterViewModel()
         
         rootController = UINavigationController(rootViewController: selectViewController)
-        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0.0, vertical: -4)
+        tabBarItem.titlePositionAdjustment = tabTitlePosition
         rootController.tabBarItem = tabBarItem
     }
 }
