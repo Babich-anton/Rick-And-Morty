@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64094F7C242E89FD00BB018D /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64094F7B242E89FD00BB018D /* UserModel.swift */; };
 		641DAFDD2424FAEF00BC0CAE /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641DAFDC2424FAEF00BC0CAE /* CharacterViewModel.swift */; };
 		641DAFDF2424FCA200BC0CAE /* CharacterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641DAFDE2424FCA200BC0CAE /* CharacterModel.swift */; };
 		641DAFE12424FD6C00BC0CAE /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641DAFE02424FD6C00BC0CAE /* LocationModel.swift */; };
@@ -45,6 +46,7 @@
 		64AEED8A2423F5ED003EDC76 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AEED892423F5ED003EDC76 /* LocationViewController.swift */; };
 		64AEED8C2423F60D003EDC76 /* EpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AEED8B2423F60D003EDC76 /* EpisodesViewController.swift */; };
 		64AEED8E2423F8A3003EDC76 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AEED8D2423F8A3003EDC76 /* ProfileViewController.swift */; };
+		64C02BF9242E531A001DA221 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C02BF8242E531A001DA221 /* ProfileViewModel.swift */; };
 		64C326AC241E6F8300B7EDB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C326AB241E6F8300B7EDB7 /* Extensions.swift */; };
 		64C326AE241E723300B7EDB7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C326AD241E723300B7EDB7 /* LoginViewController.swift */; };
 		64C326B0241E725E00B7EDB7 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C326AF241E725E00B7EDB7 /* EmailViewModel.swift */; };
@@ -68,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		3536ACF0184434918362029F /* Pods-Rick And Morty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rick And Morty.release.xcconfig"; path = "Target Support Files/Pods-Rick And Morty/Pods-Rick And Morty.release.xcconfig"; sourceTree = "<group>"; };
+		64094F7B242E89FD00BB018D /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		641DAFDC2424FAEF00BC0CAE /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
 		641DAFDE2424FCA200BC0CAE /* CharacterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterModel.swift; sourceTree = "<group>"; };
 		641DAFE02424FD6C00BC0CAE /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
@@ -106,6 +109,7 @@
 		64AEED892423F5ED003EDC76 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		64AEED8B2423F60D003EDC76 /* EpisodesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesViewController.swift; sourceTree = "<group>"; };
 		64AEED8D2423F8A3003EDC76 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		64C02BF8242E531A001DA221 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		64C326AB241E6F8300B7EDB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		64C326AD241E723300B7EDB7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		64C326AF241E725E00B7EDB7 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
@@ -355,6 +359,7 @@
 		647E23A72422B58E00B6D903 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				64094F7B242E89FD00BB018D /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -424,6 +429,7 @@
 		647E23B02422B5BF00B6D903 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				64C02BF8242E531A001DA221 /* ProfileViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -694,6 +700,7 @@
 				646603D024213D79004C6135 /* TransitionButton.swift in Sources */,
 				64C3DE8424264E5C0076E2FF /* EpisodeViewModel.swift in Sources */,
 				64C326AE241E723300B7EDB7 /* LoginViewController.swift in Sources */,
+				64094F7C242E89FD00BB018D /* UserModel.swift in Sources */,
 				646603D824214047004C6135 /* DesignTextField.swift in Sources */,
 				64516C24241E65DF0057B000 /* AppCoordinator.swift in Sources */,
 				641DAFDD2424FAEF00BC0CAE /* CharacterViewModel.swift in Sources */,
@@ -709,6 +716,7 @@
 				64516C2E241E6B780057B000 /* LoginCoordinator.swift in Sources */,
 				646603D424213D96004C6135 /* FadeTransition.swift in Sources */,
 				64516C2C241E6A710057B000 /* CoordinatorProtocol.swift in Sources */,
+				64C02BF9242E531A001DA221 /* ProfileViewModel.swift in Sources */,
 				64C326B2241E764900B7EDB7 /* LoginModel.swift in Sources */,
 				64317CEA24262FF100C05543 /* LocationViewCell.swift in Sources */,
 				64AEED8C2423F60D003EDC76 /* EpisodesViewController.swift in Sources */,
