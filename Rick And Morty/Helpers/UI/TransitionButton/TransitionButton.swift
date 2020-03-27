@@ -200,9 +200,9 @@ import UIKit
         let expandAnim = CABasicAnimation(keyPath: "transform.scale")
         let expandScale = (UIScreen.main.bounds.size.height/self.frame.size.height)*2
         expandAnim.fromValue            = 1.0
-        expandAnim.toValue              = max(expandScale,26.0)
+        expandAnim.toValue              = max(expandScale, 26.0)
         expandAnim.timingFunction       = expandCurve
-        expandAnim.duration             = 0.4
+        expandAnim.duration             = 0.3
         expandAnim.fillMode             = .forwards
         expandAnim.isRemovedOnCompletion  = false
         
