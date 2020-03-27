@@ -17,9 +17,11 @@ class ProfileCoordinator: TabCoordinator {
     
     init() {
         let viewController: ProfileViewController = storyboard.inflateVC()
+        viewController.viewModel = ProfileViewModel()
         
         rootController = UINavigationController(rootViewController: viewController)
         rootController.navigationBar.barStyle = .blackTranslucent
+        rootController.setNavigationBarHidden(true, animated: false)
         tabBarItem.titlePositionAdjustment = tabTitlePosition
         rootController.tabBarItem = tabBarItem
     }
