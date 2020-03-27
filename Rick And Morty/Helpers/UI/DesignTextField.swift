@@ -25,4 +25,24 @@ import UIKit
             layer.masksToBounds = cornerRadius > 0
         }
     }
+    
+    var padding: UIEdgeInsets {
+        get {
+            return UIEdgeInsets(top: 0, left: paddingValue, bottom: 0, right: paddingValue)
+        }
+    }
+    
+    open override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
+    }
+    
+    open override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
+    }
+    
+    open override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
+    }
+    
+    @IBInspectable var paddingValue: CGFloat = 0
 }
