@@ -28,14 +28,6 @@ class LoginViewController: UIViewController {
         self.createObservers()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     private func createViewModelBinding() {
         
         self.emailTextField.rx.text.orEmpty
@@ -66,7 +58,6 @@ class LoginViewController: UIViewController {
                     showMessage(with: text)
                     self.loginButton.stopAnimation()
                     self.passwordTextField.text = ""
-                    
                 }
             }
             
@@ -89,7 +80,6 @@ class LoginViewController: UIViewController {
                    self.signUpButton.stopAnimation()
                }
            }
-            
         }).disposed(by: disposeBag)
     }
     
@@ -106,6 +96,12 @@ class LoginViewController: UIViewController {
                 
                 self.emailTextField.text = ""
                 self.passwordTextField.text = ""
+            }
+        }.disposed(by: disposeBag)
+        
+        self.viewModel.isSignedIn.asObservable().bind { value in
+            if value {
+                self.loginButton.stopAnimation(animationStyle: .expand)
             }
         }.disposed(by: disposeBag)
         
