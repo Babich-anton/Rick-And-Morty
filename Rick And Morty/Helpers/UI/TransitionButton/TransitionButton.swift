@@ -22,7 +22,7 @@ import UIKit
     /// the background of the button in disabled state
     @IBInspectable open var disabledBackgroundColor: UIColor = UIColor.lightGray {
         didSet {
-            self.setBackgroundImage(UIImage(color: disabledBackgroundColor), for: .disabled)
+            self.setBackgroundImage(UIImage(color: disabledBackgroundColor.withAlphaComponent(0.6)), for: .disabled)
         }
     }
     
@@ -37,6 +37,7 @@ import UIKit
     private lazy var spiner: SpinerLayer = {
         let spiner = SpinerLayer(frame: self.frame)
         self.layer.addSublayer(spiner)
+        
         return spiner
     }()
     
@@ -104,7 +105,7 @@ import UIKit
      - Parameter completion: a callback closure to be called once the animation finished, it may be useful to transit to another view controller, example transit to the home screen from the login screen.
      
      */
-    open func stopAnimation(animationStyle:StopAnimationStyle = .normal, revertAfterDelay delay: TimeInterval = 1.0, completion:(()->Void)? = nil) {
+    open func stopAnimation(animationStyle: StopAnimationStyle = .normal, revertAfterDelay delay: TimeInterval = 1.0, completion:(() -> Void)? = nil) {
 
         let delayToRevert = max(delay, 0.2)
 
@@ -147,13 +148,12 @@ import UIKit
         }
         
         self.layer.add(keyFrame, forKey: keyFrame.keyPath)
-
         CATransaction.commit()
-        
         self.isLoading = false
     }
     
-    private func setOriginalState(completion:(()->Void)?) {
+    private func setOriginalState(completion:(() -> Void)?) {
+        
         self.animateToOriginalWidth(completion: completion)
         self.spiner.stopAnimation()
         self.setTitle(self.cachedTitle, for: .normal)
@@ -166,7 +166,8 @@ import UIKit
         }
     }
  
-    private func animateToOriginalWidth(completion:(()->Void)?) {
+    private func animateToOriginalWidth(completion:(() -> Void)?) {
+        
         let shrinkAnim = CABasicAnimation(keyPath: "bounds.size.width")
         shrinkAnim.fromValue = (self.bounds.height)
         shrinkAnim.toValue = (self.bounds.width)
@@ -178,8 +179,8 @@ import UIKit
         CATransaction.setCompletionBlock {
             completion?()
         }
+        
         self.layer.add(shrinkAnim, forKey: shrinkAnim.keyPath)
-
         CATransaction.commit()
     }
     
@@ -195,7 +196,7 @@ import UIKit
         layer.add(shrinkAnim, forKey: shrinkAnim.keyPath)
     }
     
-    private func expand(completion:(()->Void)?, revertDelay: TimeInterval) {
+    private func expand(completion: (() -> Void)?, revertDelay: TimeInterval) {
 
         let expandAnim = CABasicAnimation(keyPath: "transform.scale")
         let expandScale = (UIScreen.main.bounds.size.height/self.frame.size.height)*2
@@ -218,14 +219,14 @@ import UIKit
         }
         
         layer.add(expandAnim, forKey: expandAnim.keyPath)
-        
         CATransaction.commit()
     }
-    
 }
 
 public extension UIImage {
+    
     convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+        
         let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
         color.setFill()

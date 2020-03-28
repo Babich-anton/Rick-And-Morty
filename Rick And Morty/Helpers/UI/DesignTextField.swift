@@ -14,7 +14,9 @@ import UIKit
     /// the color for placeholder text
     @IBInspectable open var placeholderBackgroundColor: UIColor = UIColor.lightGray {
         didSet {
-            self.attributedPlaceholder = NSAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes:[NSAttributedString.Key.foregroundColor: placeholderBackgroundColor.withAlphaComponent(0.4)])
+            self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes:[
+                NSAttributedString.Key.foregroundColor: placeholderBackgroundColor.withAlphaComponent(0.4)
+            ])
         }
     }
     
