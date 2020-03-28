@@ -216,7 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				64C433B5241D077700BD9F18 /* Login.storyboard */,
-				64516C2F241E6B7F0057B000 /* Coordinators */,
+				64516C2F241E6B7F0057B000 /* Coordinator */,
 				64516C31241E6BA70057B000 /* Controller */,
 				64516C32241E6BBA0057B000 /* ViewModels */,
 				64516C30241E6B8E0057B000 /* Models */,
@@ -233,12 +233,12 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		64516C2F241E6B7F0057B000 /* Coordinators */ = {
+		64516C2F241E6B7F0057B000 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				64516C2D241E6B780057B000 /* LoginCoordinator.swift */,
 			);
-			path = Coordinators;
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		64516C30241E6B8E0057B000 /* Models */ = {
