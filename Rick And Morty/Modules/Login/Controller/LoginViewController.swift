@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
         self.emailTextField.rx.text.orEmpty
             .bind(to: viewModel.emailViewModel.data)
             .disposed(by: disposeBag)
-        
+
         self.passwordTextField.rx.text.orEmpty
             .bind(to: viewModel.passwordViewModel.data)
             .disposed(by: disposeBag)
@@ -41,6 +41,8 @@ class LoginViewController: UIViewController {
         self.loginButton.rx.tap.do(onNext: { [unowned self] in
             
             self.loginButton.startAnimation()
+            self.loginButton.isEnabled = false
+            self.signUpButton.isEnabled = false
             
         }).subscribe(onNext: { [unowned self] in
             
@@ -50,15 +52,18 @@ class LoginViewController: UIViewController {
                 if let text = self.viewModel.emailViewModel.errorValue.value, !text.isEmpty {
                     
                     showMessage(with: text)
-                    self.loginButton.stopAnimation()
+                    self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                     self.passwordTextField.text = ""
                     
                 } else if let text = self.viewModel.passwordViewModel.errorValue.value, !text.isEmpty {
                     
                     showMessage(with: text)
-                    self.loginButton.stopAnimation()
+                    self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                     self.passwordTextField.text = ""
                 }
+                
+                self.loginButton.isEnabled = true
+                self.signUpButton.isEnabled = true
             }
             
         }).disposed(by: disposeBag)
@@ -66,6 +71,8 @@ class LoginViewController: UIViewController {
         self.signUpButton.rx.tap.do(onNext: { [unowned self] in
             
             self.signUpButton.startAnimation()
+            self.loginButton.isEnabled = false
+            self.signUpButton.isEnabled = false
             
         }).subscribe(onNext: { [unowned self] in
             
@@ -74,11 +81,14 @@ class LoginViewController: UIViewController {
             } else {
                if let text = self.viewModel.emailViewModel.errorValue.value, !text.isEmpty {
                    showMessage(with: text)
-                   self.signUpButton.stopAnimation()
+                   self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                } else if let text = self.viewModel.passwordViewModel.errorValue.value, !text.isEmpty {
                    showMessage(with: text)
-                   self.signUpButton.stopAnimation()
+                self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                }
+               
+               self.loginButton.isEnabled = true
+               self.signUpButton.isEnabled = true
            }
         }).disposed(by: disposeBag)
     }
@@ -86,16 +96,19 @@ class LoginViewController: UIViewController {
     private func createObservers() {
         
         self.viewModel.isSuccess.asObservable().bind { value in
+        
+            self.loginButton.isEnabled = true
+            self.signUpButton.isEnabled = true
             
             if !value && self.loginButton.isLoading {
-                self.loginButton.stopAnimation()
+                self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
             }
             
             if self.signUpButton.isLoading {
-                self.signUpButton.stopAnimation()
+                self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                 
-                self.emailTextField.text = ""
-                self.passwordTextField.text = ""
+                self.emailTextField.resignFirstResponder()
+                self.passwordTextField.resignFirstResponder()
             }
         }.disposed(by: disposeBag)
         

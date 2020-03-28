@@ -6,10 +6,9 @@
 //  Copyright © 2020 SQILSOFT. All rights reserved.
 //
 
-import Foundation
 import FirebaseAuth
-import RxSwift
 import RxCocoa
+import RxSwift
 
 class LoginViewModel {
     

@@ -22,16 +22,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="color-background"/>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="anton@gmail.com" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMA-Ud-ZRI" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
-                                <rect key="frame" x="32" y="626" width="350" height="44"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMA-Ud-ZRI" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
+                                <rect key="frame" x="32" y="602" width="350" height="44"/>
                                 <color key="backgroundColor" name="color-surface"/>
                                 <color key="tintColor" name="color-background"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="KzD-bP-Kuf"/>
                                 </constraints>
                                 <color key="textColor" name="color-on-background"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" keyboardAppearance="alert" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderBackgroundColor">
                                         <color key="value" name="color-on-background"/>
@@ -44,16 +44,16 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="qwerty" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-sj-ChT" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
-                                <rect key="frame" x="32" y="682" width="350" height="44"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-sj-ChT" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
+                                <rect key="frame" x="32" y="658" width="350" height="44"/>
                                 <color key="backgroundColor" name="color-surface"/>
                                 <color key="tintColor" name="color-background"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8ZB-2N-x2p"/>
                                 </constraints>
                                 <color key="textColor" name="color-on-background"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" secureTextEntry="YES" textContentType="password"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderBackgroundColor">
                                         <color key="value" name="color-on-background"/>
@@ -67,7 +67,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isg-nl-5gC" customClass="TransitionButton" customModule="Rick_And_Morty" customModuleProvider="target">
-                                <rect key="frame" x="32" y="742" width="350" height="44"/>
+                                <rect key="frame" x="32" y="718" width="350" height="44"/>
                                 <color key="backgroundColor" name="color-primary"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="sVf-fR-IaZ"/>
@@ -81,7 +81,7 @@
                                         <color key="value" name="color-on-background"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
-                                        <color key="value" name="color-error"/>
+                                        <color key="value" name="color-primary"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="22"/>
@@ -89,7 +89,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-qG-os0" customClass="TransitionButton" customModule="Rick_And_Morty" customModuleProvider="target">
-                                <rect key="frame" x="32" y="802" width="350" height="44"/>
+                                <rect key="frame" x="32" y="778" width="350" height="44"/>
                                 <color key="backgroundColor" name="color-surface"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="l2z-2v-5sW"/>
@@ -100,7 +100,7 @@
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
-                                        <color key="value" name="color-background"/>
+                                        <color key="value" name="color-surface"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="22"/>
@@ -124,7 +124,7 @@
                             <constraint firstItem="Tto-qG-os0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fSm-Cv-qOJ"/>
                             <constraint firstItem="isg-nl-5gC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="h1v-DP-O7e"/>
                             <constraint firstItem="sMA-Ud-ZRI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jcT-qm-9qZ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Tto-qG-os0" secondAttribute="bottom" constant="16" id="max-bn-3Gd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Tto-qG-os0" secondAttribute="bottom" constant="40" id="max-bn-3Gd"/>
                             <constraint firstItem="isg-nl-5gC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oDu-8n-ZMZ"/>
                             <constraint firstItem="RQ0-sj-ChT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="pSI-6K-HDR"/>
                             <constraint firstItem="Tto-qG-os0" firstAttribute="top" secondItem="isg-nl-5gC" secondAttribute="bottom" constant="16" id="uvf-Ct-KHJ"/>
@@ -145,12 +145,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bg" width="736" height="1377"/>
+        <image name="bg" width="368" height="688.5"/>
         <namedColor name="color-background">
             <color red="0.071000002324581146" green="0.071000002324581146" blue="0.071000002324581146" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="color-error">
-            <color red="0.81199997663497925" green="0.40000000596046448" blue="0.47499999403953552" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="color-on-background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
