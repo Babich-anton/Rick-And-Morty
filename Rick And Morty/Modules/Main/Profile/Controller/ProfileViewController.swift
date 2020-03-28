@@ -19,6 +19,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var phoneField: UITextField!
     @IBOutlet weak var currentPasswordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
+    @IBOutlet weak var saveButton: TransitionButton!
+    @IBOutlet weak var logoutButton: TransitionButton!
     
     var viewModel: ProfileViewModel!
     
@@ -32,6 +34,7 @@ class ProfileViewController: UIViewController {
         imageView.setNeedsDisplay()
         
         setupBinding()
+        setupButtonBinding()
     }
     
     private func setupBinding() {
@@ -47,13 +50,42 @@ class ProfileViewController: UIViewController {
         }).disposed(by: disposeBag)
     }
     
-    @IBAction func saveClicked(_ sender: Any) {
+    private func setupButtonBinding() {
         
-//        if let user = self.viewModel.user.value {
-//            user.displayName = self.nameField.text
+//        self.saveButton.rx.tap.do(onNext: { [unowned self] in
 //
-//        }
-//        self.viewModel.update(user: )
+//        }).subscribe(onNext: {[unowned self] in
+//            //        if let user = self.viewModel.user.value {
+//            //            user.displayName = self.nameField.text
+//            //
+//            //        }
+//            //        self.viewModel.update(user: )
+//        }).disposed(by: disposeBag)
+        
+        self.logoutButton.rx.tap.do(onNext: { [unowned self] in
+            self.logoutButton.startAnimation()
+        }).subscribe(onNext: { [unowned self] in
+            do {
+                try Auth.auth().signOut()
+            } catch {
+                showMessage(with: error.localizedDescription)
+            }
+            
+            self.logoutButton.stopAnimation(animationStyle: .expand) {
+                self.dismiss(animated: false) {
+//                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+//
+//                        appDelegate.window?.rootViewController = UIViewController()
+//
+//                        if let vc = appDelegate.window?.rootViewController {
+//                            AppCoordinator().start(from: vc)
+//                        }
+//
+//                        appDelegate.window?.makeKeyAndVisible()
+//                    }
+                }
+            }
+        }).disposed(by: disposeBag)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

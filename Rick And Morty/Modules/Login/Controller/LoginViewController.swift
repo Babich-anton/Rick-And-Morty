@@ -28,6 +28,13 @@ class LoginViewController: UIViewController {
         self.createObservers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.emailTextField.resignFirstResponder()
+        self.passwordTextField.resignFirstResponder()
+    }
+    
     private func createViewModelBinding() {
         
         self.emailTextField.rx.text.orEmpty

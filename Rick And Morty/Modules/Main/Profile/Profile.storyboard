@@ -192,9 +192,22 @@
                                                         <real key="value" value="22"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="saveClicked:" destination="0BX-4k-FnI" eventType="touchUpInside" id="60j-Fw-lk9"/>
-                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPK-4u-prd" customClass="TransitionButton" customModule="Rick_And_Morty" customModuleProvider="target">
+                                                <rect key="frame" x="373" y="60" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="0gy-fI-l6B"/>
+                                                    <constraint firstAttribute="width" constant="25" id="gVn-rL-buT"/>
+                                                </constraints>
+                                                <state key="normal" image="logout"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                                        <color key="value" name="color-primary"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" name="color-background"/>
@@ -204,6 +217,7 @@
                                             <constraint firstItem="6nf-kF-p7a" firstAttribute="top" secondItem="l8f-gf-Boz" secondAttribute="bottom" constant="32" id="63h-xN-kDq"/>
                                             <constraint firstItem="cXP-Ow-GQk" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="7tr-bk-IXi"/>
                                             <constraint firstItem="6nf-kF-p7a" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="8fP-4c-fzk"/>
+                                            <constraint firstAttribute="trailing" secondItem="kPK-4u-prd" secondAttribute="trailing" constant="16" id="A4n-61-XXx"/>
                                             <constraint firstItem="NsJ-ph-OVp" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="EWn-2X-sF8"/>
                                             <constraint firstItem="dPF-V0-f47" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="I0r-BA-VFq"/>
                                             <constraint firstItem="cJO-Kb-iQV" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="I19-id-7IL"/>
@@ -226,6 +240,7 @@
                                             <constraint firstItem="RJV-Oh-MPU" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="oxg-Xe-Vdp"/>
                                             <constraint firstItem="l8f-gf-Boz" firstAttribute="top" secondItem="fgD-RQ-yo9" secondAttribute="top" constant="60" id="pev-Q1-Lc3"/>
                                             <constraint firstItem="l8f-gf-Boz" firstAttribute="centerX" secondItem="fgD-RQ-yo9" secondAttribute="centerX" id="rdr-a8-IEi"/>
+                                            <constraint firstItem="kPK-4u-prd" firstAttribute="top" secondItem="fgD-RQ-yo9" secondAttribute="top" constant="60" id="roe-NP-Msi"/>
                                             <constraint firstItem="cyQ-RU-Xz6" firstAttribute="top" secondItem="cJO-Kb-iQV" secondAttribute="bottom" constant="32" id="sYy-K5-k8V"/>
                                             <constraint firstAttribute="trailing" secondItem="cJO-Kb-iQV" secondAttribute="trailing" constant="32" id="trT-r6-gXp"/>
                                             <constraint firstItem="FiD-br-N4g" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="yoc-3d-JOK"/>
@@ -261,8 +276,10 @@
                         <outlet property="currentPasswordField" destination="NsJ-ph-OVp" id="iWe-Uz-vdm"/>
                         <outlet property="emailField" destination="MGw-g4-gdS" id="7qX-hc-X4C"/>
                         <outlet property="imageView" destination="l8f-gf-Boz" id="PFp-jI-33U"/>
+                        <outlet property="logoutButton" destination="kPK-4u-prd" id="EKp-gu-YVJ"/>
                         <outlet property="nameField" destination="NGp-kd-j1j" id="TZc-Rs-aML"/>
                         <outlet property="phoneField" destination="RJV-Oh-MPU" id="iYF-SO-41D"/>
+                        <outlet property="saveButton" destination="cyQ-RU-Xz6" id="PNB-tU-JL0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPC-io-uVU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -272,6 +289,7 @@
     </scenes>
     <resources>
         <image name="NotFound" width="155" height="100"/>
+        <image name="logout" width="25" height="25"/>
         <namedColor name="color-background">
             <color red="0.071000002324581146" green="0.071000002324581146" blue="0.071000002324581146" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -279,7 +297,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="color-primary">
-            <color red="0.73299998044967651" green="0.52499997615814209" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.73333333333333328" green="0.52549019607843139" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="color-surface">
             <color red="0.20800000429153442" green="0.20800000429153442" blue="0.20800000429153442" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
