@@ -23,12 +23,16 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgD-RQ-yo9">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="674"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotFound" translatesAutoresizingMaskIntoConstraints="NO" id="l8f-gf-Boz">
+                                            <imageView hidden="YES" clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotFound" translatesAutoresizingMaskIntoConstraints="NO" id="l8f-gf-Boz">
                                                 <rect key="frame" x="132" y="60" width="150" height="150"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="150" id="Ggt-bQ-JTy"/>
                                                     <constraint firstAttribute="height" constant="150" id="IIM-Xb-12Y"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="tTc-jZ-QhP" appends="YES" id="acF-BI-7cF"/>
+                                                </connections>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nf-kF-p7a">
                                                 <rect key="frame" x="32" y="242" width="47" height="21"/>
@@ -182,13 +186,23 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="bwX-8G-Ny4">
+                                                <rect key="frame" x="132" y="60" width="150" height="150"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="150" id="XSB-Tc-yZl"/>
+                                                    <constraint firstAttribute="height" constant="150" id="dHi-Dr-P4V"/>
+                                                </constraints>
+                                                <color key="color" name="color-on-background"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" name="color-background"/>
                                         <constraints>
+                                            <constraint firstItem="bwX-8G-Ny4" firstAttribute="top" secondItem="fgD-RQ-yo9" secondAttribute="top" constant="60" id="1Ky-7h-eQQ"/>
                                             <constraint firstItem="6nf-kF-p7a" firstAttribute="top" secondItem="l8f-gf-Boz" secondAttribute="bottom" constant="32" id="63h-xN-kDq"/>
                                             <constraint firstItem="cXP-Ow-GQk" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="7tr-bk-IXi"/>
                                             <constraint firstItem="6nf-kF-p7a" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="8fP-4c-fzk"/>
                                             <constraint firstAttribute="trailing" secondItem="kPK-4u-prd" secondAttribute="trailing" constant="16" id="A4n-61-XXx"/>
+                                            <constraint firstItem="bwX-8G-Ny4" firstAttribute="centerX" secondItem="fgD-RQ-yo9" secondAttribute="centerX" id="DS0-Wa-Lpo"/>
                                             <constraint firstItem="NsJ-ph-OVp" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="EWn-2X-sF8"/>
                                             <constraint firstItem="dPF-V0-f47" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="I0r-BA-VFq"/>
                                             <constraint firstItem="cJO-Kb-iQV" firstAttribute="leading" secondItem="fgD-RQ-yo9" secondAttribute="leading" constant="32" id="I19-id-7IL"/>
@@ -243,6 +257,8 @@
                         <outlet property="confirmPasswordField" destination="cJO-Kb-iQV" id="WlX-lj-sqK"/>
                         <outlet property="emailField" destination="MGw-g4-gdS" id="7qX-hc-X4C"/>
                         <outlet property="imageView" destination="l8f-gf-Boz" id="PFp-jI-33U"/>
+                        <outlet property="imageViewTapper" destination="tTc-jZ-QhP" id="fKX-Bm-SrZ"/>
+                        <outlet property="indicatorView" destination="bwX-8G-Ny4" id="Vgt-8N-Zcz"/>
                         <outlet property="logoutButton" destination="kPK-4u-prd" id="EKp-gu-YVJ"/>
                         <outlet property="nameField" destination="NGp-kd-j1j" id="TZc-Rs-aML"/>
                         <outlet property="newPasswordField" destination="NsJ-ph-OVp" id="nEq-1f-jl3"/>
@@ -250,6 +266,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPC-io-uVU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="tTc-jZ-QhP"/>
             </objects>
             <point key="canvasLocation" x="63.768115942028992" y="111.83035714285714"/>
         </scene>
