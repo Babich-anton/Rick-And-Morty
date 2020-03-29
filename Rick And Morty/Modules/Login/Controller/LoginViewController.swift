@@ -31,8 +31,10 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.emailTextField.resignFirstResponder()
-        self.passwordTextField.resignFirstResponder()
+        self.emailTextField.rx.text.onNext("")
+        self.viewModel.emailViewModel.data.accept("")
+        self.passwordTextField.rx.text.onNext("")
+        self.viewModel.passwordViewModel.data.accept("")
     }
     
     private func createViewModelBinding() {
@@ -60,13 +62,14 @@ class LoginViewController: UIViewController {
                     
                     showMessage(with: self.viewModel.emailViewModel.errorValue.value)
                     self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-                    self.passwordTextField.text = ""
-                    
+                    self.passwordTextField.rx.text.onNext("")
+                    self.viewModel.passwordViewModel.data.accept("")
                 } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
                     
                     showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
                     self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-                    self.passwordTextField.text = ""
+                    self.passwordTextField.rx.text.onNext("")
+                    self.viewModel.passwordViewModel.data.accept("")
                 }
                 
                 self.loginButton.isEnabled = true
@@ -114,8 +117,10 @@ class LoginViewController: UIViewController {
             if self.signUpButton.isLoading {
                 self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                 
-                self.emailTextField.text = ""
-                self.passwordTextField.text = ""
+                self.emailTextField.rx.text.onNext("")
+                self.viewModel.emailViewModel.data.accept("")
+                self.passwordTextField.rx.text.onNext("")
+                self.viewModel.passwordViewModel.data.accept("")
             }
         }.disposed(by: disposeBag)
         

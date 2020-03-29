@@ -13,5 +13,7 @@ struct UserModel {
     var name: String?
     var phone: String?
     var email: String?
-    var imageUrl: URL?
+    var imageUrl: Data?
+    var newPassword: String?
+    var confirmPassword: String?
 }

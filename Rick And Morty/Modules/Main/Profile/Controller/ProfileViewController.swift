@@ -16,8 +16,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
-    @IBOutlet weak var phoneField: UITextField!
-    @IBOutlet weak var currentPasswordField: UITextField!
+    @IBOutlet weak var newPasswordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
     @IBOutlet weak var saveButton: TransitionButton!
     @IBOutlet weak var logoutButton: TransitionButton!
@@ -35,6 +34,16 @@ class ProfileViewController: UIViewController {
         
         setupBinding()
         setupButtonBinding()
+        hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.newPasswordField.rx.text.onNext("")
+        self.viewModel.newPasswordViewModel.data.accept("")
+        self.confirmPasswordField.rx.text.onNext("")
+        self.viewModel.confirmPasswordViewModel.data.accept("")
     }
     
     private func setupBinding() {
@@ -46,21 +55,40 @@ class ProfileViewController: UIViewController {
             
             self.nameField.text = user?.displayName
             self.emailField.text = user?.email
-            self.phoneField.text = user?.phoneNumber
         }).disposed(by: disposeBag)
+        
+        self.viewModel.isUpdated.subscribe(onNext: { [unowned self] value in
+            if self.saveButton.isLoading && value {
+                self.saveButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
+                
+                self.newPasswordField.rx.text.onNext("")
+                self.viewModel.newPasswordViewModel.data.accept("")
+                self.confirmPasswordField.rx.text.onNext("")
+                self.viewModel.confirmPasswordViewModel.data.accept("")
+            }
+        }).disposed(by: disposeBag)
+        
+        self.nameField.rx.text.orEmpty
+            .bind(to: viewModel.nameViewModel.data)
+            .disposed(by: disposeBag)
+        self.emailField.rx.text.orEmpty
+            .bind(to: viewModel.emailViewModel.data)
+            .disposed(by: disposeBag)
+        self.newPasswordField.rx.text.orEmpty
+            .bind(to: viewModel.newPasswordViewModel.data)
+            .disposed(by: disposeBag)
+        self.confirmPasswordField.rx.text.orEmpty
+            .bind(to: viewModel.confirmPasswordViewModel.data)
+            .disposed(by: disposeBag)
     }
     
     private func setupButtonBinding() {
         
-//        self.saveButton.rx.tap.do(onNext: { [unowned self] in
-//
-//        }).subscribe(onNext: {[unowned self] in
-//            //        if let user = self.viewModel.user.value {
-//            //            user.displayName = self.nameField.text
-//            //
-//            //        }
-//            //        self.viewModel.update(user: )
-//        }).disposed(by: disposeBag)
+        self.saveButton.rx.tap.do(onNext: { [unowned self] in
+            self.saveButton.startAnimation()
+        }).subscribe(onNext: {[unowned self] in
+            self.viewModel.update()
+        }).disposed(by: disposeBag)
         
         self.logoutButton.rx.tap.do(onNext: { [unowned self] in
             self.logoutButton.startAnimation()
@@ -72,18 +100,7 @@ class ProfileViewController: UIViewController {
             }
             
             self.logoutButton.stopAnimation(animationStyle: .expand) {
-                self.dismiss(animated: false) {
-//                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-//
-//                        appDelegate.window?.rootViewController = UIViewController()
-//
-//                        if let vc = appDelegate.window?.rootViewController {
-//                            AppCoordinator().start(from: vc)
-//                        }
-//
-//                        appDelegate.window?.makeKeyAndVisible()
-//                    }
-                }
+                self.dismiss(animated: false)
             }
         }).disposed(by: disposeBag)
     }
