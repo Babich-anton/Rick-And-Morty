@@ -13,11 +13,19 @@ class EpisodeDetailsViewModel: NSObject {
     
     private let disposeBag = DisposeBag()
     
-    var episode: BehaviorRelay<Episode>!
+    var episode: BehaviorRelay<Episode?> = BehaviorRelay<Episode?>(value: nil)
+    var isFailedLoading: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     
-    init(episode: Episode) {
+    init(id: Int) {
         super.init()
         
-        self.episode = BehaviorRelay<Episode>(value: episode)
+        Episode.get(by: id) { episode, error in
+            if let error = error {
+                showMessage(with: error.localizedDescription)
+                self.isFailedLoading.accept(true)
+            } else if let episode = episode {
+                self.episode.accept(episode)
+            }
+        }
     }
 }
