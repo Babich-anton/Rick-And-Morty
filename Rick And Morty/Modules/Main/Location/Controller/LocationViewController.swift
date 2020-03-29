@@ -56,7 +56,7 @@ class LocationViewController: UITableViewController {
             .map { $0 }
             .subscribe({ [unowned self] model in
                 if let element = model.element {
-                    self.selectedDetailsViewModel = LocationDetailsViewModel(location: element)
+                    self.selectedDetailsViewModel = LocationDetailsViewModel(id: element.id)
                     self.performSegue(withIdentifier: "ShowLocationDetailsFromCharacters", sender: nil)
                 } else {
                     showMessage(with: "Could not found model. Please, try again!")

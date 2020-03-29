@@ -13,11 +13,19 @@ class LocationDetailsViewModel: NSObject {
     
     private let disposeBag = DisposeBag()
     
-    var location: BehaviorRelay<Location>!
+    var location: BehaviorRelay<Location?> = BehaviorRelay<Location?>(value: nil)
+    var isFailedLoading: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     
-    init(location: Location) {
+    init(id: Int) {
         super.init()
         
-        self.location = BehaviorRelay<Location>(value: location)
+        Location.get(by: id) { location, error in
+            if let error = error {
+                showMessage(with: error.localizedDescription)
+                self.isFailedLoading.accept(true)
+            } else if let location = location {
+                self.location.accept(location)
+            }
+        }
     }
 }
