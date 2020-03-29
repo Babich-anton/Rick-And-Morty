@@ -59,7 +59,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l9N-kh-kYi">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="425"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotFound" translatesAutoresizingMaskIntoConstraints="NO" id="gmS-Ie-871">
+                                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotFound" translatesAutoresizingMaskIntoConstraints="NO" id="gmS-Ie-871">
                                                 <rect key="frame" x="132" y="32" width="150" height="150"/>
                                                 <color key="backgroundColor" name="color-background"/>
                                                 <constraints>
@@ -67,7 +67,7 @@
                                                     <constraint firstAttribute="height" constant="150" id="qEn-8l-DBd"/>
                                                 </constraints>
                                             </imageView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="u8t-4c-2Zk">
+                                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="u8t-4c-2Zk">
                                                 <rect key="frame" x="16" y="214" width="382" height="203"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eZ-4B-D2D">
@@ -192,15 +192,23 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="LEy-NU-qfg">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="425"/>
+                                                <color key="color" name="color-on-background"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" name="color-background"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="u8t-4c-2Zk" secondAttribute="trailing" constant="16" id="49s-Ek-HTs"/>
                                             <constraint firstItem="gmS-Ie-871" firstAttribute="centerX" secondItem="l9N-kh-kYi" secondAttribute="centerX" id="h35-GG-XqU"/>
                                             <constraint firstItem="u8t-4c-2Zk" firstAttribute="top" secondItem="gmS-Ie-871" secondAttribute="bottom" constant="32" id="hLC-9C-tat"/>
+                                            <constraint firstItem="LEy-NU-qfg" firstAttribute="top" secondItem="l9N-kh-kYi" secondAttribute="top" id="hrl-Ii-GsI"/>
+                                            <constraint firstAttribute="bottom" secondItem="LEy-NU-qfg" secondAttribute="bottom" id="k0U-FT-8qX"/>
                                             <constraint firstAttribute="bottom" secondItem="u8t-4c-2Zk" secondAttribute="bottom" constant="8" id="kF5-4G-3qF"/>
+                                            <constraint firstItem="LEy-NU-qfg" firstAttribute="leading" secondItem="l9N-kh-kYi" secondAttribute="leading" id="kLl-aH-j9u"/>
                                             <constraint firstItem="u8t-4c-2Zk" firstAttribute="leading" secondItem="l9N-kh-kYi" secondAttribute="leading" constant="16" id="lTk-uI-Nag"/>
                                             <constraint firstItem="gmS-Ie-871" firstAttribute="top" secondItem="l9N-kh-kYi" secondAttribute="top" constant="32" id="tDK-H1-K3h"/>
+                                            <constraint firstAttribute="trailing" secondItem="LEy-NU-qfg" secondAttribute="trailing" id="wSh-x8-Yqj"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -231,8 +239,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="Yht-8n-KJI"/>
                     <connections>
+                        <outlet property="detailsStackView" destination="u8t-4c-2Zk" id="ErV-n5-i6s"/>
                         <outlet property="genderLabel" destination="tKJ-xS-uin" id="I07-Il-vwl"/>
                         <outlet property="imageView" destination="gmS-Ie-871" id="LDU-7A-8Y8"/>
+                        <outlet property="indicatorView" destination="LEy-NU-qfg" id="II4-DL-vT6"/>
                         <outlet property="nameLabel" destination="dyP-hx-489" id="iHq-WV-waD"/>
                         <outlet property="placeOfBirthLabel" destination="DNe-jM-kZG" id="C6J-e5-6XT"/>
                         <outlet property="placeOfStayLabel" destination="of6-F0-yr1" id="Iae-n7-Eil"/>
@@ -250,8 +260,11 @@
         <namedColor name="color-background">
             <color red="0.071000002324581146" green="0.071000002324581146" blue="0.071000002324581146" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="color-on-background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="color-surface">
-            <color red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20800000429153442" green="0.20800000429153442" blue="0.20800000429153442" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

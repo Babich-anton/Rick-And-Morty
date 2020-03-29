@@ -6,11 +6,15 @@
 //  Copyright © 2020 SQILSOFT. All rights reserved.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 class CharacterDetailsViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var detailsStackView: UIStackView!
+    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var speciesLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
@@ -20,10 +24,40 @@ class CharacterDetailsViewController: UIViewController {
     
     var characterViewModel: CharacterDetailsViewModel!
     
+    private let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let character = characterViewModel.character.value
+        characterViewModel.character.subscribe(onNext: { [unowned self] character in
+            if let character = character {
+                self.load(character)
+                
+                self.imageView.alpha = 0
+                self.imageView.isHidden = false
+                self.detailsStackView.alpha = 0
+                self.detailsStackView.isHidden = false
+                
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [unowned self] in
+                    self.indicatorView.stopAnimating()
+                    self.imageView.alpha = 1
+                    self.detailsStackView.alpha = 1
+                })
+            }
+        }).disposed(by: disposeBag)
+        
+        characterViewModel.isFailedLoading.subscribe(onNext: { [unowned self] value in
+            if value {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }).disposed(by: disposeBag)
+        
+        imageView.layer.cornerRadius = imageView.bounds.midY
+        imageView.clipsToBounds = true
+        imageView.setNeedsDisplay()
+    }
+    
+    private func load(_ character: Character) {
         
         if let url = URL(string: character.image) {
             imageView.af.setImage(withURL: url)
@@ -35,10 +69,6 @@ class CharacterDetailsViewController: UIViewController {
         genderLabel.text       = character.gender
         placeOfBirthLabel.text = character.origin.name
         placeOfStayLabel.text  = character.location.name
-        
-        imageView.layer.cornerRadius = imageView.bounds.midY
-        imageView.clipsToBounds = true
-        imageView.setNeedsDisplay()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

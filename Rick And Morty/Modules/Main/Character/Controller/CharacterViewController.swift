@@ -57,7 +57,7 @@ class CharacterViewController: UITableViewController {
             .map { $0 }
             .subscribe({ [unowned self] model in
                 if let element = model.element {
-                    self.selectedDetailsViewModel = CharacterDetailsViewModel(character: element)
+                    self.selectedDetailsViewModel = CharacterDetailsViewModel(id: element.id)
                     self.performSegue(withIdentifier: "ShowCharacterDetailsFromCharacters", sender: nil)
                 } else {
                     showMessage(with: "Could not found model. Please, try again!")

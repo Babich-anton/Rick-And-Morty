@@ -13,11 +13,19 @@ class CharacterDetailsViewModel: NSObject {
     
     private let disposeBag = DisposeBag()
     
-    var character: BehaviorRelay<Character>!
+    var character: BehaviorRelay<Character?> = BehaviorRelay<Character?>(value: nil)
+    var isFailedLoading: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     
-    init(character: Character) {
+    init(id: Int) {
         super.init()
         
-        self.character = BehaviorRelay<Character>(value: character)
+        Character.get(by: id) { character, error in
+            if let error = error {
+                showMessage(with: error.localizedDescription)
+                self.isFailedLoading.accept(true)
+            } else if let character = character {
+                self.character.accept(character)
+            }
+        }
     }
 }
