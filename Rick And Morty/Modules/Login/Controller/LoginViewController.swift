@@ -56,15 +56,15 @@ class LoginViewController: UIViewController {
             if self.viewModel.validateCredentials() {
                 self.viewModel.loginUser()
             } else {
-                if let text = self.viewModel.emailViewModel.errorValue.value, !text.isEmpty {
+                if !self.viewModel.emailViewModel.errorValue.value.isEmpty {
                     
-                    showMessage(with: text)
+                    showMessage(with: self.viewModel.emailViewModel.errorValue.value)
                     self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                     self.passwordTextField.text = ""
                     
-                } else if let text = self.viewModel.passwordViewModel.errorValue.value, !text.isEmpty {
+                } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
                     
-                    showMessage(with: text)
+                    showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
                     self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                     self.passwordTextField.text = ""
                 }
@@ -86,11 +86,11 @@ class LoginViewController: UIViewController {
             if self.viewModel.validateCredentials() {
                 self.viewModel.signUp()
             } else {
-               if let text = self.viewModel.emailViewModel.errorValue.value, !text.isEmpty {
-                   showMessage(with: text)
+               if !self.viewModel.emailViewModel.errorValue.value.isEmpty {
+                   showMessage(with: self.viewModel.emailViewModel.errorValue.value)
                    self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-               } else if let text = self.viewModel.passwordViewModel.errorValue.value, !text.isEmpty {
-                   showMessage(with: text)
+               } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
+                   showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
                 self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                }
                
@@ -114,8 +114,8 @@ class LoginViewController: UIViewController {
             if self.signUpButton.isLoading {
                 self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                 
-                self.emailTextField.resignFirstResponder()
-                self.passwordTextField.resignFirstResponder()
+                self.emailTextField.text = ""
+                self.passwordTextField.text = ""
             }
         }.disposed(by: disposeBag)
         

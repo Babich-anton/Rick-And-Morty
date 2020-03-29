@@ -15,7 +15,7 @@ class EmailViewModel: ValidationViewModelProtocol {
     
     var errorMessage: String = "Please enter a valid email."
     
-    var errorValue: BehaviorRelay<String?> = BehaviorRelay<String?>(value: "")
+    var errorValue: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     
     func validateCredentials() -> Bool {
         

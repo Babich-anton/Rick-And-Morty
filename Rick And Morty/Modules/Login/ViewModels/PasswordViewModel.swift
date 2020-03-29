@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
 
 class PasswordViewModel: ValidationViewModelProtocol {
@@ -16,7 +15,7 @@ class PasswordViewModel: ValidationViewModelProtocol {
     
     var errorMessage: String = "Please enter a valid password. Minimum password length: 6. Maximum password length: 15."
     
-    var errorValue: BehaviorRelay<String?> = BehaviorRelay<String?>(value: "")
+    var errorValue: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     
     func validateCredentials() -> Bool {
         
