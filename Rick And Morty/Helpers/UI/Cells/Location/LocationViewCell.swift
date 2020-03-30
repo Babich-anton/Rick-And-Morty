@@ -3,7 +3,7 @@
 //  Rick And Morty
 //
 //  Created by Anton Babich on 21.03.2020.
-//  Copyright © 2020 SQILSOFT. All rights reserved.
+//  Copyright © 2020 Anton Babich. All rights reserved.
 //
 
 import UIKit
