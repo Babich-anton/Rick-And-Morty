@@ -598,7 +598,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
-				ORGANIZATIONNAME = SQILSOFT;
+				ORGANIZATIONNAME = "Anton Babich";
 				TargetAttributes = {
 					64C433AB241D077700BD9F18 = {
 						CreatedOnToolsVersion = 11.3.1;
