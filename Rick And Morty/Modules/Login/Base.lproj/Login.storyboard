@@ -22,7 +22,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="color-background"/>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="anton@gmail.com" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMA-Ud-ZRI" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMA-Ud-ZRI" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
                                 <rect key="frame" x="32" y="602" width="350" height="44"/>
                                 <color key="backgroundColor" name="color-surface"/>
                                 <color key="tintColor" name="color-background"/>
@@ -44,7 +44,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="qwerty" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-sj-ChT" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-sj-ChT" customClass="DesignTextField" customModule="Rick_And_Morty" customModuleProvider="target">
                                 <rect key="frame" x="32" y="658" width="350" height="44"/>
                                 <color key="backgroundColor" name="color-surface"/>
                                 <color key="tintColor" name="color-background"/>
@@ -153,7 +153,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="color-primary">
-            <color red="0.73333333333333328" green="0.52549019607843139" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.73299998044967651" green="0.52499997615814209" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="color-surface">
             <color red="0.20800000429153442" green="0.20800000429153442" blue="0.20800000429153442" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
