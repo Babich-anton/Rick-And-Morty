@@ -1,4 +1,4 @@
-#  Rick and Morty
+#  Rick and Morty - MVVM Project
 
 #### Используя https://rickandmortyapi.com/documentation/ создать приложение
 
