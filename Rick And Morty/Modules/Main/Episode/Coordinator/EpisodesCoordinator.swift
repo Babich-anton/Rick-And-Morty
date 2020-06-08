@@ -22,8 +22,27 @@ class EpisodesCoordinator: TabCoordinator {
         
         rootController = UINavigationController(rootViewController: viewController)
         rootController.navigationBar.barStyle = .blackTranslucent
-        tabBarItem.titlePositionAdjustment = tabTitlePosition
+            
+        if UIDevice.current.orientation == .portrait {
+            tabBarItem.titlePositionAdjustment = tabTitlePosition
+        }
+        
+        rootController.tabBarItem = tabBarItem
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(EpisodesCoordinator.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    @objc func rotated() {
+        if UIDevice.current.orientation.isLandscape {
+            tabBarItem.titlePositionAdjustment = UITabBarItem().titlePositionAdjustment
+        } else {
+            tabBarItem.titlePositionAdjustment = tabTitlePosition
+        }
+        
         rootController.tabBarItem = tabBarItem
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
 }
-

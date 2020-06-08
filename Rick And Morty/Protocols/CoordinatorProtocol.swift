@@ -13,5 +13,6 @@ import UIKit
 protocol CoordinatorProtocol {
     
     func start(from viewController: UIViewController)
+    
     func coordinate(to coordinator: CoordinatorProtocol, from viewController: UIViewController)
 }
