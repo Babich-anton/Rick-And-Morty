@@ -25,12 +25,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-    <key>NSCameraUsageDescription</key>
-    <string>Access to Camera is needed to detect QR code of the Car or change Photo for your profile</string>
-    <key>NSFaceIDUsageDescription</key>
-    <string>This app would like to save the image associated with the current track and station to your photo library.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Access to "Photos" is needed to select Photo for your profile</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Access to Camera is needed to change Photo for your profile</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access to "Photos" is needed to select Photo for your profile</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
