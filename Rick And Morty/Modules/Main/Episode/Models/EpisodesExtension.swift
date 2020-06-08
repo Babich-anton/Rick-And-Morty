@@ -1,28 +1,16 @@
 //
-//  EpisodesModel.swift
+//  EpisodesExtension.swift
 //  Rick And Morty
 //
-//  Created by Anton Babich on 20.03.2020.
+//  Created by Anton Babich on 09.06.2020.
 //  Copyright © 2020 Anton Babich. All rights reserved.
 //
 
 import Alamofire
-import Foundation
 
-struct Episodes: Codable {
+extension Episodes {
     
-    let info: Info
-    let results: [Episode]
-    
-    struct Info: Codable {
-        
-        let count: Int
-        let pages: Int
-        let next: String
-        let prev: String
-    }
-    
-    static func getEpisodes(from url: String?, completionHandler: @escaping ((Episodes?, Error?) -> ())) {
+    static func getEpisodes(from url: String?, completionHandler: @escaping ((Episodes?, Error?) -> Void)) {
         
         var endpoint = API.ENDPOINT + API.EPISODE
         
@@ -34,13 +22,17 @@ struct Episodes: Codable {
             endpoint,
             method: .get
         ).responseJSON { response in
-            switch(response.result) {
-            case .success(_):
+            switch response.result {
+            case .success:
                 do {
+                    guard let data = response.data else {
+                        return
+                    }
+                    
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
-                    let episodes = try JSONDecoder().decode(Episodes.self, from: response.data!)
+                    let episodes = try JSONDecoder().decode(Episodes.self, from: data)
                     completionHandler(episodes, nil)
                 } catch {
                     print(error.localizedDescription)
@@ -53,7 +45,7 @@ struct Episodes: Codable {
         }
     }
     
-    static func search(by name: String, completionHandler: @escaping ((Episodes?, Error?) -> ())) {
+    static func search(by name: String, completionHandler: @escaping ((Episodes?, Error?) -> Void)) {
         
         let queryName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
@@ -61,13 +53,17 @@ struct Episodes: Codable {
             API.ENDPOINT + API.EPISODE + "?name=" + queryName,
             method: .get
         ).responseJSON { response in
-            switch(response.result) {
-            case .success(_):
+            switch response.result {
+            case .success:
                 do {
+                    guard let data = response.data else {
+                        return
+                    }
+                    
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
-                    let episodes = try JSONDecoder().decode(Episodes.self, from: response.data!)
+                    let episodes = try JSONDecoder().decode(Episodes.self, from: data)
                     completionHandler(episodes, nil)
                 } catch {
                     print(error.localizedDescription)
