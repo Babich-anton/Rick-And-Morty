@@ -12,7 +12,7 @@ import RxSwift
 
 class LoginViewModel {
     
-    let model: LoginModel = LoginModel()
+    let model = Login()
     let disposebag = DisposeBag()
     
     let emailViewModel = EmailViewModel()
@@ -34,8 +34,7 @@ class LoginViewModel {
         
         self.isLoading.accept(false)
         
-        Auth.auth().signIn(withEmail: self.model.email, password: self.model.password) { user, error in
-            
+        Auth.auth().signIn(withEmail: self.model.email, password: self.model.password) { _, error in
             if let error = error {
                 self.isLoading.accept(true)
                 self.isSuccess.accept(false)
@@ -49,14 +48,12 @@ class LoginViewModel {
     }
     
     func signUp() {
-        
         self.model.email = self.emailViewModel.data.value
         self.model.password = self.passwordViewModel.data.value
         
         self.isLoading.accept(false)
         
         Auth.auth().createUser(withEmail: self.model.email, password: self.model.password) { user, error in
-            
             if let error = error {
                 self.isLoading.accept(true)
                 self.isSuccess.accept(false)

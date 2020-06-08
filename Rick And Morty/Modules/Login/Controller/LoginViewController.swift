@@ -12,13 +12,17 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    var viewModel = LoginViewModel()
+    let disposeBag = DisposeBag()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var loginButton: TransitionButton!
     @IBOutlet var signUpButton: TransitionButton!
-    
-    var viewModel = LoginViewModel()
-    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +35,9 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.emailTextField.rx.text.onNext("")
+        self.emailTextField.rx.text.onNext("anton.babich@sqil.by")
         self.viewModel.emailViewModel.data.accept("")
-        self.passwordTextField.rx.text.onNext("")
+        self.passwordTextField.rx.text.onNext("barmaley98")
         self.viewModel.passwordViewModel.data.accept("")
     }
     
@@ -47,26 +51,33 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.passwordViewModel.data)
             .disposed(by: disposeBag)
         
-        self.loginButton.rx.tap.do(onNext: { [unowned self] in
-            
+        self.loginButton.rx.tap.do(onNext: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+
             self.loginButton.startAnimation()
             self.loginButton.isEnabled = false
             self.signUpButton.isEnabled = false
-            
-        }).subscribe(onNext: { [unowned self] in
-            
+        }).subscribe(onNext: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+
             if self.viewModel.validateCredentials() {
                 self.viewModel.loginUser()
             } else {
                 if !self.viewModel.emailViewModel.errorValue.value.isEmpty {
                     
                     showMessage(with: self.viewModel.emailViewModel.errorValue.value)
+                    
                     self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                     self.passwordTextField.rx.text.onNext("")
                     self.viewModel.passwordViewModel.data.accept("")
                 } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
                     
                     showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
+                    
                     self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                     self.passwordTextField.rx.text.onNext("")
                     self.viewModel.passwordViewModel.data.accept("")
@@ -75,31 +86,35 @@ class LoginViewController: UIViewController {
                 self.loginButton.isEnabled = true
                 self.signUpButton.isEnabled = true
             }
-            
         }).disposed(by: disposeBag)
         
-        self.signUpButton.rx.tap.do(onNext: { [unowned self] in
-            
+        self.signUpButton.rx.tap.do(onNext: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+
             self.signUpButton.startAnimation()
             self.loginButton.isEnabled = false
             self.signUpButton.isEnabled = false
-            
-        }).subscribe(onNext: { [unowned self] in
-            
+        }).subscribe(onNext: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+
             if self.viewModel.validateCredentials() {
                 self.viewModel.signUp()
             } else {
-               if !self.viewModel.emailViewModel.errorValue.value.isEmpty {
-                   showMessage(with: self.viewModel.emailViewModel.errorValue.value)
-                   self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-               } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
-                   showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
-                self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-               }
-               
-               self.loginButton.isEnabled = true
-               self.signUpButton.isEnabled = true
-           }
+                if !self.viewModel.emailViewModel.errorValue.value.isEmpty {
+                    showMessage(with: self.viewModel.emailViewModel.errorValue.value)
+                    self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
+                } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
+                    showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
+                    self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
+                }
+                
+                self.loginButton.isEnabled = true
+                self.signUpButton.isEnabled = true
+            }
         }).disposed(by: disposeBag)
     }
     
@@ -133,9 +148,5 @@ class LoginViewController: UIViewController {
         self.viewModel.errorMessage.asObservable().bind { value in
             showMessage(with: value)
         }.disposed(by: disposeBag)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }

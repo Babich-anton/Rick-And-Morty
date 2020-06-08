@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-fileprivate let CELL_IDENTIFIER = "location-cell"
+private let CELL_IDENTIFIER = "location-cell"
 
 class LocationViewController: UITableViewController {
 
@@ -18,6 +18,10 @@ class LocationViewController: UITableViewController {
     var selectedDetailsViewModel: LocationDetailsViewModel?
     
     private let disposeBag = DisposeBag()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +47,7 @@ class LocationViewController: UITableViewController {
 
     private func setupBinding() {
         
-        viewModel.locations.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { row, model, cell in
+        viewModel.locations.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { _, model, cell in
             if let cell = cell as? LocationViewCell {
                 cell.location = model
             }
@@ -54,8 +58,12 @@ class LocationViewController: UITableViewController {
         
         self.tableView.rx.modelSelected(Location.self)
             .map { $0 }
-            .subscribe({ [unowned self] model in
+            .subscribe({ [weak self] model in
                 if let element = model.element {
+                    guard let `self` = self else {
+                        return
+                    }
+                    
                     self.selectedDetailsViewModel = LocationDetailsViewModel(id: element.id)
                     self.performSegue(withIdentifier: "ShowLocationDetailsFromCharacters", sender: nil)
                 } else {
@@ -63,8 +71,7 @@ class LocationViewController: UITableViewController {
                 }
             }).disposed(by: disposeBag)
             
-        self.tableView.rx.willDisplayCell.subscribe(onNext: { cell, indexPath in
-            
+        self.tableView.rx.willDisplayCell.subscribe(onNext: { _, indexPath in
             if indexPath.row + 1 >= self.viewModel.locations.value.count {
                 if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
                     self.viewModel.loadNextPage(nextPage)
@@ -98,9 +105,5 @@ class LocationViewController: UITableViewController {
                 vc.locationViewModel = self.selectedDetailsViewModel!
             }
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }

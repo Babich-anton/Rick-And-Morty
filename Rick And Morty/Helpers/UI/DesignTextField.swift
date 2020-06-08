@@ -9,12 +9,17 @@
 import Foundation
 import UIKit
 
-@IBDesignable open class DesignTextField : UITextField {
+@IBDesignable
+open class DesignTextField: UITextField {
+    
+    var padding: UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: paddingValue, bottom: 0, right: paddingValue)
+    }
     
     /// the color for placeholder text
     @IBInspectable open var placeholderBackgroundColor: UIColor = UIColor.lightGray {
         didSet {
-            self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes:[
+            self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes: [
                 NSAttributedString.Key.foregroundColor: placeholderBackgroundColor.withAlphaComponent(0.4)
             ])
         }
@@ -28,11 +33,7 @@ import UIKit
         }
     }
     
-    var padding: UIEdgeInsets {
-        get {
-            return UIEdgeInsets(top: 0, left: paddingValue, bottom: 0, right: paddingValue)
-        }
-    }
+    @IBInspectable var paddingValue: CGFloat = 0
     
     open override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
@@ -45,6 +46,4 @@ import UIKit
     open override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
-    
-    @IBInspectable var paddingValue: CGFloat = 0
 }

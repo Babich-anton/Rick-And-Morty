@@ -74,7 +74,7 @@ extension UIStoryboard {
             return vc
         }
         
-        fatalError("Could not find " + String(describing: T.self) + ". Perhaps you need to add the class name to the StoryboardID for that UIViewController in IB?")
+        return T()
     }
 }
 
@@ -105,6 +105,26 @@ extension UITableView {
     func restoreFromEmptyView() {
         self.backgroundView = nil
         self.separatorStyle = .singleLine
+    }
+}
+
+extension UIImage {
+    
+    convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+        let rect = CGRect(origin: .zero, size: size)
+        
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+        color.setFill()
+        UIRectFill(rect)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        guard let cgImage = image?.cgImage else {
+            return nil
+        }
+        
+        self.init(cgImage: cgImage)
     }
 }
 

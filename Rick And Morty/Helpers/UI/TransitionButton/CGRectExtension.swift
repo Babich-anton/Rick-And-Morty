@@ -29,7 +29,6 @@ extension CGRect {
         }
     }
     
-    
     var width: CGFloat {
         get {
             return self.size.width
@@ -47,7 +46,6 @@ extension CGRect {
             self = CGRect(x: self.x, y: self.y, width: self.width, height: newValue)
         }
     }
-    
     
     var top: CGFloat {
         get {
@@ -85,7 +83,6 @@ extension CGRect {
         }
     }
     
-    
     var midX: CGFloat {
         get {
             return self.x + self.width / 2
@@ -104,7 +101,6 @@ extension CGRect {
         }
     }
     
-
     var center: CGPoint {
         get {
             return CGPoint(x: self.midX, y: self.midY)

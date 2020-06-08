@@ -10,18 +10,18 @@ import UIKit
 
 class EpisodeViewCell: UITableViewCell {
     
-    @IBOutlet weak var airDateLabel: UILabel!
-    @IBOutlet weak var episodeLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var surfaceView: UIView!
-    
-    var episode: Episode! {
+    var episode: Episode! { // swiftlint:disable:this implicitly_unwrapped_optional
         didSet {
             airDateLabel.text = episode.airDate
             episodeLabel.text = episode.episode
             nameLabel.text = episode.name
         }
     }
+    
+    @IBOutlet weak var airDateLabel: UILabel!
+    @IBOutlet weak var episodeLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var surfaceView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

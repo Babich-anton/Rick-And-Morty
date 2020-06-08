@@ -10,17 +10,14 @@ import AlamofireImage
 import UIKit
 
 class CharacterViewCell: UITableViewCell {
-
-    @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var characterImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var speciesLabel: UILabel!
-    @IBOutlet weak var surfaceView: UIView!
     
-    var character: Character! {
+    var character: Character! { // swiftlint:disable:this implicitly_unwrapped_optional
         didSet {
             if let url = URL(string: character.image) {
-                characterImageView.af.setImage(withURL: url) { [unowned self] response in
+                characterImageView.af.setImage(withURL: url) { [weak self] response in
+                    guard let `self` = self else {
+                        return
+                    }
                     
                     if let error = response.error, !error.isRequestCancelledError {
                         self.characterImageView.image = #imageLiteral(resourceName: "NotFound")
@@ -43,6 +40,12 @@ class CharacterViewCell: UITableViewCell {
             surfaceView.setNeedsDisplay()
         }
     }
+
+    @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var characterImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var speciesLabel: UILabel!
+    @IBOutlet weak var surfaceView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

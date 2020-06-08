@@ -14,7 +14,7 @@ class EpisodeViewModel: NSObject {
     private let disposeBag = DisposeBag()
     
     var episodes: BehaviorRelay<[Episode]> = BehaviorRelay<[Episode]>(value: [])
-    var nextPage: String? = nil
+    var nextPage: String?
     
     override init() {
         super.init()

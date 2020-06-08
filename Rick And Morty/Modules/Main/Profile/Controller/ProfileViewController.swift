@@ -15,6 +15,14 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    var viewModel: ProfileViewModel!
+    
+    private let disposeBag = DisposeBag()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -23,11 +31,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var saveButton: TransitionButton!
     @IBOutlet weak var logoutButton: TransitionButton!
     @IBOutlet weak var indicatorView: UIActivityIndicatorView!
-    @IBOutlet var imageViewTapper: UITapGestureRecognizer!
-    
-    var viewModel: ProfileViewModel!
-    
-    private let disposeBag = DisposeBag()
+    @IBOutlet weak var imageViewTapper: UITapGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,19 +56,30 @@ class ProfileViewController: UIViewController {
     
     private func setupBinding() {
         
-        self.viewModel.user.subscribe(onNext: { [unowned self] user in
-            if let url = user?.photoURL {
-                self.imageView.af.setImage(withURL: url) { response in
+        self.viewModel.user.subscribe(onNext: { [weak self] user in
+            guard let `self` = self, let user = user else {
+                return
+            }
+            
+            if let url = user.photoURL {
+                self.imageView.af.setImage(withURL: url) { _ in
                     self.imageView.isHidden = false
                     self.indicatorView.stopAnimating()
                 }
+            } else {
+                self.imageView.isHidden = false
+                self.indicatorView.stopAnimating()
             }
             
-            self.nameField.text = user?.displayName
-            self.emailField.text = user?.email
+            self.nameField.text = user.displayName
+            self.emailField.text = user.email
         }).disposed(by: disposeBag)
         
-        self.viewModel.isUpdated.subscribe(onNext: { [unowned self] value in
+        self.viewModel.isUpdated.subscribe(onNext: { [weak self] value in
+            guard let `self` = self else {
+                return
+            }
+            
             if self.saveButton.isLoading && value {
                 self.saveButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                 
@@ -91,15 +106,31 @@ class ProfileViewController: UIViewController {
     
     private func setupButtonBinding() {
         
-        self.saveButton.rx.tap.do(onNext: { [unowned self] in
+        self.saveButton.rx.tap.do(onNext: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
             self.saveButton.startAnimation()
-        }).subscribe(onNext: {[unowned self] in
+        }).subscribe(onNext: {[weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
             self.viewModel.update()
         }).disposed(by: disposeBag)
         
-        self.logoutButton.rx.tap.do(onNext: { [unowned self] in
+        self.logoutButton.rx.tap.do(onNext: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
             self.logoutButton.startAnimation()
-        }).subscribe(onNext: { [unowned self] in
+        }).subscribe(onNext: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
             do {
                 try Auth.auth().signOut()
             } catch {
@@ -111,13 +142,9 @@ class ProfileViewController: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-        self.imageViewTapper.rx.event.bind(onNext: { tap in
+        self.imageViewTapper.rx.event.bind(onNext: { _ in
             self.changeUserImage()
         }).disposed(by: disposeBag)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }
 
@@ -134,11 +161,12 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
             do {
                 try pickedImage.jpegData(compressionQuality: 1)?.write(to: imgPath, options: .atomic)
-                self.imageView.af.setImage(withURL: imgPath) { response in
+                
+                self.imageView.af.setImage(withURL: imgPath) { _ in
                     self.imageView.isHidden = false
                     self.indicatorView.stopAnimating()
                 }
-                
+                // todo:: all firebase requests to api manager
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.photoURL = imgPath
                 
@@ -163,27 +191,28 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     private func changeUserImage() {
         let chooseSourceSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let openImageGalleryAction = UIAlertAction(title: "Photos", style: .default) { (action) in
+        let openImageGalleryAction = UIAlertAction(title: "Photos", style: .default) { _ in
             let status = PHPhotoLibrary.authorizationStatus()
             
-            if (status == PHAuthorizationStatus.authorized) {
+            switch status {
+            case PHAuthorizationStatus.authorized:
                 self.openGallery()
-            } else if (status == PHAuthorizationStatus.denied) {
+            case PHAuthorizationStatus.denied:
                 self.permissionDenied(message: "Photos is unavailable")
-            } else if (status == PHAuthorizationStatus.notDetermined) {
+            case PHAuthorizationStatus.notDetermined:
                 PHPhotoLibrary.requestAuthorization({ (newStatus) in
-                    if (newStatus == PHAuthorizationStatus.authorized) {
+                    if newStatus == .authorized {
                         self.openGallery()
                     } else {
                         self.permissionDenied(message: "Photos is unavailable")
                     }
                 })
-            } else {
-                self.permissionDenied(message: "Photos is unavailable")
+            default:
+                 self.permissionDenied(message: "Photos is unavailable")
             }
         }
         
-        let openCameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+        let openCameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
             switch AVCaptureDevice.authorizationStatus(for: .video) {
             case .authorized:
                 self.openCamera()

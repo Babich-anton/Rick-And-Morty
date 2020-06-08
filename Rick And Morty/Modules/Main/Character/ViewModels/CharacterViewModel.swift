@@ -14,7 +14,7 @@ class CharacterViewModel: NSObject {
     private let disposeBag = DisposeBag()
     
     var characters: BehaviorRelay<[Character]> = BehaviorRelay<[Character]>(value: [])
-    var nextPage: String? = nil
+    var nextPage: String?
     
     override init() {
         super.init()

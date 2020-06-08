@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-fileprivate let CELL_IDENTIFIER = "episode-cell"
+private let CELL_IDENTIFIER = "episode-cell"
 
 class EpisodesViewController: UITableViewController {
 
@@ -18,6 +18,10 @@ class EpisodesViewController: UITableViewController {
     var selectedDetailsViewModel: EpisodeDetailsViewModel?
     
     private let disposeBag = DisposeBag()
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +46,27 @@ class EpisodesViewController: UITableViewController {
         self.setupBinding()
     }
     
+    // MARK: - Table view data source
+    // todo:: data sources to view model
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.episodes.value.count
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowEpisodeDetailsFromCharacters" {
+            if let vc = segue.destination as? EpisodeDetailsViewController {
+                vc.episodeViewModel = self.selectedDetailsViewModel
+            }
+        }
+    }
+    
     private func setupBinding() {
-        
-        viewModel.episodes.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { row, model, cell in
+        viewModel.episodes.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { _, model, cell in
             if let cell = cell as? EpisodeViewCell {
                 cell.episode = model
             }
@@ -53,9 +75,13 @@ class EpisodesViewController: UITableViewController {
             cell.layoutMargins = .zero
         }.disposed(by: disposeBag)
         
-        self.tableView.rx.modelSelected(Episode.self)
+        tableView.rx.modelSelected(Episode.self)
             .map { $0 }
-            .subscribe({ [unowned self] model in
+            .subscribe({ [weak self] model in
+                guard let `self` = self else {
+                    return
+                }
+                
                 if let element = model.element {
                     self.selectedDetailsViewModel = EpisodeDetailsViewModel(id: element.id)
                     self.performSegue(withIdentifier: "ShowEpisodeDetailsFromCharacters", sender: nil)
@@ -64,8 +90,7 @@ class EpisodesViewController: UITableViewController {
                 }
             }).disposed(by: disposeBag)
         
-        self.tableView.rx.willDisplayCell.subscribe(onNext: { cell, indexPath in
-            
+        self.tableView.rx.willDisplayCell.subscribe(onNext: { _, indexPath in
             if indexPath.row + 1 >= self.viewModel.episodes.value.count {
                 if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
                     self.viewModel.loadNextPage(nextPage)
@@ -80,28 +105,5 @@ class EpisodesViewController: UITableViewController {
             
         let isEmpty = tableView.rx.isEmpty(message: "No episodes found")
         viewModel.episodes.map({ $0.isEmpty }).distinctUntilChanged().bind(to: isEmpty).disposed(by: disposeBag)
-    }
-
-    // MARK: - Table view data source
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.episodes.value.count
-    }
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "ShowEpisodeDetailsFromCharacters" {
-            if let vc = segue.destination as? EpisodeDetailsViewController {
-                vc.episodeViewModel = self.selectedDetailsViewModel
-            }
-        }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }

@@ -12,15 +12,19 @@ import UIKit
 
 class EpisodeDetailsViewController: UIViewController {
     
+    var episodeViewModel: EpisodeDetailsViewModel!
+    
+    private let disposeBag = DisposeBag()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var indicatorView: UIActivityIndicatorView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var episodeLabel: UILabel!
     @IBOutlet weak var airDateLabel: UILabel!
-    
-    var episodeViewModel: EpisodeDetailsViewModel!
-    
-    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,14 +36,22 @@ class EpisodeDetailsViewController: UIViewController {
                 self.mainView.alpha = 0
                 self.mainView.isHidden = false
                 
-                UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [unowned self] in
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
+                    guard let `self` = self else {
+                        return
+                    }
+                    
                     self.indicatorView.stopAnimating()
                     self.mainView.alpha = 1
                 })
             }
         }).disposed(by: disposeBag)
         
-        episodeViewModel.isFailedLoading.subscribe(onNext: { [unowned self] value in
+        episodeViewModel.isFailedLoading.subscribe(onNext: { [weak self] value in
+            guard let `self` = self else {
+                return
+            }
+            
             if value {
                 self.navigationController?.popViewController(animated: true)
             }
@@ -47,13 +59,8 @@ class EpisodeDetailsViewController: UIViewController {
     }
     
     private func load(_ episode: Episode) {
-        
         nameLabel.text = episode.name
         episodeLabel.text = episode.episode
         airDateLabel.text = episode.airDate
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }

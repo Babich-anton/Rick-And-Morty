@@ -10,8 +10,8 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-fileprivate let CELL_IDENTIFIER = "character-cell"
-fileprivate let SCOPE_BUTTON_TITLES = ["All", "Alive", "Dead", "Unknown"]
+private let CELL_IDENTIFIER = "character-cell"
+private let SCOPE_BUTTON_TITLES = ["All", "Alive", "Dead", "Unknown"]
 
 class CharacterViewController: UITableViewController {
 
@@ -19,6 +19,10 @@ class CharacterViewController: UITableViewController {
     var selectedDetailsViewModel: CharacterDetailsViewModel?
     
     private let disposeBag = DisposeBag()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +48,7 @@ class CharacterViewController: UITableViewController {
     
     private func setupBinding() {
         
-        viewModel.characters.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { row, model, cell in
+        viewModel.characters.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { _, model, cell in
             if let cell = cell as? CharacterViewCell {
                 cell.character = model
             }
@@ -55,7 +59,11 @@ class CharacterViewController: UITableViewController {
         
         tableView.rx.modelSelected(Character.self)
             .map { $0 }
-            .subscribe({ [unowned self] model in
+            .subscribe({ [weak self] model in
+                guard let `self` = self else {
+                    return
+                }
+                
                 if let element = model.element {
                     self.selectedDetailsViewModel = CharacterDetailsViewModel(id: element.id)
                     self.performSegue(withIdentifier: "ShowCharacterDetailsFromCharacters", sender: nil)
@@ -64,8 +72,7 @@ class CharacterViewController: UITableViewController {
                 }
         }).disposed(by: disposeBag)
             
-        self.tableView.rx.willDisplayCell.subscribe(onNext: { cell, indexPath in
-            
+        self.tableView.rx.willDisplayCell.subscribe(onNext: { _, indexPath in
             if indexPath.row + 1 >= self.viewModel.characters.value.count {
                 if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
                     self.viewModel.loadNextPage(nextPage)
@@ -79,7 +86,11 @@ class CharacterViewController: UITableViewController {
                 self.viewModel.search(query, status: status)
             }).disposed(by: disposeBag)
         
-        navigationItem.searchController?.searchBar.rx.selectedScopeButtonIndex.subscribe(onNext: { [unowned self] index in
+        navigationItem.searchController?.searchBar.rx.selectedScopeButtonIndex.subscribe(onNext: { [weak self] index in
+            guard let `self` = self else {
+                return
+            }
+            
             let status = SCOPE_BUTTON_TITLES[index]
             self.viewModel.search(self.navigationItem.searchController?.searchBar.text ?? "", status: status)
         }).disposed(by: disposeBag)
@@ -105,9 +116,5 @@ class CharacterViewController: UITableViewController {
                 vc.characterViewModel = self.selectedDetailsViewModel!
             }
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }

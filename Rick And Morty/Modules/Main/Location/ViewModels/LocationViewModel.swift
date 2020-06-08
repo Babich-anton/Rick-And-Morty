@@ -14,7 +14,7 @@ class LocationViewModel: NSObject {
     private var disposeBag = DisposeBag()
     
     var locations: BehaviorRelay<[Location]> = BehaviorRelay<[Location]>(value: [])
-    var nextPage: String? = nil
+    var nextPage: String?
     
     override init() {
         super.init()
@@ -23,7 +23,6 @@ class LocationViewModel: NSObject {
     }
     
     func loadNextPage(_ url: String?) {
-        
         Locations.getLocations(from: url) { locations, error in
             self.nextPage = locations?.info.next
             
@@ -44,7 +43,6 @@ class LocationViewModel: NSObject {
     }
     
     func search(_ query: String) {
-        
         Locations.search(by: query) { locations, error in
             if let locations = locations {
                 self.locations.accept(locations.results)

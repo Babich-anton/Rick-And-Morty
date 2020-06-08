@@ -9,17 +9,17 @@
 import UIKit
 
 class LocationViewCell: UITableViewCell {
-
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var surfaceView: UIView!
     
-    var location: Location! {
+    var location: Location! { // swiftlint:disable:this implicitly_unwrapped_optional
         didSet {
             nameLabel.text = location.name
             typeLabel.text = location.type
         }
     }
+
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var surfaceView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

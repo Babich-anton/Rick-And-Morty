@@ -10,7 +10,31 @@ import Foundation
 import UIKit
 
 /// UIButton sublass for loading and transition animation. Useful for network based application or where you need to animate an action button while doing background tasks.
-@IBDesignable open class TransitionButton : UIButton, UIViewControllerTransitioningDelegate, CAAnimationDelegate {
+@IBDesignable
+open class TransitionButton: UIButton, UIViewControllerTransitioningDelegate, CAAnimationDelegate {
+    
+    private lazy var spiner: SpinerLayer = {
+        let spiner = SpinerLayer(frame: self.frame)
+        self.layer.addSublayer(spiner)
+        
+        return spiner
+    }()
+    
+    private var cachedTitle: String?
+    private var cachedImage: UIImage?
+    
+    private let springGoEase: CAMediaTimingFunction
+        = CAMediaTimingFunction(controlPoints: 0.45, -0.36, 0.44, 0.92)
+    
+    private let shrinkCurve: CAMediaTimingFunction
+        = CAMediaTimingFunction(name: .linear)
+    
+    private let expandCurve: CAMediaTimingFunction
+        = CAMediaTimingFunction(controlPoints: 0.95, 0.02, 1, 0.05)
+    
+    private let shrinkDuration: CFTimeInterval = 0.1
+    
+    public var isLoading: Bool = false
     
     /// the color of the spinner while animating the button
     @IBInspectable open var spinnerColor: UIColor = UIColor.white {
@@ -33,30 +57,15 @@ import UIKit
             layer.masksToBounds = cornerRadius > 0
         }
     }
-    
-    private lazy var spiner: SpinerLayer = {
-        let spiner = SpinerLayer(frame: self.frame)
-        self.layer.addSublayer(spiner)
-        
-        return spiner
-    }()
-    
-    private var cachedTitle: String?
-    private var cachedImage: UIImage?
-    
-    private let springGoEase:CAMediaTimingFunction  = CAMediaTimingFunction(controlPoints: 0.45, -0.36, 0.44, 0.92)
-    private let shrinkCurve:CAMediaTimingFunction   = CAMediaTimingFunction(name: .linear)
-    private let expandCurve:CAMediaTimingFunction   = CAMediaTimingFunction(controlPoints: 0.95, 0.02, 1, 0.05)
-    private let shrinkDuration: CFTimeInterval      = 0.1
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-         self.setup()
+        self.setup()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-         self.setup()
+        self.setup()
     }
 
     override open func prepareForInterfaceBuilder() {
@@ -70,11 +79,9 @@ import UIKit
     }
     
     private func setup() {
-        self.clipsToBounds  = true
+        self.clipsToBounds = true
         spiner.spinnerColor = spinnerColor
     }
-    
-    public var isLoading: Bool = false
     
     /**
      start animating the button, before starting a task, exemple: before a network call.
@@ -83,15 +90,15 @@ import UIKit
         self.isUserInteractionEnabled = false // Disable the user interaction during the animation
         self.isLoading = true
         
-        self.cachedTitle            = title(for: .normal)  // cache title before animation of spiner
-        self.cachedImage            = image(for: .normal)  // cache image before animation of spiner
+        self.cachedTitle = title(for: .normal) // cache title before animation of spiner
+        self.cachedImage = image(for: .normal) // cache image before animation of spiner
         
-        self.setTitle("",  for: .normal)                    // place an empty string as title to display a spiner
-        self.setImage(nil, for: .normal)                    // remove the image, if any, before displaying the spinner
+        self.setTitle("", for: .normal) // place an empty string as title to display a spiner
+        self.setImage(nil, for: .normal) // remove the image, if any, before displaying the spinner
         
         UIView.animate(withDuration: 0.1, animations: { () -> Void in
             self.layer.cornerRadius = self.frame.height / 2 // corner radius should be half the height to have a circle corners
-        }, completion: { completed -> Void in
+        }, completion: { _ in
             self.shrink()   // reduce the width to be equal to the height in order to have a circle
             self.spiner.animation() // animate spinner
         })
@@ -127,7 +134,7 @@ import UIKit
         }
     }
     
-    private func shakeAnimation(completion:(()->Void)?) {
+    private func shakeAnimation(completion: (() -> Void)?) {
         let keyFrame = CAKeyframeAnimation(keyPath: "position")
         let point = self.layer.position
         keyFrame.values = [NSValue(cgPoint: CGPoint(x: CGFloat(point.x), y: CGFloat(point.y))),
@@ -149,11 +156,11 @@ import UIKit
         
         self.layer.add(keyFrame, forKey: keyFrame.keyPath)
         CATransaction.commit()
+        
         self.isLoading = false
     }
     
-    private func setOriginalState(completion:(() -> Void)?) {
-        
+    private func setOriginalState(completion: (() -> Void)?) {
         self.animateToOriginalWidth(completion: completion)
         self.spiner.stopAnimation()
         self.setTitle(self.cachedTitle, for: .normal)
@@ -167,8 +174,8 @@ import UIKit
     }
  
     private func animateToOriginalWidth(completion:(() -> Void)?) {
-        
         let shrinkAnim = CABasicAnimation(keyPath: "bounds.size.width")
+        
         shrinkAnim.fromValue = (self.bounds.height)
         shrinkAnim.toValue = (self.bounds.width)
         shrinkAnim.duration = shrinkDuration
@@ -185,27 +192,27 @@ import UIKit
     }
     
     private func shrink() {
-        let shrinkAnim                   = CABasicAnimation(keyPath: "bounds.size.width")
-        shrinkAnim.fromValue             = frame.width
-        shrinkAnim.toValue               = frame.height
-        shrinkAnim.duration              = shrinkDuration
-        shrinkAnim.timingFunction        = shrinkCurve
-        shrinkAnim.fillMode              = .forwards
+        let shrinkAnim = CABasicAnimation(keyPath: "bounds.size.width")
+        shrinkAnim.fromValue = frame.width
+        shrinkAnim.toValue = frame.height
+        shrinkAnim.duration = shrinkDuration
+        shrinkAnim.timingFunction = shrinkCurve
+        shrinkAnim.fillMode = .forwards
         shrinkAnim.isRemovedOnCompletion = false
         
         layer.add(shrinkAnim, forKey: shrinkAnim.keyPath)
     }
     
     private func expand(completion: (() -> Void)?, revertDelay: TimeInterval) {
-
         let expandAnim = CABasicAnimation(keyPath: "transform.scale")
-        let expandScale = (UIScreen.main.bounds.size.height/self.frame.size.height)*2
-        expandAnim.fromValue            = 1.0
-        expandAnim.toValue              = max(expandScale, 26.0)
-        expandAnim.timingFunction       = expandCurve
-        expandAnim.duration             = 0.3
-        expandAnim.fillMode             = .forwards
-        expandAnim.isRemovedOnCompletion  = false
+        let expandScale = (UIScreen.main.bounds.size.height / self.frame.size.height) * 2
+        
+        expandAnim.fromValue = 1.0
+        expandAnim.toValue = max(expandScale, 26.0)
+        expandAnim.timingFunction = expandCurve
+        expandAnim.duration = 0.3
+        expandAnim.fillMode = .forwards
+        expandAnim.isRemovedOnCompletion = false
         
         CATransaction.setCompletionBlock {
             completion?()
@@ -221,33 +228,4 @@ import UIKit
         layer.add(expandAnim, forKey: expandAnim.keyPath)
         CATransaction.commit()
     }
-}
-
-public extension UIImage {
-    
-    convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
-        
-        let rect = CGRect(origin: .zero, size: size)
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
-        color.setFill()
-        UIRectFill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        guard let cgImage = image!.cgImage else { return nil }
-        self.init(cgImage: cgImage)
-    }
-}
-
-/**
-Stop animation style of the `TransitionButton`.
- 
- - normal: just revert the button to the original state.
- - expand: expand the button and cover all the screen, useful to do transit animation.
- - shake: revert the button to original state and make a shaoe animation, useful to reflect that something went wrong
- */
-public enum StopAnimationStyle {
-    case normal
-    case expand
-    case shake
 }

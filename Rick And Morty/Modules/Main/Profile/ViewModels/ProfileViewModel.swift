@@ -32,7 +32,7 @@ class ProfileViewModel: NSObject {
     override init() {
         super.init()
         
-        self.handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+        self.handle = Auth.auth().addStateDidChangeListener { (_, user) in
             if let user = user {
                 self.user.accept(user)
             } else {

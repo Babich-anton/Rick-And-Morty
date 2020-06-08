@@ -12,6 +12,14 @@ import UIKit
 
 class CharacterDetailsViewController: UIViewController {
     
+    var characterViewModel: CharacterDetailsViewModel!
+    
+    private let disposeBag = DisposeBag()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var detailsStackView: UIStackView!
     @IBOutlet weak var indicatorView: UIActivityIndicatorView!
@@ -22,15 +30,15 @@ class CharacterDetailsViewController: UIViewController {
     @IBOutlet weak var placeOfBirthLabel: UILabel!
     @IBOutlet weak var placeOfStayLabel: UILabel!
     
-    var characterViewModel: CharacterDetailsViewModel!
-    
-    private let disposeBag = DisposeBag()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        characterViewModel.character.subscribe(onNext: { [unowned self] character in
+        characterViewModel.character.subscribe(onNext: { [weak self] character in
             if let character = character {
+                guard let `self` = self else {
+                    return
+                }
+                
                 self.load(character)
                 
                 self.imageView.alpha = 0
@@ -38,7 +46,11 @@ class CharacterDetailsViewController: UIViewController {
                 self.detailsStackView.alpha = 0
                 self.detailsStackView.isHidden = false
                 
-                UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [unowned self] in
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
+                    guard let `self` = self else {
+                        return
+                    }
+                    
                     self.indicatorView.stopAnimating()
                     self.imageView.alpha = 1
                     self.detailsStackView.alpha = 1
@@ -46,7 +58,11 @@ class CharacterDetailsViewController: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-        characterViewModel.isFailedLoading.subscribe(onNext: { [unowned self] value in
+        characterViewModel.isFailedLoading.subscribe(onNext: { [weak self] value in
+            guard let `self` = self else {
+                return
+            }
+            
             if value {
                 self.navigationController?.popViewController(animated: true)
             }
@@ -58,20 +74,15 @@ class CharacterDetailsViewController: UIViewController {
     }
     
     private func load(_ character: Character) {
-        
         if let url = URL(string: character.image) {
             imageView.af.setImage(withURL: url)
         }
         
-        nameLabel.text         = character.name
-        speciesLabel.text      = character.species
-        statusLabel.text       = character.status
-        genderLabel.text       = character.gender
+        nameLabel.text = character.name
+        speciesLabel.text = character.species
+        statusLabel.text = character.status
+        genderLabel.text = character.gender
         placeOfBirthLabel.text = character.origin.name
-        placeOfStayLabel.text  = character.location.name
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        placeOfStayLabel.text = character.location.name
     }
 }
