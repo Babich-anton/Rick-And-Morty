@@ -10,8 +10,6 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-private let CELL_IDENTIFIER = "location-cell"
-
 class LocationViewController: UITableViewController {
 
     var viewModel: LocationViewModel!
@@ -31,12 +29,12 @@ class LocationViewController: UITableViewController {
         let search = UISearchController(searchResultsController: nil)
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
-        search.searchBar.tintColor = UIColor(named: "color-on-background")
+        search.searchBar.tintColor = App.Color.onBackground
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        let cell = UINib(nibName: "LocationViewCell", bundle: nil)
-        self.tableView.register(cell, forCellReuseIdentifier: CELL_IDENTIFIER)
+        let cell = UINib(nibName: App.Tab.location.cellNib, bundle: nil)
+        self.tableView.register(cell, forCellReuseIdentifier: App.Tab.location.cellIdentifier)
         self.tableView.dataSource = nil
         self.tableView.delegate = self
         self.tableView.separatorInset = .zero
@@ -47,7 +45,7 @@ class LocationViewController: UITableViewController {
 
     private func setupBinding() {
         
-        viewModel.locations.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { _, model, cell in
+        viewModel.locations.bind(to: self.tableView.rx.items(cellIdentifier: App.Tab.location.cellIdentifier)) { _, model, cell in
             if let cell = cell as? LocationViewCell {
                 cell.location = model
             }

@@ -30,6 +30,6 @@ class LocationViewCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         
-        self.surfaceView.backgroundColor = UIColor(named: "color-surface")?.withAlphaComponent(highlighted ? 1 : 0.2)
+        self.surfaceView.backgroundColor = App.Color.surface.withAlphaComponent(highlighted ? 1 : 0.2)
     }
 }

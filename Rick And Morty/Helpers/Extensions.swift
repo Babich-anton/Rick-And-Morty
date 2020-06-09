@@ -64,7 +64,7 @@ extension UIViewController {
 
 extension UIStoryboard {
     
-    convenience init(_ name: Tab) {
+    convenience init(_ name: App.Tab) {
         self.init(name: name.rawValue, bundle: nil)
     }
     
@@ -80,7 +80,7 @@ extension UIStoryboard {
 
 extension UITabBarItem {
     
-    convenience init(_ title: Tab, image: Tab) {
+    convenience init(_ title: App.Tab, image: App.Tab) {
         self.init(title: title.rawValue, image: UIImage(named: image.rawValue), selectedImage: UIImage(named: image.rawValue))
     }
 }
@@ -91,7 +91,7 @@ extension UITableView {
         let emptyView = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
         let textLabel = UILabel()
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.textColor = UIColor(named: "color-on-background")
+        textLabel.textColor = App.Color.onBackground
         textLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         emptyView.addSubview(textLabel)
         textLabel.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
@@ -125,6 +125,17 @@ extension UIImage {
         }
         
         self.init(cgImage: cgImage)
+    }
+}
+
+extension UIColor {
+    
+    public convenience init(hex: Int, alpha: CGFloat = 1.0) {
+        let red = CGFloat((hex & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((hex & 0xFF00) >> 8) / 255.0
+        let blue = CGFloat((hex & 0xFF)) / 255.0
+
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 }
 

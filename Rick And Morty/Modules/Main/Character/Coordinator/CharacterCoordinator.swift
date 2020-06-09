@@ -16,7 +16,7 @@ class CharacterCoordinator: TabCoordinator {
     
     init() {
         let selectViewController: CharacterViewController = storyboard.inflateVC()
-        selectViewController.title = Tab.character.rawValue
+        selectViewController.title = App.Tab.character.rawValue
         selectViewController.viewModel = CharacterViewModel()
         
         rootController = UINavigationController(rootViewController: selectViewController)

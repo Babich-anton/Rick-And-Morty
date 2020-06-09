@@ -8,9 +8,7 @@
 
 import RxCocoa
 import RxSwift
-import UIKit
-
-private let CELL_IDENTIFIER = "episode-cell"
+import UIKit 
 
 class EpisodesViewController: UITableViewController {
 
@@ -31,12 +29,12 @@ class EpisodesViewController: UITableViewController {
         let search = UISearchController(searchResultsController: nil)
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
-        search.searchBar.tintColor = UIColor(named: "color-on-background")
+        search.searchBar.tintColor = App.Color.onBackground
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        let cell = UINib(nibName: "EpisodeViewCell", bundle: nil)
-        self.tableView.register(cell, forCellReuseIdentifier: CELL_IDENTIFIER)
+        let cell = UINib(nibName: App.Tab.episodes.cellNib, bundle: nil)
+        self.tableView.register(cell, forCellReuseIdentifier: App.Tab.episodes.cellIdentifier)
         self.tableView.dataSource = nil
         self.tableView.delegate = self
         self.tableView.separatorInset = .zero
@@ -47,7 +45,6 @@ class EpisodesViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    // todo:: data sources to view model
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.episodes.value.count
@@ -66,7 +63,7 @@ class EpisodesViewController: UITableViewController {
     }
     
     private func setupBinding() {
-        viewModel.episodes.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { _, model, cell in
+        viewModel.episodes.bind(to: self.tableView.rx.items(cellIdentifier: App.Tab.episodes.cellIdentifier)) { _, model, cell in
             if let cell = cell as? EpisodeViewCell {
                 cell.episode = model
             }

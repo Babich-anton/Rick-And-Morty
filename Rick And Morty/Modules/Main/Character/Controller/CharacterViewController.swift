@@ -10,7 +10,6 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-private let CELL_IDENTIFIER = "character-cell"
 private let SCOPE_BUTTON_TITLES = ["All", "Alive", "Dead", "Unknown"]
 
 class CharacterViewController: UITableViewController {
@@ -33,12 +32,12 @@ class CharacterViewController: UITableViewController {
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
         search.searchBar.scopeButtonTitles = SCOPE_BUTTON_TITLES
-        search.searchBar.tintColor = UIColor(named: "color-on-background")
+        search.searchBar.tintColor = App.Color.onBackground
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        let cell = UINib(nibName: "CharacterViewCell", bundle: nil)
-        self.tableView.register(cell, forCellReuseIdentifier: CELL_IDENTIFIER)
+        let cell = UINib(nibName: App.Tab.character.cellNib, bundle: nil)
+        self.tableView.register(cell, forCellReuseIdentifier: App.Tab.character.cellIdentifier)
         self.tableView.dataSource = nil
         self.tableView.delegate = self
         self.tableView.tableFooterView = UIView()
@@ -48,7 +47,7 @@ class CharacterViewController: UITableViewController {
     
     private func setupBinding() {
         
-        viewModel.characters.bind(to: self.tableView.rx.items(cellIdentifier: CELL_IDENTIFIER)) { _, model, cell in
+        viewModel.characters.bind(to: self.tableView.rx.items(cellIdentifier: App.Tab.character.cellIdentifier)) { _, model, cell in
             if let cell = cell as? CharacterViewCell {
                 cell.character = model
             }

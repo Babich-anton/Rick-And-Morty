@@ -166,7 +166,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
                     self.imageView.isHidden = false
                     self.indicatorView.stopAnimating()
                 }
-                // todo:: all firebase requests to api manager
+                
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.photoURL = imgPath
                 
