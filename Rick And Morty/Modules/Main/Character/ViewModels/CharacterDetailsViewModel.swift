@@ -19,13 +19,11 @@ class CharacterDetailsViewModel: NSObject {
     init(id: Int) {
         super.init()
         
-        Character.get(by: id) { character, error in
-            if let error = error {
-                showMessage(with: error.localizedDescription)
-                self.isFailedLoading.accept(true)
-            } else if let character = character {
-                self.character.accept(character)
-            }
-        }
+        Character.get(by: id, successHandler: { character in
+            self.character.accept(character)
+        }, errorHandler: { error in
+            showMessage(with: error.localizedDescription)
+            self.isFailedLoading.accept(true)
+        })
     }
 }

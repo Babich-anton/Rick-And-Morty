@@ -23,37 +23,28 @@ class EpisodeViewModel: NSObject {
     }
     
     func loadNextPage(_ url: String?) {
-        
-        Episodes.getEpisodes(from: url) { episodes, error in
-            self.nextPage = episodes?.info.next
+        Episodes.getEpisodes(from: url, successHandler: { ep in
+            var episodes = self.episodes.value
+            self.nextPage = ep.info.next
             
-            if let episodesToAppend = episodes?.results {
-                var episodes = self.episodes.value
-                
-                for episode in episodesToAppend {
-                    if !episodes.contains(where: { $0.id == episode.id }) {
-                        episodes.append(episode)
-                    }
+            for episode in ep.results {
+                if !episodes.contains(where: { $0.id == episode.id }) {
+                    episodes.append(episode)
                 }
-                
-                self.episodes.accept(episodes)
-            } else if let error = error {
-                showMessage(with: error.localizedDescription)
             }
-        }
+            
+            self.episodes.accept(episodes)
+        }, errorHandler: { error in
+            showMessage(with: error.localizedDescription)
+        })
     }
     
     func search(_ query: String) {
-        
-        Episodes.search(by: query) { episodes, error in
-            if let episodes = episodes {
-                self.episodes.accept(episodes.results)
-                self.nextPage = episodes.info.next
-            } else if let error = error {
-                showMessage(with: error.localizedDescription)
-            } else {
-                self.episodes.accept([])
-            }
-        }
+        Episodes.search(by: query, successHandler: { episodes in
+            self.episodes.accept(episodes.results)
+            self.nextPage = episodes.info.next
+        }, errorHandler: { error in
+            showMessage(with: error.localizedDescription)
+        })
     }
 }

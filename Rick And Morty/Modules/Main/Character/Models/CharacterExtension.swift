@@ -9,12 +9,10 @@
 import Alamofire
 
 extension Character {
-    // todo: add success and error completion handler
     
-    static func get(by id: Int, completionHandler: @escaping ((Character?, Error?) -> Void)) {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
+    static func get(by id: Int,
+                    successHandler: @escaping ((Character) -> Void),
+                    errorHandler: @escaping ((Error) -> Void)) {
         AF.request(
             API.ENDPOINT + API.CHARACTER + String(id),
             method: .get
@@ -26,13 +24,16 @@ extension Character {
                         return
                     }
                     
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
                     let character = try JSONDecoder().decode(Character.self, from: data)
-                    completionHandler(character, nil)
+                    successHandler(character)
                 } catch {
-                    print(error.localizedDescription)
+                    errorHandler(error)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                errorHandler(error)
             }
         }
     }

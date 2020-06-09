@@ -19,13 +19,11 @@ class LocationDetailsViewModel: NSObject {
     init(id: Int) {
         super.init()
         
-        Location.get(by: id) { location, error in
-            if let error = error {
-                showMessage(with: error.localizedDescription)
-                self.isFailedLoading.accept(true)
-            } else if let location = location {
-                self.location.accept(location)
-            }
-        }
+        Location.get(by: id, successHandler: { location in
+            self.location.accept(location)
+        }, errorHandler: { error in
+            showMessage(with: error.localizedDescription)
+            self.isFailedLoading.accept(true)
+        })
     }
 }

@@ -10,10 +10,9 @@ import Alamofire
 
 extension Episode {
     
-    static func get(by id: Int, completionHandler: @escaping ((Episode?, Error?) -> Void)) {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
+    static func get(by id: Int,
+                    successHandler: @escaping ((Episode) -> Void),
+                    errorHandler: @escaping ((Error) -> Void)) {
         AF.request(
             API.ENDPOINT + API.EPISODE + String(id),
             method: .get
@@ -25,13 +24,16 @@ extension Episode {
                         return
                     }
                     
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
                     let episode = try JSONDecoder().decode(Episode.self, from: data)
-                    completionHandler(episode, nil)
+                    successHandler(episode)
                 } catch {
-                    print(error.localizedDescription)
+                    errorHandler(error)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                errorHandler(error)
             }
         }
     }

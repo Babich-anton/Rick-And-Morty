@@ -19,13 +19,11 @@ class EpisodeDetailsViewModel: NSObject {
     init(id: Int) {
         super.init()
         
-        Episode.get(by: id) { episode, error in
-            if let error = error {
-                showMessage(with: error.localizedDescription)
-                self.isFailedLoading.accept(true)
-            } else if let episode = episode {
-                self.episode.accept(episode)
-            }
-        }
+        Episode.get(by: id, successHandler: { episode in
+            self.episode.accept(episode)
+        }, errorHandler: { error in
+            showMessage(with: error.localizedDescription)
+            self.isFailedLoading.accept(true)
+        })
     }
 }

@@ -10,7 +10,9 @@ import Alamofire
 
 extension Locations {
     
-    static func getLocations(from url: String?, completionHandler: @escaping ((Locations?, Error?) -> Void)) {
+    static func getLocations(from url: String?,
+                             successHandler: @escaping ((Locations) -> Void),
+                             errorHandler: @escaping ((Error) -> Void)) {
         
         var endpoint = API.ENDPOINT + API.LOCATION
         
@@ -33,19 +35,19 @@ extension Locations {
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
                     let locations = try JSONDecoder().decode(Locations.self, from: data)
-                    completionHandler(locations, nil)
+                    successHandler(locations)
                 } catch {
-                    print(error.localizedDescription)
-                    completionHandler(nil, error)
+                    errorHandler(error)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
-                completionHandler(nil, error)
+                errorHandler(error)
             }
         }
     }
     
-    static func search(by name: String, completionHandler: @escaping ((Locations?, Error?) -> Void)) {
+    static func search(by name: String,
+                       successHandler: @escaping ((Locations) -> Void),
+                       errorHandler: @escaping ((Error) -> Void)) {
         
         let queryName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
@@ -64,14 +66,12 @@ extension Locations {
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
                     let locations = try JSONDecoder().decode(Locations.self, from: data)
-                    completionHandler(locations, nil)
+                    successHandler(locations)
                 } catch {
-                    print(error.localizedDescription)
-                    completionHandler(nil, nil)
+                    errorHandler(error)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
-                completionHandler(nil, error)
+                errorHandler(error)
             }
         }
     }

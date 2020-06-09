@@ -10,7 +10,9 @@ import Alamofire
 
 extension Location {
     
-    static func get(by id: Int, completionHandler: @escaping ((Location?, Error?) -> Void)) {
+    static func get(by id: Int,
+                    successHandler: @escaping ((Location) -> Void),
+                    errorHandler: @escaping ((Error) -> Void)) {
         AF.request(
             API.ENDPOINT + API.LOCATION + String(id),
             method: .get
@@ -26,12 +28,12 @@ extension Location {
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
                     let location = try JSONDecoder().decode(Location.self, from: data)
-                    completionHandler(location, nil)
+                    successHandler(location)
                 } catch {
-                    print(error.localizedDescription)
+                    errorHandler(error)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                errorHandler(error)
             }
         }
     }

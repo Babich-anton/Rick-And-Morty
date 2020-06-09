@@ -23,37 +23,28 @@ class CharacterViewModel: NSObject {
     }
     
     func loadNextPage(_ url: String?) {
-        
-        Characters.getCharacters(from: url) { characters, error in
-            self.nextPage = characters?.info.next
+        Characters.getCharacters(from: url, successHandler: { ch in
+            self.nextPage = ch.info.next
+            var characters = self.characters.value
             
-            if let charactersToAppend = characters?.results {
-                var characters = self.characters.value
-                
-                for character in charactersToAppend {
-                    if !characters.contains(where: { $0.id == character.id }) {
-                        characters.append(character)
-                    }
+            for character in ch.results {
+                if !characters.contains(where: { $0.id == character.id }) {
+                    characters.append(character)
                 }
-                
-                self.characters.accept(characters)
-            } else if let error = error {
-                showMessage(with: error.localizedDescription)
             }
-        }
+            
+            self.characters.accept(characters)
+        }, errorHandler: { error in
+            showMessage(with: error.localizedDescription)
+        })
     }
     
     func search(_ query: String, status: String) {
-        
-        Characters.search(by: query, status: status) { characters, error in
-            if let characters = characters {
-                self.characters.accept(characters.results)
-                self.nextPage = characters.info.next
-            } else if let error = error {
-                showMessage(with: error.localizedDescription)
-            } else {
-                self.characters.accept([])
-            }
-        }
+        Characters.search(by: query, status: status, successHandler: { characters in
+            self.characters.accept(characters.results)
+            self.nextPage = characters.info.next
+        }, errorHandler: { error in
+            showMessage(with: error.localizedDescription)
+        })
     }
 }

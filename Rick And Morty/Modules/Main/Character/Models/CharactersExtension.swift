@@ -10,7 +10,9 @@ import Alamofire
 
 extension Characters {
     
-    static func getCharacters(from url: String?, completionHandler: @escaping ((Characters?, Error?) -> Void)) {
+    static func getCharacters(from url: String?,
+                              successHandler: @escaping ((Characters) -> Void),
+                              errorHandler: @escaping ((Error) -> Void)) {
         
         var endpoint = API.ENDPOINT + API.CHARACTER
         
@@ -33,19 +35,20 @@ extension Characters {
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
                     let characters = try JSONDecoder().decode(Characters.self, from: data)
-                    completionHandler(characters, nil)
+                    successHandler(characters)
                 } catch {
-                    print(error.localizedDescription)
-                    completionHandler(nil, error)
+                    errorHandler(error)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
-                completionHandler(nil, error)
+                errorHandler(error)
             }
         }
     }
     
-    static func search(by name: String, status: String, completionHandler: @escaping ((Characters?, Error?) -> Void)) {
+    static func search(by name: String,
+                       status: String,
+                       successHandler: @escaping ((Characters) -> Void),
+                       errorHandler: @escaping ((Error) -> Void)) {
         
         let statusUrl = status == "All" ? "" : "&status=" + status.lowercased()
         let queryName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -66,14 +69,12 @@ extension Characters {
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
                     let characters = try JSONDecoder().decode(Characters.self, from: data)
-                    completionHandler(characters, nil)
+                    successHandler(characters)
                 } catch {
-                    print(error.localizedDescription)
-                    completionHandler(nil, nil)
+                    errorHandler(error)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
-                completionHandler(nil, error)
+                errorHandler(error)
             }
         }
     }
