@@ -56,7 +56,6 @@
 		64C0281E248EF9D500B1BE85 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C0281D248EF9D500B1BE85 /* CharacterExtension.swift */; };
 		64C02820248EF9E200B1BE85 /* CharactersExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C0281F248EF9E200B1BE85 /* CharactersExtension.swift */; };
 		64C02822248EFB2E00B1BE85 /* TabCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C02821248EFB2E00B1BE85 /* TabCoordinatorProtocol.swift */; };
-		64C02824248EFB3F00B1BE85 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C02823248EFB3F00B1BE85 /* Tab.swift */; };
 		64C02826248EFC7A00B1BE85 /* StopAnimationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C02825248EFC7A00B1BE85 /* StopAnimationStyle.swift */; };
 		64C02BF9242E531A001DA221 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C02BF8242E531A001DA221 /* ProfileViewModel.swift */; };
 		64C326AC241E6F8300B7EDB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C326AB241E6F8300B7EDB7 /* Extensions.swift */; };
@@ -77,6 +76,8 @@
 		64C433BC241D077900BD9F18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64C433BA241D077900BD9F18 /* LaunchScreen.storyboard */; };
 		64E77F6B24254E0C007CDD68 /* CharacterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E77F6924254E0C007CDD68 /* CharacterViewCell.swift */; };
 		64E77F6C24254E0C007CDD68 /* CharacterViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64E77F6A24254E0C007CDD68 /* CharacterViewCell.xib */; };
+		64F303AE2490349200205E6A /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F303AD2490349200205E6A /* Info.swift */; };
+		64F303B0249042DB00205E6A /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F303AF249042DB00205E6A /* App.swift */; };
 		6535F11B65F44DEBE0EF5B69 /* Pods_Rick_And_Morty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA81BC8FAAFDAD4B2A25D4B /* Pods_Rick_And_Morty.framework */; };
 /* End PBXBuildFile section */
 
@@ -131,7 +132,6 @@
 		64C0281D248EF9D500B1BE85 /* CharacterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
 		64C0281F248EF9E200B1BE85 /* CharactersExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersExtension.swift; sourceTree = "<group>"; };
 		64C02821248EFB2E00B1BE85 /* TabCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCoordinatorProtocol.swift; sourceTree = "<group>"; };
-		64C02823248EFB3F00B1BE85 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		64C02825248EFC7A00B1BE85 /* StopAnimationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopAnimationStyle.swift; sourceTree = "<group>"; };
 		64C02BF8242E531A001DA221 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		64C326AB241E6F8300B7EDB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -154,6 +154,8 @@
 		64C433BD241D077900BD9F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64E77F6924254E0C007CDD68 /* CharacterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewCell.swift; sourceTree = "<group>"; };
 		64E77F6A24254E0C007CDD68 /* CharacterViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterViewCell.xib; sourceTree = "<group>"; };
+		64F303AD2490349200205E6A /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
+		64F303AF249042DB00205E6A /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		EA7F97EE1314C4D605731EDE /* Pods-Rick And Morty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rick And Morty.debug.xcconfig"; path = "Target Support Files/Pods-Rick And Morty/Pods-Rick And Morty.debug.xcconfig"; sourceTree = "<group>"; };
 		FAA81BC8FAAFDAD4B2A25D4B /* Pods_Rick_And_Morty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rick_And_Morty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -369,7 +371,6 @@
 			children = (
 				647E23A52422B3EF00B6D903 /* MainCoordinator.swift */,
 				64C02821248EFB2E00B1BE85 /* TabCoordinatorProtocol.swift */,
-				64C02823248EFB3F00B1BE85 /* Tab.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -395,8 +396,8 @@
 		647E23AA2422B5A400B6D903 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				64C0281D248EF9D500B1BE85 /* CharacterExtension.swift */,
 				64C0281F248EF9E200B1BE85 /* CharactersExtension.swift */,
+				64C0281D248EF9D500B1BE85 /* CharacterExtension.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -509,6 +510,7 @@
 		64C0280F248EF79500B1BE85 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				64F303AD2490349200205E6A /* Info.swift */,
 				64C02814248EF88E00B1BE85 /* Character */,
 				64C02813248EF88700B1BE85 /* Location */,
 				64C02810248EF85A00B1BE85 /* Episode */,
@@ -558,6 +560,7 @@
 				641DAFE42425002600BC0CAE /* Network */,
 				646603CB24213C9F004C6135 /* UI */,
 				64C326AB241E6F8300B7EDB7 /* Extensions.swift */,
+				64F303AF249042DB00205E6A /* App.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				641DAFEC24250BE500BC0CAE /* Episode.swift in Sources */,
 				64C02818248EF8E000B1BE85 /* EpisodeExtension.swift in Sources */,
 				6463C0652430F745008D18FB /* NameViewModel.swift in Sources */,
+				64F303AE2490349200205E6A /* Info.swift in Sources */,
 				6434FC6A2425E52400B7025A /* CharacterDetailsViewController.swift in Sources */,
 				647E23C82422C8F000B6D903 /* ProfileCoordinator.swift in Sources */,
 				641DAFE62425003600BC0CAE /* API.swift in Sources */,
@@ -792,7 +796,6 @@
 				64C326B4241E76CC00B7EDB7 /* ValidationViewModelProtocol.swift in Sources */,
 				64314EC5242BCC4A003D6EEB /* AppSettings.swift in Sources */,
 				641DAFE12424FD6C00BC0CAE /* Location.swift in Sources */,
-				64C02824248EFB3F00B1BE85 /* Tab.swift in Sources */,
 				64C326AC241E6F8300B7EDB7 /* Extensions.swift in Sources */,
 				647E23C42422C8D500B6D903 /* LocationCoordinator.swift in Sources */,
 				64AEED8A2423F5ED003EDC76 /* LocationViewController.swift in Sources */,
@@ -801,6 +804,7 @@
 				646603D224213D85004C6135 /* SpinerLayer.swift in Sources */,
 				64C02816248EF8D100B1BE85 /* EpisodesExtension.swift in Sources */,
 				64516C2E241E6B780057B000 /* LoginCoordinator.swift in Sources */,
+				64F303B0249042DB00205E6A /* App.swift in Sources */,
 				646603D424213D96004C6135 /* FadeTransition.swift in Sources */,
 				64516C2C241E6A710057B000 /* CoordinatorProtocol.swift in Sources */,
 				64C02BF9242E531A001DA221 /* ProfileViewModel.swift in Sources */,

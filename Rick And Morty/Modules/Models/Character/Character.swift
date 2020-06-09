@@ -6,7 +6,6 @@
 //  Copyright © 2020 Anton Babich. All rights reserved.
 //
 
-import Alamofire
 import Foundation
 
 struct Character: Codable {
