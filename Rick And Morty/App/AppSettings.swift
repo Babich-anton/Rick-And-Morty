@@ -9,9 +9,5 @@
 import UIKit
 
 var tabTitlePosition: UIOffset {
-    if UIScreen.main.nativeBounds.height > 1500 {
-        return UIOffset(horizontal: 0.0, vertical: -4)
-    } else {
-        return UIOffset(horizontal: 0.0, vertical: -2)
-    }
+    return UIOffset(horizontal: 0.0, vertical: -2)
 }

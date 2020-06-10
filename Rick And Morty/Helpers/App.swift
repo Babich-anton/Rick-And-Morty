@@ -22,6 +22,10 @@ struct App {
         static var surface: UIColor { return UIColor(hex: 0x353535) }
     }
     
+    struct Font {
+        static var bold: UIFont { return UIFont(name: "HelveticaNeue-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18) }
+    }
+    
     enum Tab: String {
         
         case character = "Character"

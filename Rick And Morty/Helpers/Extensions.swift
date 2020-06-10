@@ -92,7 +92,7 @@ extension UITableView {
         let textLabel = UILabel()
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         textLabel.textColor = App.Color.onBackground
-        textLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        textLabel.font = App.Font.bold
         emptyView.addSubview(textLabel)
         textLabel.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
         textLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
