@@ -6,7 +6,6 @@
 //  Copyright © 2020 Anton Babich. All rights reserved.
 //
 
-import FirebaseAuth
 import RxCocoa
 import RxSwift
 
@@ -34,17 +33,17 @@ class LoginViewModel {
         
         self.isLoading.accept(false)
         
-        Auth.auth().signIn(withEmail: self.model.email, password: self.model.password) { _, error in
-            if let error = error {
-                self.isLoading.accept(true)
-                self.isSuccess.accept(false)
-                showMessage(with: error.localizedDescription)
-            } else {
-                self.isLoading.accept(true)
-                self.isSuccess.accept(true)
-                self.isSignedIn.accept(true)
-            }
-        }
+        FirebaseManager.login(email: self.model.email,
+                              password: self.model.password,
+                              successHandler: { _ in
+            self.isLoading.accept(true)
+            self.isSuccess.accept(true)
+            self.isSignedIn.accept(true)
+        }, errorHandler: { error in
+            self.isLoading.accept(true)
+            self.isSuccess.accept(false)
+            showMessage(with: error.localizedDescription)
+        })
     }
     
     func signUp() {
@@ -53,22 +52,22 @@ class LoginViewModel {
         
         self.isLoading.accept(false)
         
-        Auth.auth().createUser(withEmail: self.model.email, password: self.model.password) { user, error in
-            if let error = error {
-                self.isLoading.accept(true)
-                self.isSuccess.accept(false)
-                showMessage(with: error.localizedDescription)
+        FirebaseManager.signUp(email: self.model.email,
+                               password: self.model.password,
+                               successHandler: { result in
+            self.isLoading.accept(true)
+            
+            if result.additionalUserInfo?.isNewUser ?? false {
+                showMessage(with: "New user created successfully. Please sign in to the app.")
+                self.isSuccess.accept(true)
             } else {
-                self.isLoading.accept(true)
-                
-                if user?.additionalUserInfo?.isNewUser ?? false {
-                    showMessage(with: "New user created successfully. Please sign in to the app.")
-                    self.isSuccess.accept(true)
-                } else {
-                    showMessage(with: "Failed to create new user..")
-                    self.isSuccess.accept(false)
-                }
+                showMessage(with: "Failed to create new user..")
+                self.isSuccess.accept(false)
             }
-        }
+        }, errorHandler: { error in
+            self.isLoading.accept(true)
+            self.isSuccess.accept(false)
+            showMessage(with: error.localizedDescription)
+        })
     }
 }

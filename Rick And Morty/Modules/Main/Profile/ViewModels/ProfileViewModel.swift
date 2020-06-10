@@ -42,53 +42,12 @@ class ProfileViewModel: NSObject {
     }
     
     func update() {
-        
         if isValid() {
             let group = DispatchGroup()
             
-            if user.value?.displayName != nameViewModel.data.value {
-                
-                let request = Auth.auth().currentUser?.createProfileChangeRequest()
-                request?.displayName = nameViewModel.data.value
-                group.enter()
-                isUpdated.accept(false)
-                
-                request?.commitChanges { error in
-                    if let error = error {
-                        self.errorMessage.accept(error.localizedDescription)
-                    }
-                    
-                    group.leave()
-                }
-            }
-            
-            if user.value?.email != emailViewModel.data.value {
-                
-                group.enter()
-                isUpdated.accept(false)
-                
-                user.value?.updateEmail(to: emailViewModel.data.value) { error in
-                    if let error = error {
-                        self.errorMessage.accept(error.localizedDescription)
-                    }
-                    
-                    group.leave()
-                }
-            }
-            
-            if newPasswordViewModel.data.value == confirmPasswordViewModel.data.value && !confirmPasswordViewModel.data.value.isEmpty {
-                
-                group.enter()
-                isUpdated.accept(false)
-                
-                user.value?.updatePassword(to: confirmPasswordViewModel.data.value) { error in
-                    if let error = error {
-                        self.errorMessage.accept(error.localizedDescription)
-                    }
-                    
-                    group.leave()
-                }
-            }
+            updateUsername(group)
+            updateEmail(group)
+            updatePassword(group)
             
             group.notify(queue: .main) {
                 showMessage(with: self.errorMessage.value.isEmpty ? "User successfully updated" : self.errorMessage.value)
@@ -111,6 +70,51 @@ class ProfileViewModel: NSObject {
             
             showMessage(with: message)
             isUpdated.accept(true)
+        }
+    }
+    
+    private func updateUsername(_ group: DispatchGroup) {
+        if user.value?.displayName != nameViewModel.data.value {
+            group.enter()
+            isUpdated.accept(false)
+            
+            FirebaseManager.update(name: nameViewModel.data.value, successHandler: {
+                group.leave()
+            }, errorHandler: { error in
+                self.errorMessage.accept(error.localizedDescription)
+                group.leave()
+            })
+        }
+    }
+    
+    private func updateEmail(_ group: DispatchGroup) {
+        if user.value?.email != emailViewModel.data.value {
+            group.enter()
+            isUpdated.accept(false)
+            
+            if let user = user.value {
+                FirebaseManager.update(email: emailViewModel.data.value, user: user, successHandler: {
+                    group.leave()
+                }, errorHandler: { error in
+                    self.errorMessage.accept(error.localizedDescription)
+                })
+            }
+        }
+    }
+    
+    private func updatePassword(_ group: DispatchGroup) {
+        if newPasswordViewModel.data.value == confirmPasswordViewModel.data.value && !confirmPasswordViewModel.data.value.isEmpty {
+            
+            group.enter()
+            isUpdated.accept(false)
+            
+            if let user = user.value {
+                FirebaseManager.update(email: confirmPasswordViewModel.data.value, user: user, successHandler: {
+                    group.leave()
+                }, errorHandler: { error in
+                    self.errorMessage.accept(error.localizedDescription)
+                })
+            }
         }
     }
     

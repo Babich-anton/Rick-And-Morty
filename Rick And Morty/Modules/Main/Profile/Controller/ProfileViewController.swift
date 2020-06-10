@@ -157,7 +157,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
                 return
             }
 
-            let imgPath = documentDirectoryPath.appendingPathComponent("\(Date().timeIntervalSince1970).jpg")
+            let imgPath = documentDirectoryPath.appendingPathComponent("user-image.jpg")
 
             do {
                 try pickedImage.jpegData(compressionQuality: 1)?.write(to: imgPath, options: .atomic)
@@ -167,16 +167,11 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
                     self.indicatorView.stopAnimating()
                 }
                 
-                let request = Auth.auth().currentUser?.createProfileChangeRequest()
-                request?.photoURL = imgPath
-                
-                request?.commitChanges { error in
-                    if let error = error {
-                        showMessage(with: error.localizedDescription)
-                    } else {
-                        showMessage(with: "User image updated")
-                    }
-                }
+                FirebaseManager.update(image: imgPath, successHandler: {
+                    showMessage(with: "User image updated")
+                }, errorHandler: { error in
+                    showMessage(with: error.localizedDescription)
+                })
             } catch {
                 print(error.localizedDescription)
             }
