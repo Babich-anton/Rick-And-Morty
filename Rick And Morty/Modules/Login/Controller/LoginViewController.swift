@@ -35,9 +35,9 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.emailTextField.rx.text.onNext("anton.babich@sqil.by")
+        self.emailTextField.rx.text.onNext("")
         self.viewModel.emailViewModel.data.accept("")
-        self.passwordTextField.rx.text.onNext("barmaley98")
+        self.passwordTextField.rx.text.onNext("")
         self.viewModel.passwordViewModel.data.accept("")
     }
     
