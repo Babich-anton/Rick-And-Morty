@@ -10,13 +10,15 @@ import RxCocoa
 import RxSwift
 import UIKit 
 
-class EpisodesViewController: UITableViewController {
+class EpisodesViewController: UIViewController {
 
     var viewModel: EpisodeViewModel!
     var selectedDetailsViewModel: EpisodeDetailsViewModel?
     
     private let disposeBag = DisposeBag()
-
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -36,30 +38,10 @@ class EpisodesViewController: UITableViewController {
         let cell = UINib(nibName: App.Tab.episodes.cellNib, bundle: nil)
         self.tableView.register(cell, forCellReuseIdentifier: App.Tab.episodes.cellIdentifier)
         self.tableView.dataSource = nil
-        self.tableView.delegate = self
-        self.tableView.separatorInset = .zero
-        self.tableView.separatorColor = .clear
+        self.tableView.delegate = nil
         self.tableView.tableFooterView = UIView()
         
         self.setupBinding()
-    }
-    
-    // MARK: - Table view data source
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.episodes.value.count
-    }
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowEpisodeDetailsFromCharacters" {
-            if let vc = segue.destination as? EpisodeDetailsViewController {
-                vc.episodeViewModel = self.selectedDetailsViewModel
-            }
-        }
     }
     
     private func setupBinding() {
@@ -68,7 +50,7 @@ class EpisodesViewController: UITableViewController {
                 cell.episode = model
             }
 
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+            cell.separatorInset = separatorInsets
             cell.layoutMargins = .zero
         }.disposed(by: disposeBag)
         
@@ -102,5 +84,13 @@ class EpisodesViewController: UITableViewController {
             
         let isEmpty = tableView.rx.isEmpty(message: "No episodes found")
         viewModel.episodes.map({ $0.isEmpty }).distinctUntilChanged().bind(to: isEmpty).disposed(by: disposeBag)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowEpisodeDetailsFromCharacters" {
+            if let vc = segue.destination as? EpisodeDetailsViewController {
+                vc.episodeViewModel = self.selectedDetailsViewModel
+            }
+        }
     }
 }

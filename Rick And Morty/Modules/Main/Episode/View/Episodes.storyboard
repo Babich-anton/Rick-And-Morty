@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Episodes View Controller-->
-        <scene sceneID="tD5-Hi-s6T">
+        <scene sceneID="W8A-hI-NHG">
             <objects>
-                <tableViewController storyboardIdentifier="EpisodesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" interfaceStyle="dark" id="Lmk-QJ-EAI" customClass="EpisodesViewController" customModule="Rick_And_Morty" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JqS-OY-otB">
+                <viewController storyboardIdentifier="EpisodesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Mj8-TQ-eZv" customClass="EpisodesViewController" customModule="Rick_And_Morty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="txl-6q-MLZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" name="color-background"/>
-                        <color key="separatorColor" name="color-primary"/>
-                        <color key="sectionIndexColor" name="color-background"/>
-                        <color key="sectionIndexBackgroundColor" name="color-background"/>
-                        <color key="sectionIndexTrackingBackgroundColor" name="color-background"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="episode-cell" id="GXW-HQ-VXD">
-                                <rect key="frame" x="0.0" y="28" width="414" height="64"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GXW-HQ-VXD" id="zxI-qZ-DFI">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="X2C-oz-Y4K">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" name="color-background"/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Lmk-QJ-EAI" id="7Yq-ey-cPJ"/>
-                            <outlet property="delegate" destination="Lmk-QJ-EAI" id="H5M-R1-tYF"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="zAF-YZ-2Eq"/>
+                                <color key="separatorColor" name="color-primary"/>
+                                <color key="sectionIndexColor" name="color-background"/>
+                                <color key="sectionIndexBackgroundColor" name="color-background"/>
+                                <color key="sectionIndexTrackingBackgroundColor" name="color-background"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="X2C-oz-Y4K" secondAttribute="bottom" id="1dd-gE-B4Z"/>
+                            <constraint firstItem="X2C-oz-Y4K" firstAttribute="leading" secondItem="txl-6q-MLZ" secondAttribute="leading" id="7BX-yS-IX4"/>
+                            <constraint firstItem="X2C-oz-Y4K" firstAttribute="top" secondItem="Tac-Vg-UVF" secondAttribute="top" id="Nl3-nf-77M"/>
+                            <constraint firstItem="X2C-oz-Y4K" firstAttribute="trailing" secondItem="txl-6q-MLZ" secondAttribute="trailing" id="XaO-r9-vcu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Tac-Vg-UVF"/>
+                    </view>
                     <connections>
-                        <segue destination="S48-34-yb9" kind="show" identifier="ShowEpisodeDetailsFromCharacters" id="ec0-mL-6cM"/>
+                        <outlet property="tableView" destination="X2C-oz-Y4K" id="Iji-ny-gQd"/>
+                        <segue destination="S48-34-yb9" kind="show" identifier="ShowEpisodeDetailsFromCharacters" id="wO5-eV-RDO"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nIK-75-vJH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tCC-c7-11K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="668.11594202898561" y="-19.419642857142858"/>
+            <point key="canvasLocation" x="639" y="-19"/>
         </scene>
         <!--Episode Details View Controller-->
         <scene sceneID="xOj-Om-y3Z">

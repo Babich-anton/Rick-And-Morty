@@ -10,12 +10,14 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class LocationViewController: UITableViewController {
+class LocationViewController: UIViewController {
 
     var viewModel: LocationViewModel!
     var selectedDetailsViewModel: LocationDetailsViewModel?
     
     private let disposeBag = DisposeBag()
+    
+    @IBOutlet weak var tableView: UITableView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -36,7 +38,7 @@ class LocationViewController: UITableViewController {
         let cell = UINib(nibName: App.Tab.location.cellNib, bundle: nil)
         self.tableView.register(cell, forCellReuseIdentifier: App.Tab.location.cellIdentifier)
         self.tableView.dataSource = nil
-        self.tableView.delegate = self
+        self.tableView.delegate = nil
         self.tableView.separatorInset = .zero
         self.tableView.tableFooterView = UIView()
         
@@ -50,7 +52,7 @@ class LocationViewController: UITableViewController {
                 cell.location = model
             }
 
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+            cell.separatorInset = separatorInsets
             cell.layoutMargins = .zero
         }.disposed(by: disposeBag)
         
@@ -86,21 +88,13 @@ class LocationViewController: UITableViewController {
         viewModel.locations.map({ $0.isEmpty }).distinctUntilChanged().bind(to: isEmpty).disposed(by: disposeBag)
     }
 
-    // MARK: - Table view data source
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.locations.value.count
-    }
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ShowLocationDetailsFromCharacters" {
-            if let vc = segue.destination as? LocatioDetailsViewController {
-                vc.locationViewModel = self.selectedDetailsViewModel!
+            if let vc = segue.destination as? LocationDetailsViewController {
+                if let viewModel = self.selectedDetailsViewModel {
+                    vc.locationViewModel = viewModel
+                }
             }
         }
     }

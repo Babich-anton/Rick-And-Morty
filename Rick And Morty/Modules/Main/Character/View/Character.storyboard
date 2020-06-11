@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Character View Controller-->
-        <scene sceneID="VgL-AC-4r8">
+        <scene sceneID="4Fv-pX-PL9">
             <objects>
-                <tableViewController storyboardIdentifier="CharacterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" interfaceStyle="dark" id="LYn-iK-tRI" customClass="CharacterViewController" customModule="Rick_And_Morty" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="79u-PJ-lFg">
+                <viewController storyboardIdentifier="CharacterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="axQ-S5-WsB" customClass="CharacterViewController" customModule="Rick_And_Morty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TY4-iV-kKJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" name="color-background"/>
-                        <color key="separatorColor" name="color-background"/>
-                        <color key="sectionIndexColor" name="color-background"/>
-                        <color key="sectionIndexBackgroundColor" name="color-background"/>
-                        <color key="sectionIndexTrackingBackgroundColor" name="color-background"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="character-cell" id="ACO-ah-Fbl" customClass="CharacterViewCell" customModule="Rick_And_Morty" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="72"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ACO-ah-Fbl" id="oSI-IU-N9d">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="LYn-iK-tRI" id="Bhj-Cb-eI6"/>
-                            <outlet property="delegate" destination="LYn-iK-tRI" id="TCB-EO-mA0"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="7mc-FX-3tc"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="72" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mrf-vv-pGP">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <color key="backgroundColor" name="color-background"/>
+                                <color key="separatorColor" name="color-background"/>
+                                <color key="sectionIndexColor" name="color-background"/>
+                                <color key="sectionIndexBackgroundColor" name="color-background"/>
+                                <color key="sectionIndexTrackingBackgroundColor" name="color-background"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Mrf-vv-pGP" firstAttribute="trailing" secondItem="TY4-iV-kKJ" secondAttribute="trailing" id="9p1-r3-s6g"/>
+                            <constraint firstItem="Mrf-vv-pGP" firstAttribute="top" secondItem="lZl-dr-vHT" secondAttribute="top" id="DUA-xA-l9V"/>
+                            <constraint firstAttribute="bottom" secondItem="Mrf-vv-pGP" secondAttribute="bottom" id="F9o-AZ-j0T"/>
+                            <constraint firstItem="Mrf-vv-pGP" firstAttribute="leading" secondItem="TY4-iV-kKJ" secondAttribute="leading" id="wyr-Ia-oPa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lZl-dr-vHT"/>
+                    </view>
                     <connections>
-                        <segue destination="Z6J-rH-6iV" kind="show" identifier="ShowCharacterDetailsFromCharacters" id="L0w-de-kfa"/>
+                        <outlet property="tableView" destination="Mrf-vv-pGP" id="XBh-iL-SxA"/>
+                        <segue destination="Z6J-rH-6iV" kind="show" identifier="ShowCharacterDetailsFromCharacters" id="5Cb-Mm-YWD"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cO3-as-OTL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sK4-Lp-DLZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-420.28985507246381" y="-196.20535714285714"/>
+            <point key="canvasLocation" x="-507" y="-196"/>
         </scene>
         <!--Character Details View Controller-->
         <scene sceneID="HII-KB-H5l">

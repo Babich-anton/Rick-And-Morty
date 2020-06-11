@@ -10,18 +10,19 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-private let SCOPE_BUTTON_TITLES = ["All", "Alive", "Dead", "Unknown"]
-
-class CharacterViewController: UITableViewController {
+class CharacterViewController: UIViewController {
 
     var viewModel: CharacterViewModel!
     var selectedDetailsViewModel: CharacterDetailsViewModel?
     
     private let disposeBag = DisposeBag()
+    private var avaliableSearchButtons: [CharacterStatus] = [.all, .alive, .dead, .unknown]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ class CharacterViewController: UITableViewController {
         let search = UISearchController(searchResultsController: nil)
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "Search"
-        search.searchBar.scopeButtonTitles = SCOPE_BUTTON_TITLES
+        search.searchBar.scopeButtonTitles = avaliableSearchButtons.getTitles()
         search.searchBar.tintColor = App.Color.onBackground
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -39,7 +40,7 @@ class CharacterViewController: UITableViewController {
         let cell = UINib(nibName: App.Tab.character.cellNib, bundle: nil)
         self.tableView.register(cell, forCellReuseIdentifier: App.Tab.character.cellIdentifier)
         self.tableView.dataSource = nil
-        self.tableView.delegate = self
+        self.tableView.delegate = nil
         self.tableView.tableFooterView = UIView()
         
         self.setupBinding()
@@ -81,8 +82,10 @@ class CharacterViewController: UITableViewController {
         
         navigationItem.searchController?.searchBar.rx.text.orEmpty
             .subscribe(onNext: { query in
-                let status = SCOPE_BUTTON_TITLES[self.navigationItem.searchController?.searchBar.selectedScopeButtonIndex ?? 0]
-                self.viewModel.search(query, status: status)
+                if let index = self.navigationItem.searchController?.searchBar.selectedScopeButtonIndex {
+                    let status = self.avaliableSearchButtons[index].rawValue
+                    self.viewModel.search(query, status: status)
+                }
             }).disposed(by: disposeBag)
         
         navigationItem.searchController?.searchBar.rx.selectedScopeButtonIndex.subscribe(onNext: { [weak self] index in
@@ -90,30 +93,26 @@ class CharacterViewController: UITableViewController {
                 return
             }
             
-            let status = SCOPE_BUTTON_TITLES[index]
+            let status = self.avaliableSearchButtons[index].rawValue
             self.viewModel.search(self.navigationItem.searchController?.searchBar.text ?? "", status: status)
         }).disposed(by: disposeBag)
         
         let isEmpty = tableView.rx.isEmpty(message: "No characters found")
         viewModel.characters.map({ $0.isEmpty }).distinctUntilChanged().bind(to: isEmpty).disposed(by: disposeBag)
     }
-
-    // MARK: - Table view data source
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.characters.value.count
-    }
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ShowCharacterDetailsFromCharacters" {
             if let vc = segue.destination as? CharacterDetailsViewController {
-                vc.characterViewModel = self.selectedDetailsViewModel!
+                if let viewModel = self.selectedDetailsViewModel {
+                    vc.characterViewModel = viewModel
+                }
             }
         }
     }
 }
+
+// MARK: - Table view delegate
+
+extension CharacterViewController: UITableViewDelegate { }

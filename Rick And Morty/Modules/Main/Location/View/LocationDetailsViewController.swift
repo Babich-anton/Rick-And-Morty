@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class LocatioDetailsViewController: UIViewController {
+class LocationDetailsViewController: UIViewController {
     
     var locationViewModel: LocationDetailsViewModel!
     
