@@ -11,6 +11,7 @@ import UIKit
 struct App {
     
     struct Color {
+        
         static var background: UIColor { return UIColor(hex: 0x121212) }
         static var error: UIColor { return UIColor(hex: 0xCF6679) }
         static var onBackground: UIColor { return UIColor(hex: 0xFFFFFF) }
@@ -23,6 +24,7 @@ struct App {
     }
     
     struct Font {
+        
         static var bold: UIFont { return UIFont(name: "HelveticaNeue-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18) }
     }
     

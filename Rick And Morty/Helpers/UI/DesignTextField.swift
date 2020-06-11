@@ -19,7 +19,7 @@ open class DesignTextField: UITextField {
     /// the color for placeholder text
     @IBInspectable open var placeholderBackgroundColor: UIColor = UIColor.lightGray {
         didSet {
-            self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes: [
+            self.attributedPlaceholder = NSAttributedString(string: self.placeholder?.capitalized ?? "", attributes: [
                 NSAttributedString.Key.foregroundColor: placeholderBackgroundColor.withAlphaComponent(0.4)
             ])
         }

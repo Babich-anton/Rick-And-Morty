@@ -11,3 +11,7 @@ import UIKit
 var tabTitlePosition: UIOffset {
     return UIOffset(horizontal: 0.0, vertical: -2)
 }
+
+var separatorInsets: UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+}
