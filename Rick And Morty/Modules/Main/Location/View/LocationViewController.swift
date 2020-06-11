@@ -12,16 +12,16 @@ import UIKit
 
 class LocationViewController: UIViewController {
 
-    var viewModel: LocationViewModel!
+    var viewModel = LocationViewModel()
     var selectedDetailsViewModel: LocationDetailsViewModel?
     
     private let disposeBag = DisposeBag()
     
-    @IBOutlet weak var tableView: UITableView!
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -18,7 +18,6 @@ class EpisodesCoordinator: TabCoordinator {
     init() {
         let viewController: EpisodesViewController = storyboard.inflateVC()
         viewController.title = App.Tab.episodes.rawValue
-        viewController.viewModel = EpisodeViewModel()
         
         rootController = UINavigationController(rootViewController: viewController)
         rootController.navigationBar.barStyle = .blackTranslucent

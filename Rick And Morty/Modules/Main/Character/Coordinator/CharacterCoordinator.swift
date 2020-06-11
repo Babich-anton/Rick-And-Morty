@@ -17,7 +17,6 @@ class CharacterCoordinator: TabCoordinator {
     init() {
         let selectViewController: CharacterViewController = storyboard.inflateVC()
         selectViewController.title = App.Tab.character.rawValue
-        selectViewController.viewModel = CharacterViewModel()
         
         rootController = UINavigationController(rootViewController: selectViewController)
         rootController.navigationBar.barStyle = .blackTranslucent

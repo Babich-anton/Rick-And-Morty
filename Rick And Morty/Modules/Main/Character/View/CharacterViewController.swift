@@ -12,7 +12,7 @@ import UIKit
 
 class CharacterViewController: UIViewController {
 
-    var viewModel: CharacterViewModel!
+    var viewModel = CharacterViewModel()
     var selectedDetailsViewModel: CharacterDetailsViewModel?
     
     private let disposeBag = DisposeBag()
