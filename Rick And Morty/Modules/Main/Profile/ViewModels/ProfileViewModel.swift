@@ -14,8 +14,6 @@ class ProfileViewModel: NSObject {
     
     var handle: AuthStateDidChangeListenerHandle?
     
-    let disposebag = DisposeBag()
-    
     var user: BehaviorRelay<User?> = BehaviorRelay<User?>(value: nil)
     
     let nameViewModel = NameViewModel()

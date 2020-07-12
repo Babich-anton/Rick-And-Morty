@@ -139,4 +139,8 @@ class ProfileViewController: UIViewController {
             }
         }).disposed(by: disposeBag)
     }
+    
+    deinit {
+        print("deinit ProfileViewController")
+    }
 }
