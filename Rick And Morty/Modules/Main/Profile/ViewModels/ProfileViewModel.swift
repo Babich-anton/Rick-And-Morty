@@ -119,7 +119,6 @@ class ProfileViewModel: NSObject {
     }
     
     private func isValid() -> Bool {
-        
         return nameViewModel.validateCredentials() &&
             emailViewModel.validateCredentials() &&
             newPasswordViewModel.validateCredentials() &&

@@ -8,14 +8,13 @@
 
 import Foundation
 import FirebaseAuth
-import Photos
 import RxCocoa
 import RxSwift
 import UIKit
 
 class ProfileViewController: UIViewController {
     
-    var viewModel: ProfileViewModel!
+    var viewModel: ProfileViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
     
     private let disposeBag = DisposeBag()
     
@@ -105,27 +104,25 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupButtonBinding() {
+        self.bindSaveButton()
+        self.bindLogoutButton()
         
-        self.saveButton.rx.tap.do(onNext: { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.saveButton.startAnimation()
-        }).subscribe(onNext: {[weak self] in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.viewModel.update()
+        self.imageViewTapper.rx.event.bind(onNext: { _ in
+            self.changeUserImage()
         }).disposed(by: disposeBag)
-        
+    }
+    
+    private func bindSaveButton() {
+        self.saveButton.rx.tap.do(onNext: { [weak self] in
+            self?.saveButton.startAnimation()
+        }).subscribe(onNext: { [weak self] in
+            self?.viewModel.update()
+        }).disposed(by: disposeBag)
+    }
+    
+    private func bindLogoutButton() {
         self.logoutButton.rx.tap.do(onNext: { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.logoutButton.startAnimation()
+            self?.logoutButton.startAnimation()
         }).subscribe(onNext: { [weak self] in
             guard let `self` = self else {
                 return
@@ -141,135 +138,5 @@ class ProfileViewController: UIViewController {
                 self.dismiss(animated: false)
             }
         }).disposed(by: disposeBag)
-        
-        self.imageViewTapper.rx.event.bind(onNext: { _ in
-            self.changeUserImage()
-        }).disposed(by: disposeBag)
-    }
-}
-
-extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let pickedImage = info[.originalImage] as? UIImage {
-            
-            guard let documentDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                return
-            }
-
-            let imgPath = documentDirectoryPath.appendingPathComponent("user-image.jpg")
-
-            do {
-                try pickedImage.jpegData(compressionQuality: 1)?.write(to: imgPath, options: .atomic)
-                
-                self.imageView.af.setImage(withURL: imgPath) { _ in
-                    self.imageView.isHidden = false
-                    self.indicatorView.stopAnimating()
-                }
-                
-                FirebaseManager.update(image: imgPath, successHandler: {
-                    showMessage(with: "User image updated")
-                }, errorHandler: { error in
-                    showMessage(with: error.localizedDescription)
-                })
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        
-        self.imageView.isHidden = true
-        self.indicatorView.startAnimating()
-        
-        picker.dismiss(animated: true)
-    }
-    
-    private func changeUserImage() {
-        let chooseSourceSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let openImageGalleryAction = UIAlertAction(title: "Photos", style: .default) { _ in
-            let status = PHPhotoLibrary.authorizationStatus()
-            
-            switch status {
-            case PHAuthorizationStatus.authorized:
-                self.openGallery()
-            case PHAuthorizationStatus.denied:
-                self.permissionDenied(message: "Photos is unavailable")
-            case PHAuthorizationStatus.notDetermined:
-                PHPhotoLibrary.requestAuthorization({ (newStatus) in
-                    if newStatus == .authorized {
-                        self.openGallery()
-                    } else {
-                        self.permissionDenied(message: "Photos is unavailable")
-                    }
-                })
-            default:
-                 self.permissionDenied(message: "Photos is unavailable")
-            }
-        }
-        
-        let openCameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
-            switch AVCaptureDevice.authorizationStatus(for: .video) {
-            case .authorized:
-                self.openCamera()
-            case .notDetermined:
-                AVCaptureDevice.requestAccess(for: .video) { granted in
-                    if granted {
-                        self.openCamera()
-                    } else {
-                        self.permissionDenied(message: "Camera is unavailable")
-                    }
-                }
-            case .denied:
-                self.permissionDenied(message: "Camera is unavailable")
-            case .restricted:
-                self.permissionDenied(message: "Camera is unavailable")
-            @unknown default: break
-            }
-        }
-        
-        chooseSourceSheetController.addAction(openImageGalleryAction)
-        chooseSourceSheetController.addAction(openCameraAction)
-        chooseSourceSheetController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
-        if let popoverController = chooseSourceSheetController.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.height - 120, width: 0, height: 0)
-            popoverController.permittedArrowDirections = .init(rawValue: 0) // remove arrow
-        }
-        
-        present(chooseSourceSheetController, animated: true, completion: nil)
-    }
-    
-    private func openCamera() {
-        DispatchQueue.main.async {
-            let pickerController = UIImagePickerController()
-            pickerController.delegate = self
-            pickerController.allowsEditing = false
-            pickerController.sourceType = .camera
-            pickerController.cameraCaptureMode = .photo
-            pickerController.showsCameraControls = true
-            
-            self.present(pickerController, animated: true)
-        }
-    }
-    
-    private func openGallery() {
-        DispatchQueue.main.async {
-            let pickerController = UIImagePickerController()
-            pickerController.delegate = self
-            pickerController.allowsEditing = false
-            pickerController.sourceType = .savedPhotosAlbum
-            
-            self.present(pickerController, animated: true)
-        }
-    }
-    
-    func permissionDenied(message: String) {
-        DispatchQueue.main.async {
-            let cameraAlert = UIAlertController(title: "Permission denied", message: message, preferredStyle: .alert)
-            cameraAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            
-            self.present(cameraAlert, animated: true, completion: nil)
-        }
     }
 }
