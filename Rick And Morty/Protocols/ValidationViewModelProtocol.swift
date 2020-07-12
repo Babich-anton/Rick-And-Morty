@@ -11,7 +11,7 @@ import RxCocoa
 
 protocol ValidationViewModelProtocol {
     
-    var data: BehaviorRelay<String> { get set }
+    var data: BehaviorRelay<String> { get }
     
     var errorMessage: String { get }
     var errorValue: BehaviorRelay<String> { get }
