@@ -6,6 +6,7 @@
 //  Copyright © 2020 Anton Babich. All rights reserved.
 //
 
+import FirebaseAuth
 import RxSwift
 
 protocol ViewModel: class {
@@ -57,4 +58,28 @@ protocol EpisodeDetailsViewProtocol: class {
     func set(episode: Episode)
     
     func set(loadingFailed: Bool)
+}
+
+protocol ProfileViewProtocol: class {
+    
+    func set(user: User)
+    
+    func set(value: Bool)
+}
+
+protocol LoginViewProtocol: class {
+    
+    func loginTapped()
+    
+    func loginSuccess()
+    
+    func loginFailed()
+    
+    func signUpTapped()
+    
+    func signUpSuccess()
+    
+    func signUpFailed()
+    
+    func show(errorMessage: String)
 }

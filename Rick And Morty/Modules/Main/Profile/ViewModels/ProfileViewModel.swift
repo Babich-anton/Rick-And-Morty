@@ -10,22 +10,26 @@ import FirebaseAuth
 import RxCocoa
 import RxSwift
 
-class ProfileViewModel: NSObject {
+class ProfileViewModel: NSObject, ViewModel {
     
-    var handle: AuthStateDidChangeListenerHandle?
+    private var handle: AuthStateDidChangeListenerHandle?
     
-    var user: BehaviorRelay<User?> = BehaviorRelay<User?>(value: nil)
+    private var user: BehaviorRelay<User?> = BehaviorRelay<User?>(value: nil)
+    
+    private let disposeBag = DisposeBag()
     
     let nameViewModel = NameViewModel()
     let emailViewModel = ProfileEmailViewModel()
     let newPasswordViewModel = ProfilePasswordViewModel()
     let confirmPasswordViewModel = ProfilePasswordViewModel()
     
-    let isImageUpdated: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    private let isImageUpdated: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     
-    let isUpdated: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    private let isUpdated: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     
-    let errorMessage: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
+    private let errorMessage: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
+    
+    weak var delegate: ProfileViewProtocol?
     
     override init() {
         super.init()
@@ -37,6 +41,18 @@ class ProfileViewModel: NSObject {
                 self.user.accept(nil)
             }
         }
+    }
+    
+    func setupBinding() {
+        user.subscribe(onNext: { [weak self] user in
+            if let user = user {
+                self?.delegate?.set(user: user)
+            }
+        }).disposed(by: disposeBag)
+        
+        isUpdated.subscribe(onNext: { [weak self] value in
+            self?.delegate?.set(value: value)
+        }).disposed(by: disposeBag)
     }
     
     func update() {
@@ -121,6 +137,10 @@ class ProfileViewModel: NSObject {
             emailViewModel.validateCredentials() &&
             newPasswordViewModel.validateCredentials() &&
             confirmPasswordViewModel.validateCredentials()
+    }
+    
+    func getDisposeBag() -> DisposeBag {
+        return self.disposeBag
     }
     
     deinit {

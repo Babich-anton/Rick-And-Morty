@@ -13,7 +13,6 @@ import UIKit
 class LoginViewController: UIViewController {
     
     private var viewModel: LoginViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
-    private let disposeBag = DisposeBag()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -28,139 +27,104 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         self.hideKeyboardWhenTappedAround()
-        self.createViewModelBinding()
-        self.createObservers()
+        self.setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.emailTextField.rx.text.onNext("")
-        self.viewModel.emailViewModel.data.accept("")
-        self.passwordTextField.rx.text.onNext("")
-        self.viewModel.passwordViewModel.data.accept("")
+
+        self.viewModel.isSignedIn.accept(false)
+        self.emailTextField.rx.text.onNext("anton.babich@sqil.by")
+        self.viewModel.emailViewModel.data.accept("anton.babich@sqil.by")
+        self.passwordTextField.rx.text.onNext("barmaley98")
+        self.viewModel.passwordViewModel.data.accept("barmaley98")
     }
     
-    private func createViewModelBinding() {
+    private func setupBinding() {
         self.bindFields()
-        self.bindLoginButton()
-        self.bindSignUpButton()
+        self.bindButtons()
     }
     
     private func bindFields() {
         self.emailTextField.rx.text.orEmpty
             .bind(to: viewModel.emailViewModel.data)
-            .disposed(by: disposeBag)
+            .disposed(by: viewModel.getDisposeBag())
 
         self.passwordTextField.rx.text.orEmpty
             .bind(to: viewModel.passwordViewModel.data)
-            .disposed(by: disposeBag)
+            .disposed(by: viewModel.getDisposeBag())
     }
     
-    private func bindLoginButton() {
-        self.loginButton.rx.tap.do(onNext: { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-
-            self.loginButton.startAnimation()
-            self.loginButton.isEnabled = false
-            self.signUpButton.isEnabled = false
-        }).subscribe(onNext: { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-
-            if self.viewModel.validateCredentials() {
-                self.viewModel.loginUser()
-            } else {
-                if !self.viewModel.emailViewModel.errorValue.value.isEmpty {
-                    
-                    showMessage(with: self.viewModel.emailViewModel.errorValue.value)
-                    
-                    self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-                    self.passwordTextField.rx.text.onNext("")
-                    self.viewModel.passwordViewModel.data.accept("")
-                } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
-                    
-                    showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
-                    
-                    self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-                    self.passwordTextField.rx.text.onNext("")
-                    self.viewModel.passwordViewModel.data.accept("")
-                }
-                
-                self.loginButton.isEnabled = true
-                self.signUpButton.isEnabled = true
-            }
-        }).disposed(by: disposeBag)
+    private func bindButtons() {
+        self.viewModel.bind(loginButton: self.loginButton)
+        self.viewModel.bind(signUpButton: self.signUpButton)
+        self.viewModel.delegate = self
     }
     
-    private func bindSignUpButton() {
-        self.signUpButton.rx.tap.do(onNext: { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-
-            self.signUpButton.startAnimation()
-            self.loginButton.isEnabled = false
-            self.signUpButton.isEnabled = false
-        }).subscribe(onNext: { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-
-            if self.viewModel.validateCredentials() {
-                self.viewModel.signUp()
-            } else {
-                if !self.viewModel.emailViewModel.errorValue.value.isEmpty {
-                    
-                    showMessage(with: self.viewModel.emailViewModel.errorValue.value)
-                    self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-                } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
-                    
-                    showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
-                    self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-                }
-                
-                self.loginButton.isEnabled = true
-                self.signUpButton.isEnabled = true
-            }
-        }).disposed(by: disposeBag)
+    private func clearForm() {
+        self.clearLogin()
+        self.clearPassword()
     }
     
-    private func createObservers() {
-        self.viewModel.isSuccess.asObservable().bind { value in
-        
-            self.loginButton.isEnabled = true
-            self.signUpButton.isEnabled = true
-            
-            if !value && self.loginButton.isLoading {
-                self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-            }
-            
-            if self.signUpButton.isLoading {
-                self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-                
-                self.emailTextField.rx.text.onNext("")
-                self.viewModel.emailViewModel.data.accept("")
-                self.passwordTextField.rx.text.onNext("")
-                self.viewModel.passwordViewModel.data.accept("")
-            }
-        }.disposed(by: disposeBag)
-        
-        self.viewModel.isSignedIn.asObservable().bind { value in
-            if value {
-                self.loginButton.stopAnimation(animationStyle: .expand)
-            }
-        }.disposed(by: disposeBag)
-        
-        self.viewModel.errorMessage.asObservable().bind { value in
-            showMessage(with: value)
-        }.disposed(by: disposeBag)
+    private func clearLogin() {
+        self.emailTextField.rx.text.onNext("")
+        self.viewModel.emailViewModel.data.accept("")
+    }
+    
+    private func clearPassword() {
+        self.passwordTextField.rx.text.onNext("")
+        self.viewModel.passwordViewModel.data.accept("")
     }
     
     internal func set(_ viewModel: LoginViewModel) {
         self.viewModel = viewModel
+    }
+}
+
+extension LoginViewController: LoginViewProtocol {
+    
+    func loginTapped() {
+        self.loginButton.startAnimation()
+        self.loginButton.isEnabled = false
+        self.signUpButton.isEnabled = false
+    }
+    
+    func loginSuccess() {
+        self.clearForm()
+        self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
+        self.loginButton.isEnabled = true
+        self.signUpButton.isEnabled = true
+    }
+    
+    func loginFailed() {
+        self.clearPassword()
+        self.loginButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
+        self.loginButton.isEnabled = true
+        self.signUpButton.isEnabled = true
+    }
+    
+    func signUpTapped() {
+        self.signUpButton.startAnimation()
+        self.loginButton.isEnabled = false
+        self.signUpButton.isEnabled = false
+    }
+    
+    func signUpSuccess() {
+        self.clearPassword()
+        self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
+        self.loginButton.isEnabled = true
+        self.signUpButton.isEnabled = true
+        showMessage(with: "New user created successfully. Please sign in to the app.")
+    }
+    
+    func signUpFailed() {
+        self.clearPassword()
+        self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
+        self.loginButton.isEnabled = true
+        self.signUpButton.isEnabled = true
+    }
+    
+    func show(errorMessage: String) {
+        showMessage(with: errorMessage)
     }
 }

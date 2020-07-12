@@ -12,6 +12,7 @@ import UIKit
 
 class MainCoordinator: CoordinatorProtocol {
     
+    let tabBarController = UITabBarController()
     var tabs: [TabCoordinator]
     
     init() {
@@ -24,8 +25,6 @@ class MainCoordinator: CoordinatorProtocol {
     }
     
     func start(from viewController: UIViewController) {
-        let tabBarController = UITabBarController()
-        
         tabBarController.viewControllers = tabs.map { $0.rootController }
         tabBarController.tabBar.barTintColor = App.Color.surface
         tabBarController.tabBar.tintColor = App.Color.secondary

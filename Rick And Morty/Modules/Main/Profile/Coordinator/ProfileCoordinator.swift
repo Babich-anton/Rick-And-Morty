@@ -17,7 +17,7 @@ class ProfileCoordinator: TabCoordinator {
     
     init() {
         let viewController: ProfileViewController = storyboard.inflateVC()
-        viewController.viewModel = ProfileViewModel()
+        viewController.set(viewModel: ProfileViewModel())
         
         rootController = UINavigationController(rootViewController: viewController)
         rootController.navigationBar.barStyle = .blackTranslucent

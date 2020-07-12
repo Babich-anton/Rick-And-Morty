@@ -6,6 +6,7 @@
 //  Copyright © 2020 Anton Babich. All rights reserved.
 //
 
+import FirebaseAuth
 import Foundation
 import RxSwift
 import UIKit

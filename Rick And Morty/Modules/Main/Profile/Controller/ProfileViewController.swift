@@ -14,23 +14,21 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    var viewModel: ProfileViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
-    
-    private let disposeBag = DisposeBag()
+    private var viewModel: ProfileViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var nameField: UITextField!
-    @IBOutlet weak var emailField: UITextField!
-    @IBOutlet weak var newPasswordField: UITextField!
-    @IBOutlet weak var confirmPasswordField: UITextField!
-    @IBOutlet weak var saveButton: TransitionButton!
-    @IBOutlet weak var logoutButton: TransitionButton!
-    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var imageViewTapper: UITapGestureRecognizer!
+    @IBOutlet internal weak var imageView: UIImageView!
+    @IBOutlet private weak var nameField: UITextField!
+    @IBOutlet private weak var emailField: UITextField!
+    @IBOutlet private weak var newPasswordField: UITextField!
+    @IBOutlet private weak var confirmPasswordField: UITextField!
+    @IBOutlet private weak var saveButton: TransitionButton!
+    @IBOutlet private weak var logoutButton: TransitionButton!
+    @IBOutlet internal weak var indicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var imageViewTapper: UITapGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +38,6 @@ class ProfileViewController: UIViewController {
         imageView.setNeedsDisplay()
         
         setupBinding()
-        setupButtonBinding()
         hideKeyboardWhenTappedAround()
     }
     
@@ -54,53 +51,22 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupBinding() {
-        
-        self.viewModel.user.subscribe(onNext: { [weak self] user in
-            guard let `self` = self, let user = user else {
-                return
-            }
-            
-            if let url = user.photoURL {
-                self.imageView.af.setImage(withURL: url) { _ in
-                    self.imageView.isHidden = false
-                    self.indicatorView.stopAnimating()
-                }
-            } else {
-                self.imageView.isHidden = false
-                self.indicatorView.stopAnimating()
-            }
-            
-            self.nameField.text = user.displayName
-            self.emailField.text = user.email
-        }).disposed(by: disposeBag)
-        
-        self.viewModel.isUpdated.subscribe(onNext: { [weak self] value in
-            guard let `self` = self else {
-                return
-            }
-            
-            if self.saveButton.isLoading && value {
-                self.saveButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
-                
-                self.newPasswordField.rx.text.onNext("")
-                self.viewModel.newPasswordViewModel.data.accept("")
-                self.confirmPasswordField.rx.text.onNext("")
-                self.viewModel.confirmPasswordViewModel.data.accept("")
-            }
-        }).disposed(by: disposeBag)
+        self.viewModel.delegate = self
+        self.viewModel.setupBinding()
+        self.setupButtonBinding()
         
         self.nameField.rx.text.orEmpty
             .bind(to: viewModel.nameViewModel.data)
-            .disposed(by: disposeBag)
+            .disposed(by: viewModel.getDisposeBag())
         self.emailField.rx.text.orEmpty
             .bind(to: viewModel.emailViewModel.data)
-            .disposed(by: disposeBag)
+            .disposed(by: viewModel.getDisposeBag())
         self.newPasswordField.rx.text.orEmpty
             .bind(to: viewModel.newPasswordViewModel.data)
-            .disposed(by: disposeBag)
+            .disposed(by: viewModel.getDisposeBag())
         self.confirmPasswordField.rx.text.orEmpty
             .bind(to: viewModel.confirmPasswordViewModel.data)
-            .disposed(by: disposeBag)
+            .disposed(by: viewModel.getDisposeBag())
     }
     
     private func setupButtonBinding() {
@@ -109,7 +75,7 @@ class ProfileViewController: UIViewController {
         
         self.imageViewTapper.rx.event.bind(onNext: { _ in
             self.changeUserImage()
-        }).disposed(by: disposeBag)
+        }).disposed(by: viewModel.getDisposeBag())
     }
     
     private func bindSaveButton() {
@@ -117,7 +83,7 @@ class ProfileViewController: UIViewController {
             self?.saveButton.startAnimation()
         }).subscribe(onNext: { [weak self] in
             self?.viewModel.update()
-        }).disposed(by: disposeBag)
+        }).disposed(by: viewModel.getDisposeBag())
     }
     
     private func bindLogoutButton() {
@@ -137,10 +103,43 @@ class ProfileViewController: UIViewController {
             self.logoutButton.stopAnimation(animationStyle: .expand) {
                 self.dismiss(animated: false)
             }
-        }).disposed(by: disposeBag)
+        }).disposed(by: viewModel.getDisposeBag())
+    }
+    
+    func set(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
     }
     
     deinit {
         print("deinit ProfileViewController")
+    }
+}
+
+extension ProfileViewController: ProfileViewProtocol {
+    
+    func set(user: User) {
+        if let url = user.photoURL {
+            self.imageView.af.setImage(withURL: url) { _ in
+                self.imageView.isHidden = false
+                self.indicatorView.stopAnimating()
+            }
+        } else {
+            self.imageView.isHidden = false
+            self.indicatorView.stopAnimating()
+        }
+        
+        self.nameField.text = user.displayName
+        self.emailField.text = user.email
+    }
+    
+    func set(value: Bool) {
+        if self.saveButton.isLoading && value {
+            self.saveButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
+            
+            self.newPasswordField.rx.text.onNext("")
+            self.viewModel.newPasswordViewModel.data.accept("")
+            self.confirmPasswordField.rx.text.onNext("")
+            self.viewModel.confirmPasswordViewModel.data.accept("")
+        }
     }
 }
