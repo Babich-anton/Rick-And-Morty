@@ -9,12 +9,12 @@
 import RxCocoa
 import RxSwift
 
-class LocationViewModel: NSObject {
+class LocationViewModel: NSObject, ViewModel {
     
-    private var disposeBag = DisposeBag()
+    private var locations: BehaviorRelay<[Location]> = BehaviorRelay<[Location]>(value: [])
+    private var nextPage: String?
     
-    var locations: BehaviorRelay<[Location]> = BehaviorRelay<[Location]>(value: [])
-    var nextPage: String?
+    private let disposeBag = DisposeBag()
     
     weak var selectionDelegate: TableViewSelectionDelegate?
     
@@ -22,6 +22,13 @@ class LocationViewModel: NSObject {
         super.init()
         self.loadNextPage(nil)
     }
+    
+    func getDisposeBag() -> DisposeBag {
+        return disposeBag
+    }
+}
+
+extension LocationViewModel: LocationViewModelProtocol {
     
     func loadNextPage(_ url: String?) {
         Locations.getLocations(from: url, successHandler: { loc in

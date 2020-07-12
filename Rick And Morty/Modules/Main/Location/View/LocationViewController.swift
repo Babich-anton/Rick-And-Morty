@@ -12,16 +12,14 @@ import UIKit
 
 class LocationViewController: UIViewController {
 
-    var viewModel = LocationViewModel()
-    var selectedDetailsViewModel: LocationDetailsViewModel?
-    
-    private let disposeBag = DisposeBag()
+    private var viewModel = LocationViewModel()
+    private var selectedDetailsViewModel: LocationDetailsViewModel?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +43,7 @@ class LocationViewController: UIViewController {
         navigationItem.searchController?.searchBar.rx.text.orEmpty
             .subscribe(onNext: { query in
                 self.viewModel.search(query)
-            }).disposed(by: disposeBag)
+            }).disposed(by: viewModel.getDisposeBag())
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,10 +51,14 @@ class LocationViewController: UIViewController {
         if segue.identifier == "ShowLocationDetailsFromCharacters" {
             if let vc = segue.destination as? LocationDetailsViewController {
                 if let viewModel = self.selectedDetailsViewModel {
-                    vc.locationViewModel = viewModel
+                    vc.set(viewModel)
                 }
             }
         }
+    }
+    
+    deinit {
+        print("deinit LocationViewController")
     }
 }
 

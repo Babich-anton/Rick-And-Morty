@@ -12,62 +12,60 @@ import UIKit
 
 class LocationDetailsViewController: UIViewController {
     
-    var locationViewModel: LocationDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
-    
-    private let disposeBag = DisposeBag()
+    private var locationViewModel: LocationDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var dimensionLabel: UILabel!
+    @IBOutlet private weak var mainView: UIView!
+    @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var typeLabel: UILabel!
+    @IBOutlet private weak var dimensionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupBinding()
-    }
-    
-    private func setupBinding() {
-        locationViewModel.location.subscribe(onNext: { [weak self] location in
-            if let location = location {
-                guard let `self` = self else {
-                    return
-                }
-                
-                self.load(location)
-                
-                self.mainView.alpha = 0
-                self.mainView.isHidden = false
-                
-                UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
-                    guard let `self` = self else {
-                        return
-                    }
-                    
-                    self.indicatorView.stopAnimating()
-                    self.mainView.alpha = 1
-                })
-            }
-        }).disposed(by: disposeBag)
-        
-        locationViewModel.isFailedLoading.subscribe(onNext: { [weak self] value in
-            if value {
-                guard let `self` = self else {
-                    return
-                }
-                
-                self.navigationController?.popViewController(animated: true)
-            }
-        }).disposed(by: disposeBag)
+        locationViewModel.detailsDelegate = self
+        locationViewModel.setupBinding()
     }
     
     private func load(_ location: Location) {
         self.nameLabel.text = location.name
         self.typeLabel.text = location.type
         self.dimensionLabel.text = location.dimension
+    }
+    
+    func set(_ viewModel: LocationDetailsViewModel) {
+        self.locationViewModel = viewModel
+    }
+    
+    deinit {
+        print("deinit LocationDetailsViewController")
+    }
+}
+
+extension LocationDetailsViewController: LocationDetailsViewProtocol {
+    
+    func set(location: Location) {
+        self.load(location)
+        
+        self.mainView.alpha = 0
+        self.mainView.isHidden = false
+        
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.indicatorView.stopAnimating()
+            self.mainView.alpha = 1
+        })
+    }
+    
+    func set(loadingFailed: Bool) {
+        if loadingFailed {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
