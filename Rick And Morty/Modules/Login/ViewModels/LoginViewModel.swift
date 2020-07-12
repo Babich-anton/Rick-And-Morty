@@ -27,7 +27,6 @@ class LoginViewModel {
     }
     
     func loginUser() {
-        
         self.model.email = self.emailViewModel.data.value
         self.model.password = self.passwordViewModel.data.value
         

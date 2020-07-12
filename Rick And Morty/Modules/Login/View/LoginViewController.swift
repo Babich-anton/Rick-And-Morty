@@ -42,7 +42,12 @@ class LoginViewController: UIViewController {
     }
     
     private func createViewModelBinding() {
-        
+        self.bindFields()
+        self.bindLoginButton()
+        self.bindSignUpButton()
+    }
+    
+    private func bindFields() {
         self.emailTextField.rx.text.orEmpty
             .bind(to: viewModel.emailViewModel.data)
             .disposed(by: disposeBag)
@@ -50,7 +55,9 @@ class LoginViewController: UIViewController {
         self.passwordTextField.rx.text.orEmpty
             .bind(to: viewModel.passwordViewModel.data)
             .disposed(by: disposeBag)
-        
+    }
+    
+    private func bindLoginButton() {
         self.loginButton.rx.tap.do(onNext: { [weak self] in
             guard let `self` = self else {
                 return
@@ -87,7 +94,9 @@ class LoginViewController: UIViewController {
                 self.signUpButton.isEnabled = true
             }
         }).disposed(by: disposeBag)
-        
+    }
+    
+    private func bindSignUpButton() {
         self.signUpButton.rx.tap.do(onNext: { [weak self] in
             guard let `self` = self else {
                 return
@@ -105,9 +114,11 @@ class LoginViewController: UIViewController {
                 self.viewModel.signUp()
             } else {
                 if !self.viewModel.emailViewModel.errorValue.value.isEmpty {
+                    
                     showMessage(with: self.viewModel.emailViewModel.errorValue.value)
                     self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                 } else if !self.viewModel.passwordViewModel.errorValue.value.isEmpty {
+                    
                     showMessage(with: self.viewModel.passwordViewModel.errorValue.value)
                     self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 0.0)
                 }
@@ -119,7 +130,6 @@ class LoginViewController: UIViewController {
     }
     
     private func createObservers() {
-        
         self.viewModel.isSuccess.asObservable().bind { value in
         
             self.loginButton.isEnabled = true
