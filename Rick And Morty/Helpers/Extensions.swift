@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MaterialComponents
 import RxCocoa
 import RxSwift
 import UIKit
@@ -51,7 +50,6 @@ extension Reactive where Base: UITableView {
 extension UIViewController {
     
     func hideKeyboardWhenTappedAround() {
-        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
@@ -136,11 +134,5 @@ extension UIColor {
         let blue = CGFloat((hex & 0xFF)) / 255.0
 
         self.init(red: red, green: green, blue: blue, alpha: alpha)
-    }
-}
-
-func showMessage(with text: String) {
-    if !text.isEmpty {
-        MDCSnackbarManager.show(MDCSnackbarMessage(text: text))
     }
 }

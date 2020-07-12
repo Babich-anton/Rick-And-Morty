@@ -6,6 +6,7 @@
 //  Copyright © 2020 Anton Babich. All rights reserved.
 //
 
+import MaterialComponents
 import UIKit
 
 var tabTitlePosition: UIOffset {
@@ -14,4 +15,10 @@ var tabTitlePosition: UIOffset {
 
 var separatorInsets: UIEdgeInsets {
     return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+}
+
+func showMessage(with text: String) {
+    if !text.isEmpty {
+        MDCSnackbarManager.show(MDCSnackbarMessage(text: text))
+    }
 }

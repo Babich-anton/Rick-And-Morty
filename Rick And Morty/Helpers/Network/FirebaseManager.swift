@@ -11,17 +11,17 @@ import FirebaseAuth
 struct FirebaseManager {
     
     static func login(email: String,
-                       password: String,
-                       successHandler: @escaping ((AuthDataResult) -> Void),
-                       errorHandler: @escaping ((Error) -> Void)) {
-        
+                      password: String,
+                      successHandler: @escaping ((AuthDataResult) -> Void),
+                      errorHandler: @escaping ((Error) -> Void)) {
+
         Auth.auth().signIn(withEmail: email, password: password) { user, error in
             if let user = user {
                 successHandler(user)
             } else if let error = error {
                 errorHandler(error)
             } else {
-                let error = NSError(domain:"", code: 500, userInfo:[NSLocalizedDescriptionKey: "Internal Server Error"]) as Error
+                let error = NSError(domain: "", code: 500, userInfo: [NSLocalizedDescriptionKey: "Internal Server Error"]) as Error
                 errorHandler(error)
             }
         }
@@ -38,7 +38,7 @@ struct FirebaseManager {
             } else if let error = error {
                 errorHandler(error)
             } else {
-                let error = NSError(domain:"", code: 500, userInfo:[NSLocalizedDescriptionKey: "Internal Server Error"]) as Error
+                let error = NSError(domain: "", code: 500, userInfo: [NSLocalizedDescriptionKey: "Internal Server Error"]) as Error
                 errorHandler(error)
             }
         }
@@ -50,7 +50,6 @@ struct FirebaseManager {
         
         let request = Auth.auth().currentUser?.createProfileChangeRequest()
         request?.photoURL = image
-        
         request?.commitChanges { error in
             if let error = error {
                 errorHandler(error)
@@ -66,7 +65,6 @@ struct FirebaseManager {
         
         let request = Auth.auth().currentUser?.createProfileChangeRequest()
         request?.displayName = name
-        
         request?.commitChanges { error in
             if let error = error {
                 errorHandler(error)
