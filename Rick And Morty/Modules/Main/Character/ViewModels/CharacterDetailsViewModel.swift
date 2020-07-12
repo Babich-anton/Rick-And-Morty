@@ -11,10 +11,12 @@ import RxCocoa
 
 class CharacterDetailsViewModel: NSObject {
     
+    private var character: BehaviorRelay<Character?> = BehaviorRelay<Character?>(value: nil)
+    private var isFailedLoading: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    
     private let disposeBag = DisposeBag()
     
-    var character: BehaviorRelay<Character?> = BehaviorRelay<Character?>(value: nil)
-    var isFailedLoading: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    weak var detailsDelegate: CharacterDetailsViewProtocol?
     
     init(id: Int) {
         super.init()
@@ -25,5 +27,17 @@ class CharacterDetailsViewModel: NSObject {
             showMessage(with: error.localizedDescription)
             self.isFailedLoading.accept(true)
         })
+    }
+    
+    func setupBinding() {
+        character.subscribe(onNext: { [weak self] character in
+            if let character = character {
+                self?.detailsDelegate?.set(character: character)
+            }
+        }).disposed(by: disposeBag)
+        
+        isFailedLoading.subscribe(onNext: { [weak self] value in
+            self?.detailsDelegate?.set(loadingFailed: value)
+        }).disposed(by: disposeBag)
     }
 }

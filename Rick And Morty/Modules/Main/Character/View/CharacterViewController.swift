@@ -11,18 +11,17 @@ import RxSwift
 import UIKit
 
 class CharacterViewController: UIViewController {
-
-    var viewModel = CharacterViewModel()
-    var selectedDetailsViewModel: CharacterDetailsViewModel?
     
-    private let disposeBag = DisposeBag()
+    private var viewModel = CharacterViewModel()
+    private var selectedDetailsViewModel: CharacterDetailsViewModel?
+    
     private var avaliableSearchButtons: [CharacterStatus] = [.all, .alive, .dead, .unknown]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +49,7 @@ class CharacterViewController: UIViewController {
                     let status = self.avaliableSearchButtons[index].rawValue
                     self.viewModel.search(query, status: status)
                 }
-            }).disposed(by: disposeBag)
+            }).disposed(by: viewModel.getDisposeBag())
         
         navigationItem.searchController?.searchBar.rx.selectedScopeButtonIndex.subscribe(onNext: { [weak self] index in
             guard let `self` = self else {
@@ -59,17 +58,21 @@ class CharacterViewController: UIViewController {
             
             let status = self.avaliableSearchButtons[index].rawValue
             self.viewModel.search(self.navigationItem.searchController?.searchBar.text ?? "", status: status)
-        }).disposed(by: disposeBag)
+        }).disposed(by: viewModel.getDisposeBag())
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowCharacterDetailsFromCharacters" {
             if let vc = segue.destination as? CharacterDetailsViewController {
                 if let viewModel = self.selectedDetailsViewModel {
-                    vc.characterViewModel = viewModel
+                    vc.set(viewModel)
                 }
             }
         }
+    }
+    
+    deinit {
+        print("deinit CharacterViewController")
     }
 }
 

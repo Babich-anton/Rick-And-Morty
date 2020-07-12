@@ -12,68 +12,31 @@ import UIKit
 
 class CharacterDetailsViewController: UIViewController {
     
-    var characterViewModel: CharacterDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
-    
-    private let disposeBag = DisposeBag()
+    private var characterViewModel: CharacterDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var detailsStackView: UIStackView!
-    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var speciesLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var genderLabel: UILabel!
-    @IBOutlet weak var placeOfBirthLabel: UILabel!
-    @IBOutlet weak var placeOfStayLabel: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var detailsStackView: UIStackView!
+    @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var speciesLabel: UILabel!
+    @IBOutlet private weak var statusLabel: UILabel!
+    @IBOutlet private weak var genderLabel: UILabel!
+    @IBOutlet private weak var placeOfBirthLabel: UILabel!
+    @IBOutlet private weak var placeOfStayLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupBinding()
+        
+        characterViewModel.detailsDelegate = self
+        characterViewModel.setupBinding()
         
         imageView.layer.cornerRadius = imageView.bounds.midY
         imageView.clipsToBounds = true
         imageView.setNeedsDisplay()
-    }
-    
-    private func setupBinding() {
-        characterViewModel.character.subscribe(onNext: { [weak self] character in
-            if let character = character {
-                guard let `self` = self else {
-                    return
-                }
-                
-                self.load(character)
-                
-                self.imageView.alpha = 0
-                self.imageView.isHidden = false
-                self.detailsStackView.alpha = 0
-                self.detailsStackView.isHidden = false
-                
-                UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
-                    guard let `self` = self else {
-                        return
-                    }
-                    
-                    self.indicatorView.stopAnimating()
-                    self.imageView.alpha = 1
-                    self.detailsStackView.alpha = 1
-                })
-            }
-        }).disposed(by: disposeBag)
-        
-        characterViewModel.isFailedLoading.subscribe(onNext: { [weak self] value in
-            guard let `self` = self else {
-                return
-            }
-            
-            if value {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }).disposed(by: disposeBag)
     }
     
     private func load(_ character: Character) {
@@ -87,5 +50,41 @@ class CharacterDetailsViewController: UIViewController {
         genderLabel.text = character.gender
         placeOfBirthLabel.text = character.origin.name
         placeOfStayLabel.text = character.location.name
+    }
+    
+    func set(_ viewModel: CharacterDetailsViewModel) {
+        self.characterViewModel = viewModel
+    }
+    
+    deinit {
+        print("deinit CharacterDetailsViewController")
+    }
+}
+
+extension CharacterDetailsViewController: CharacterDetailsViewProtocol {
+    
+    func set(character: Character) {
+        self.load(character)
+        
+        self.imageView.alpha = 0
+        self.imageView.isHidden = false
+        self.detailsStackView.alpha = 0
+        self.detailsStackView.isHidden = false
+        
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.indicatorView.stopAnimating()
+            self.imageView.alpha = 1
+            self.detailsStackView.alpha = 1
+        })
+    }
+    
+    func set(loadingFailed: Bool) {
+        if loadingFailed {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }

@@ -9,12 +9,12 @@
 import RxSwift
 import RxCocoa
 
-class CharacterViewModel: NSObject {
+class CharacterViewModel: NSObject, ViewModel {
+    
+    private var characters: BehaviorRelay<[Character]> = BehaviorRelay<[Character]>(value: [])
+    private var nextPage: String?
     
     private let disposeBag = DisposeBag()
-    
-    var characters: BehaviorRelay<[Character]> = BehaviorRelay<[Character]>(value: [])
-    var nextPage: String?
     
     weak var selectionDelegate: TableViewSelectionDelegate?
     
@@ -22,6 +22,13 @@ class CharacterViewModel: NSObject {
         super.init()
         self.loadNextPage(nil)
     }
+    
+    func getDisposeBag() -> DisposeBag {
+        return disposeBag
+    }
+}
+
+extension CharacterViewModel: CharacterViewModelProtocol {
     
     func loadNextPage(_ url: String?) {
         Characters.getCharacters(from: url, successHandler: { ch in
