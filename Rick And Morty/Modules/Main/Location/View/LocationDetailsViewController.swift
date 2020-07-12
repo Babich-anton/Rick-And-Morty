@@ -12,7 +12,7 @@ import UIKit
 
 class LocationDetailsViewController: UIViewController {
     
-    var locationViewModel: LocationDetailsViewModel!
+    var locationViewModel: LocationDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
     
     private let disposeBag = DisposeBag()
     
@@ -28,7 +28,10 @@ class LocationDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.setupBinding()
+    }
+    
+    private func setupBinding() {
         locationViewModel.location.subscribe(onNext: { [weak self] location in
             if let location = location {
                 guard let `self` = self else {

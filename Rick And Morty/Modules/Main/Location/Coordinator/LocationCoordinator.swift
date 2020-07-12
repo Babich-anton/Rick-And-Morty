@@ -25,8 +25,7 @@ class LocationCoordinator: TabCoordinator {
         if UIDevice.current.orientation == .portrait {
             tabBarItem.titlePositionAdjustment = tabTitlePosition
         }
-        
-            
+         
         rootController.tabBarItem = tabBarItem
         
         NotificationCenter.default.addObserver(self, selector: #selector(LocationCoordinator.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
