@@ -12,16 +12,14 @@ import UIKit
 
 class EpisodesViewController: UIViewController {
 
-    var viewModel = EpisodeViewModel()
-    var selectedDetailsViewModel: EpisodeDetailsViewModel?
-    
-    private let disposeBag = DisposeBag()
+    private var viewModel = EpisodeViewModel()
+    private var selectedDetailsViewModel: EpisodeDetailsViewModel?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,15 +43,21 @@ class EpisodesViewController: UIViewController {
         navigationItem.searchController?.searchBar.rx.text.orEmpty
             .subscribe(onNext: { query in
                 self.viewModel.search(query)
-            }).disposed(by: disposeBag)
+            }).disposed(by: viewModel.getDisposeBag())
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowEpisodeDetailsFromCharacters" {
             if let vc = segue.destination as? EpisodeDetailsViewController {
-                vc.episodeDetailsViewModel = self.selectedDetailsViewModel
+                if let viewModel = self.selectedDetailsViewModel {
+                    vc.set(viewModel)
+                }
             }
         }
+    }
+    
+    deinit {
+        print("deinit EpisodesViewController")
     }
 }
 

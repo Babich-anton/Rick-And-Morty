@@ -10,12 +10,12 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class EpisodeViewModel: NSObject {
+class EpisodeViewModel: NSObject, ViewModel {
+    
+    private var episodes: BehaviorRelay<[Episode]> = BehaviorRelay<[Episode]>(value: [])
+    private var nextPage: String?
     
     private let disposeBag = DisposeBag()
-    
-    var episodes: BehaviorRelay<[Episode]> = BehaviorRelay<[Episode]>(value: [])
-    var nextPage: String?
     
     weak var selectionDelegate: TableViewSelectionDelegate?
     
@@ -23,6 +23,13 @@ class EpisodeViewModel: NSObject {
         super.init()
         self.loadNextPage(nil)
     }
+    
+    func getDisposeBag() -> DisposeBag {
+        return self.disposeBag
+    }
+}
+
+extension EpisodeViewModel: EpisodeViewModelProtocol {
     
     func loadNextPage(_ url: String?) {
         Episodes.getEpisodes(from: url, successHandler: { ep in

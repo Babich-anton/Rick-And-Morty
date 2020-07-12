@@ -12,53 +12,22 @@ import UIKit
 
 class EpisodeDetailsViewController: UIViewController {
     
-    var episodeDetailsViewModel: EpisodeDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
-    
-    private let disposeBag = DisposeBag()
+    private var episodeDetailsViewModel: EpisodeDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var episodeLabel: UILabel!
-    @IBOutlet weak var airDateLabel: UILabel!
+    @IBOutlet private weak var mainView: UIView!
+    @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var episodeLabel: UILabel!
+    @IBOutlet private weak var airDateLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupBinding()
-    }
-    
-    private func setupBinding() {
-        episodeDetailsViewModel.episode.subscribe(onNext: { [weak self] location in
-            guard let `self` = self else {
-                return
-            }
-            
-            if let location = location {
-                self.load(location)
-                
-                self.mainView.alpha = 0
-                self.mainView.isHidden = false
-                
-                UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
-                    guard let `self` = self else {
-                        return
-                    }
-                    
-                    self.indicatorView.stopAnimating()
-                    self.mainView.alpha = 1
-                })
-            }
-        }).disposed(by: disposeBag)
-        
-        episodeDetailsViewModel.isFailedLoading.subscribe(onNext: { [weak self] value in
-            if value {
-                self?.navigationController?.popViewController(animated: true)
-            }
-        }).disposed(by: disposeBag)
+        episodeDetailsViewModel.detailsDelegate = self
+        episodeDetailsViewModel.setupBinding()
     }
     
     private func load(_ episode: Episode) {
@@ -66,4 +35,39 @@ class EpisodeDetailsViewController: UIViewController {
         episodeLabel.text = episode.episode
         airDateLabel.text = episode.airDate
     }
+    
+    func set(_ viewModel: EpisodeDetailsViewModel) {
+        self.episodeDetailsViewModel = viewModel
+    }
+    
+    deinit {
+        print("deinit EpisodeDetailsViewController")
+    }
 }
+
+extension EpisodeDetailsViewController: EpisodeDetailsViewProtocol {
+    
+    func set(episode: Episode) {
+        self.load(episode)
+        
+        self.mainView.alpha = 0
+        self.mainView.isHidden = false
+        
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.indicatorView.stopAnimating()
+            self.mainView.alpha = 1
+        })
+    }
+    
+    func set(loadingFailed: Bool) {
+        if loadingFailed {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+}
+
+// todo:: check deinit - fix problems with deinit
