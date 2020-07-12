@@ -12,7 +12,7 @@ import UIKit
 
 class CharacterDetailsViewController: UIViewController {
     
-    var characterViewModel: CharacterDetailsViewModel!
+    var characterViewModel: CharacterDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
     
     private let disposeBag = DisposeBag()
     
@@ -32,7 +32,14 @@ class CharacterDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupBinding()
         
+        imageView.layer.cornerRadius = imageView.bounds.midY
+        imageView.clipsToBounds = true
+        imageView.setNeedsDisplay()
+    }
+    
+    private func setupBinding() {
         characterViewModel.character.subscribe(onNext: { [weak self] character in
             if let character = character {
                 guard let `self` = self else {
@@ -67,10 +74,6 @@ class CharacterDetailsViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         }).disposed(by: disposeBag)
-        
-        imageView.layer.cornerRadius = imageView.bounds.midY
-        imageView.clipsToBounds = true
-        imageView.setNeedsDisplay()
     }
     
     private func load(_ character: Character) {

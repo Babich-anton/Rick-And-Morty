@@ -37,48 +37,12 @@ class CharacterViewController: UIViewController {
         navigationItem.searchController = search
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        let cell = UINib(nibName: App.Tab.character.cellNib, bundle: nil)
-        self.tableView.register(cell, forCellReuseIdentifier: App.Tab.character.cellIdentifier)
-        self.tableView.dataSource = nil
-        self.tableView.delegate = nil
-        self.tableView.tableFooterView = UIView()
-        
         self.setupBinding()
     }
     
     private func setupBinding() {
-        
-        viewModel.characters.bind(to: self.tableView.rx.items(cellIdentifier: App.Tab.character.cellIdentifier)) { _, model, cell in
-            if let cell = cell as? CharacterViewCell {
-                cell.character = model
-            }
-            
-            cell.separatorInset = .zero
-            cell.layoutMargins = .zero
-        }.disposed(by: disposeBag)
-        
-        tableView.rx.modelSelected(Character.self)
-            .map { $0 }
-            .subscribe({ [weak self] model in
-                guard let `self` = self else {
-                    return
-                }
-                
-                if let element = model.element {
-                    self.selectedDetailsViewModel = CharacterDetailsViewModel(id: element.id)
-                    self.performSegue(withIdentifier: "ShowCharacterDetailsFromCharacters", sender: nil)
-                } else {
-                    showMessage(with: "Could not found model. Please, try again!")
-                }
-        }).disposed(by: disposeBag)
-            
-        self.tableView.rx.willDisplayCell.subscribe(onNext: { _, indexPath in
-            if indexPath.row + 1 >= self.viewModel.characters.value.count {
-                if let nextPage = self.viewModel.nextPage, !nextPage.isEmpty {
-                    self.viewModel.loadNextPage(nextPage)
-                }
-            }
-        }).disposed(by: disposeBag)
+        viewModel.selectionDelegate = self
+        viewModel.configure(tableView: self.tableView)
         
         navigationItem.searchController?.searchBar.rx.text.orEmpty
             .subscribe(onNext: { query in
@@ -96,13 +60,9 @@ class CharacterViewController: UIViewController {
             let status = self.avaliableSearchButtons[index].rawValue
             self.viewModel.search(self.navigationItem.searchController?.searchBar.text ?? "", status: status)
         }).disposed(by: disposeBag)
-        
-        let isEmpty = tableView.rx.isEmpty(message: "No characters found")
-        viewModel.characters.map({ $0.isEmpty }).distinctUntilChanged().bind(to: isEmpty).disposed(by: disposeBag)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "ShowCharacterDetailsFromCharacters" {
             if let vc = segue.destination as? CharacterDetailsViewController {
                 if let viewModel = self.selectedDetailsViewModel {
@@ -113,6 +73,10 @@ class CharacterViewController: UIViewController {
     }
 }
 
-// MARK: - Table view delegate
-
-extension CharacterViewController: UITableViewDelegate { }
+extension CharacterViewController: TableViewSelectionDelegate {
+    
+    func select(id: Int) {
+        self.selectedDetailsViewModel = CharacterDetailsViewModel(id: id)
+        self.performSegue(withIdentifier: "ShowCharacterDetailsFromCharacters", sender: nil)
+    }
+}
