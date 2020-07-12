@@ -12,17 +12,17 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    var viewModel = LoginViewModel()
-    let disposeBag = DisposeBag()
+    private var viewModel: LoginViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
+    private let disposeBag = DisposeBag()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBOutlet var emailTextField: UITextField!
-    @IBOutlet var passwordTextField: UITextField!
-    @IBOutlet var loginButton: TransitionButton!
-    @IBOutlet var signUpButton: TransitionButton!
+    @IBOutlet private var emailTextField: UITextField!
+    @IBOutlet private var passwordTextField: UITextField!
+    @IBOutlet private var loginButton: TransitionButton!
+    @IBOutlet private var signUpButton: TransitionButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -158,5 +158,9 @@ class LoginViewController: UIViewController {
         self.viewModel.errorMessage.asObservable().bind { value in
             showMessage(with: value)
         }.disposed(by: disposeBag)
+    }
+    
+    internal func set(_ viewModel: LoginViewModel) {
+        self.viewModel = viewModel
     }
 }
