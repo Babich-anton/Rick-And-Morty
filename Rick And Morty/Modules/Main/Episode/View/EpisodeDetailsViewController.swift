@@ -12,7 +12,7 @@ import UIKit
 
 class EpisodeDetailsViewController: UIViewController {
     
-    var episodeViewModel: EpisodeDetailsViewModel!
+    var episodeDetailsViewModel: EpisodeDetailsViewModel! // swiftlint:disable:this implicitly_unwrapped_optional
     
     private let disposeBag = DisposeBag()
     
@@ -28,8 +28,15 @@ class EpisodeDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        episodeViewModel.episode.subscribe(onNext: { [unowned self] location in
+        self.setupBinding()
+    }
+    
+    private func setupBinding() {
+        episodeDetailsViewModel.episode.subscribe(onNext: { [weak self] location in
+            guard let `self` = self else {
+                return
+            }
+            
             if let location = location {
                 self.load(location)
                 
@@ -47,13 +54,9 @@ class EpisodeDetailsViewController: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-        episodeViewModel.isFailedLoading.subscribe(onNext: { [weak self] value in
-            guard let `self` = self else {
-                return
-            }
-            
+        episodeDetailsViewModel.isFailedLoading.subscribe(onNext: { [weak self] value in
             if value {
-                self.navigationController?.popViewController(animated: true)
+                self?.navigationController?.popViewController(animated: true)
             }
         }).disposed(by: disposeBag)
     }
